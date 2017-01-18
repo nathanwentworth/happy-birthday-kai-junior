@@ -17,8 +17,9 @@ public class RigidbodySleepCheck : MonoBehaviour {
 	}
 	
 	private void OnCollisionStay (Collision other) {
-    if (other.transform.name == "Sphere") {
+    if (other.gameObject.GetComponent<Rigidbody>() != null) {
   		if (!rb.IsSleeping() && !knockedOver && rb.velocity.magnitude > 2) {
+        Debug.Log(other.gameObject.name);
         knockedOver = true;
         DataManager.Points += points;
         hudManager.ScoreChange();
