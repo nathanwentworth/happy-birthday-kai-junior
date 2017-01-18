@@ -16,12 +16,14 @@ public class RigidbodySleepCheck : MonoBehaviour {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 	}
 	
-	private void Update () {
-		if (!rb.IsSleeping() && !knockedOver && rb.velocity.magnitude > 2) {
-      print(rb.transform.name + " isn't sleeping!");
-      knockedOver = true;
-      DataManager.Points += points;
-      hudManager.ScoreChange();
+	private void OnCollisionStay (Collision other) {
+    if (other.transform.name == "Sphere") {
+  		if (!rb.IsSleeping() && !knockedOver && rb.velocity.magnitude > 2) {
+        knockedOver = true;
+        DataManager.Points += points;
+        hudManager.ScoreChange();
+      }      
     }
 	}
+
 }
