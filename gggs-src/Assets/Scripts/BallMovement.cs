@@ -33,8 +33,8 @@ public class BallMovement : MonoBehaviour {
 
   private void FixedUpdate() {
     if (dir != Vector3.zero) {
-      rb.AddTorque(dir.x * 100 * speed * -cam.transform.forward);
-      rb.AddTorque(dir.y * 100 * speed * cam.transform.right);    
+      rb.AddForce(dir.x * 1 * speed * cam.transform.right);
+      rb.AddForce(dir.y * 1 * speed * cam.transform.forward);
     }
   }
 }
