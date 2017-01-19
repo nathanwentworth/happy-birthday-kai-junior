@@ -11,6 +11,7 @@ public class BallMovement : MonoBehaviour {
   private Transform cam;
   [SerializeField]
   private float speed;
+  private bool allowControl;
 
   private Controls controls;
 
@@ -24,6 +25,8 @@ public class BallMovement : MonoBehaviour {
 	private void Start () {
     player = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody>();
+
+    allowControl = true;
 	}
 	
 	private void Update () {
@@ -32,7 +35,7 @@ public class BallMovement : MonoBehaviour {
 	}
 
   private void FixedUpdate() {
-    if (dir != Vector3.zero) {
+    if (dir != Vector3.zero && allowControl) {
       rb.AddForce(dir.x * 1 * speed * cam.transform.right);
       rb.AddForce(dir.y * 1 * speed * cam.transform.forward);
     }

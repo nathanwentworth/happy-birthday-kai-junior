@@ -6,11 +6,11 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
   private Rigidbody rb;
   private bool knockedOver;
-  [SerializeField]
   private int points;
   private HUDManager hudManager;
 
 	private void Start () {
+    points = GetComponent<ObjectDataContainer>().ObjectPoints;
     knockedOver = false;
 		rb = GetComponent<Rigidbody>();
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
@@ -19,11 +19,18 @@ public class RigidbodySleepCheck : MonoBehaviour {
 	private void OnCollisionStay (Collision other) {
     if (other.gameObject.GetComponent<Rigidbody>() != null) {
   		if (!rb.IsSleeping() && !knockedOver && rb.velocity.magnitude > 2) {
-        Debug.Log(other.gameObject.name);
         knockedOver = true;
-        DataManager.Points += points;
+        DataManager.Score += points;
         hudManager.ScoreChange();
-      }      
+
+        if (DataManager.Score >= DataManager.HighScore) {
+          print ("new high score!");
+          DataManager.UpdateHighScore();
+          hudManager.HighScoreChange();
+        }
+
+        this.enabled = false;
+      }
     }
 	}
 
