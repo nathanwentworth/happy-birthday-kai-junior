@@ -34,10 +34,16 @@ public class Timer : MonoBehaviour {
       DataManager.AllowControl = false;
       DataManager.GameOver = true;
 
-      string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
-
-      hudManager.OverlayText(gameOverText);
+      StartCoroutine(GameOverDelay());
     }
+  }
+
+  private IEnumerator GameOverDelay() {
+    yield return new WaitForSeconds(3);
+
+    string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
+
+    hudManager.OverlayText(gameOverText);
   }
 
 }
