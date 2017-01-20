@@ -37,8 +37,11 @@ public class BallMovement : MonoBehaviour {
 
   private void FixedUpdate() {
     if (dir != Vector3.zero && DataManager.AllowControl) {
-      rb.AddForce(dir.x * 1 * speed * cam.transform.right);
-      rb.AddForce(dir.y * 1 * speed * cam.transform.forward);
+      rb.AddForce(dir.x * speed * cam.transform.right);
+      rb.AddForce(dir.y * speed * cam.transform.forward);
+
+      print ("forward " + cam.transform.forward);
+      print ("right " + cam.transform.right);
     }
   }
 }
