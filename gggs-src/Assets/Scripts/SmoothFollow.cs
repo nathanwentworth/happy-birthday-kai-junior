@@ -12,7 +12,11 @@ public class SmoothFollow : MonoBehaviour {
   public float rotationSpeed = 3.0f;
   private Vector3 targetVector;
 
-  void FixedUpdate () {
+  private void Awake() {
+    target = GameObject.FindWithTag("Player").GetComponent<Transform>();
+  }
+
+  private void FixedUpdate () {
     if (!target) return;
 
     transform.position = new Vector3(

@@ -7,6 +7,17 @@ public class GameFunctions : MonoBehaviour {
 
   private Controls controls;
 
+  [SerializeField]
+  private Weapon selectedWeapon;
+
+  [SerializeField]
+  private GameObject[] weapons;
+
+  private enum Weapon {
+    Ball,
+    Cannon
+  }
+
   private void OnEnable() {
     controls = Controls.DefaultBindings();
   }
@@ -14,6 +25,9 @@ public class GameFunctions : MonoBehaviour {
   private void Awake() {
     DataManager.GameOver = false;
     DataManager.Score = 0;
+
+
+    GameObject.Instantiate(weapons[(int)selectedWeapon]);
   }
 
 	private void Update () {

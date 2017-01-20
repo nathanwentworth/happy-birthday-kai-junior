@@ -7,7 +7,6 @@ public class BallMovement : MonoBehaviour {
   private Transform player;
   private Rigidbody rb;
 
-  [SerializeField]
   private Transform cam;
   [SerializeField]
   private float speed;
@@ -20,15 +19,20 @@ public class BallMovement : MonoBehaviour {
     controls = Controls.DefaultBindings();
   }
 
+  private void Awake() {
+    GameObject camObj = GameObject.Find("Main Camera");
+    cam = camObj.transform;
+  }
 
-	private void Start () {
+
+	private void Start() {
     player = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody>();
 
     DataManager.AllowControl = true;
 	}
 	
-	private void Update () {
+	private void Update() {
 		dir = controls.Move;
 	}
 
