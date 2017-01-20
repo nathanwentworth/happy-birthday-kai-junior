@@ -12,8 +12,11 @@ public class SmoothFollow : MonoBehaviour {
   public float rotationSpeed = 3.0f;
   private Vector3 targetVector;
 
+  private string targetName;
+
   private void Awake() {
     target = GameObject.FindWithTag("Player").GetComponent<Transform>();
+    targetName = target.name;
   }
 
   private void FixedUpdate () {
@@ -22,13 +25,28 @@ public class SmoothFollow : MonoBehaviour {
     transform.position = new Vector3(
       Mathf.Lerp(transform.position.x, target.transform.position.x + xOffset, Time.deltaTime * speed),
       Mathf.Lerp(transform.position.y, target.transform.position.y + yOffset, Time.deltaTime * speed),
-      Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed));
+      Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed)
+    );
 
-    // float wantedRotationAngle = target.eulerAngles.y;
-    float currentRotationAngle = transform.eulerAngles.y;
-    // currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationSpeed * Time.deltaTime);
 
-    var currentRotation = Quaternion.Euler(45, currentRotationAngle, 0);
+    float wantedRotationAngleY = target.eulerAngles.y;
+    float wantedRotationAngleX = target.eulerAngles.x;
+    // wantedRotationAngleY = target.eulerAngles.y
+    float currentRotationAngleY = transform.eulerAngles.y;
+    float currentRotationAngleX = transform.eulerAngles.x;
+    // currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
+
+    if (targetName == "Ball") {
+
+    } else if (targetName == "Cannon(Clone)") {
+      wantedRotationAngleY = target.eulerAngles.y - 180;
+      wantedRotationAngleX = -(target.eulerAngles.x - 15);
+      currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
+      currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
+    }
+
+
+    var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
     transform.rotation = currentRotation;
     transform.position += currentRotation * Vector3.forward * zOffset;
   }

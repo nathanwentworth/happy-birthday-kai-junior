@@ -34,11 +34,11 @@ public class CannonLaunch : MonoBehaviour {
       cannonBallInst.transform.position = spawnPoint.transform.position;
       cannonBallInst.transform.rotation = spawnPoint.transform.rotation;
       cannonBallInst.SetActive(true);
-      cannonBallInst.GetComponent<Rigidbody>().AddForce(-Vector3.forward * 1000);
+      cannonBallInst.GetComponent<Rigidbody>().AddForce(-cannonBallInst.transform.forward * 1000);
     }
 	}
 
   private void FixedUpdate() {
-    gameObject.transform.Rotate(0, dir.x * Time.deltaTime * 10, dir.y * Time.deltaTime * 10);
+    gameObject.transform.Rotate(dir.y * Time.deltaTime * 10, dir.x * Time.deltaTime * 10, 0);
   }
 }
