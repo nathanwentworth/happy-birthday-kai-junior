@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -8,7 +9,10 @@ public class SaveLoad : MonoBehaviour {
 	
 	public static SaveLoad saveLoad;
 	
-	public int highScore { get; set; }
+	private int highScore { get; set; }
+	private int cumulativeScore { get; set; }
+
+	private List<string> itemsOwned { get; set; }
 	
 	private void Awake() {
 		if (saveLoad == null) {
@@ -31,24 +35,29 @@ public class SaveLoad : MonoBehaviour {
 	
 	public void Save() {
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
+		FileStream file = File.Create(Application.persistentDataPath + "/save.dat");
 
 		highScore = DataManager.HighScore;
+		cumulativeScore = DataManager.CumulativeScore;
 		
 		PlayerData data = new PlayerData();
 		data.highScore = highScore;
+		data.cumulativeScore = cumulativeScore;
 		
 		bf.Serialize(file, data);
 		file.Close();	
 	}
 	
 	public void Load() {
-		if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
+		if (File.Exists(Application.persistentDataPath + "/save.dat")) {
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+			FileStream file = File.Open(Application.persistentDataPath + "/save.dat", FileMode.Open);
 			PlayerData data = (PlayerData)bf.Deserialize(file);
 			file.Close();
-			
+
+			cumulativeScore = data.cumulativeScore;
+			DataManager.CumulativeScore = cumulativeScore;
+
 			highScore = data.highScore;
 			DataManager.HighScore = highScore;
 		}
@@ -58,4 +67,8 @@ public class SaveLoad : MonoBehaviour {
 [Serializable]
 class PlayerData {
 	public int highScore;
+	public int cumulativeScore;
+
+	public List<string> itemsOwned;
+
 }

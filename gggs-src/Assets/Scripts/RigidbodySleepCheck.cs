@@ -20,8 +20,12 @@ public class RigidbodySleepCheck : MonoBehaviour {
     if (other.gameObject.GetComponent<Rigidbody>() != null) {
   		if (!rb.IsSleeping() && !knockedOver && rb.velocity.magnitude > 2) {
         knockedOver = true;
+        Renderer rend = GetComponent<Renderer>();
+        rend.material.color = Color.black;
         DataManager.Score += points;
+        DataManager.CumulativeScore += points;
         hudManager.ScoreChange();
+        hudManager.CumulativeScoreChange();
 
         if (DataManager.Score >= DataManager.HighScore) {
           print ("new high score!");

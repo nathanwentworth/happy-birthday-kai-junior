@@ -10,6 +10,8 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private Text highScoreText;
   [SerializeField]
+  private Text cumulativeScoreText;
+  [SerializeField]
   private Text timerText;
   [SerializeField]
   private Text overlayText;
@@ -21,7 +23,14 @@ public class HUDManager : MonoBehaviour {
   private void Start() {
     ScoreChange();
     HighScoreChange();
+    CumulativeScoreChange();
     HideOverlay();
+  }
+
+  public void UpdateScoreDisplays() {
+    ScoreChange();
+    HighScoreChange();
+    CumulativeScoreChange();    
   }
 
   public void ScoreChange() {
@@ -30,6 +39,10 @@ public class HUDManager : MonoBehaviour {
 
   public void HighScoreChange() {
     highScoreText.text = "High Score: " + DataManager.HighScore;
+  }
+
+  public void CumulativeScoreChange() {
+    cumulativeScoreText.text = "Cumulative Score: " + DataManager.CumulativeScore;
   }
 
   public void TimerChange(float t) {

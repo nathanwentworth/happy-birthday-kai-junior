@@ -15,9 +15,10 @@ public static class DataManager {
       if (score > highScore) highScore = score;
     }
   }
+
   public static int HighScore { get { return highScore; } set { highScore = value; } }
   public static bool NewHighScore { get; set; }
-  public static int CumulativeScore { get { return highScore; } set { highScore = value; } }
+  public static int CumulativeScore { get; set; }
 
   public static bool AllowControl { get; set; }
   public static bool GameOver { get; set; }

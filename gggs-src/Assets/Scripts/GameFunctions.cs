@@ -18,8 +18,6 @@ public class GameFunctions : MonoBehaviour {
 
 	private void Update () {
 
-    Debug.Log("is the return key being pressed: " + controls.Confirm.WasPressed);
-
     if (controls.Interact.WasPressed) {
       DataManager.ResetHighScore();
     }
