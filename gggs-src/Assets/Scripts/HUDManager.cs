@@ -11,10 +11,17 @@ public class HUDManager : MonoBehaviour {
   private Text highScoreText;
   [SerializeField]
   private Text timerText;
+  [SerializeField]
+  private Text overlayText;
+
+
+  [SerializeField]
+  private GameObject overlayPanel;
 
   private void Start() {
     ScoreChange();
     HighScoreChange();
+    HideOverlay();
   }
 
   public void ScoreChange() {
@@ -27,5 +34,15 @@ public class HUDManager : MonoBehaviour {
 
   public void TimerChange(float t) {
     timerText.text = "Time Left: " + t;
+  }
+
+  public void OverlayText(string text) {
+    if (!overlayPanel.activeSelf) overlayPanel.SetActive(true);
+
+    overlayText.text = text;
+  }
+
+  public void HideOverlay() {
+    overlayPanel.SetActive(false);
   }
 }

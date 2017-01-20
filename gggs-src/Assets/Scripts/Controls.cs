@@ -5,6 +5,7 @@ public class Controls : PlayerActionSet
 {
   public PlayerAction Jump;
   public PlayerAction Interact;
+  public PlayerAction Confirm;
   public PlayerAction Pause;
   public PlayerAction ToggleLook;
   public PlayerAction Left;
@@ -21,6 +22,7 @@ public class Controls : PlayerActionSet
   {
     Jump = CreatePlayerAction( "Jump" );
     Interact = CreatePlayerAction( "Interact" );
+    Confirm = CreatePlayerAction( "Confirm" );
     Pause = CreatePlayerAction( "Pause" );
     ToggleLook = CreatePlayerAction( "Toggle Look" );
     Left = CreatePlayerAction( "Move Left" );
@@ -43,6 +45,9 @@ public class Controls : PlayerActionSet
 
     controls.Interact.AddDefaultBinding( Key.E );
     controls.Interact.AddDefaultBinding( InputControlType.Action2 );
+
+    controls.Confirm.AddDefaultBinding( Key.Return );
+    controls.Confirm.AddDefaultBinding( InputControlType.Action2 );
 
     controls.Pause.AddDefaultBinding( Key.Escape );
     controls.Pause.AddDefaultBinding( InputControlType.Command );

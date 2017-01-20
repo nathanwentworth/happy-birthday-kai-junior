@@ -6,10 +6,13 @@ public class Timer : MonoBehaviour {
 
   private HUDManager hudManager;
 
-  private void Start() {
+  [SerializeField]
+  private float defaultTime;
+
+  private void Awake() {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 
-    StartTimer(30f);
+    StartTimer(defaultTime);
   }
 
   public void StartTimer(float totalTime) {
@@ -20,11 +23,21 @@ public class Timer : MonoBehaviour {
     float time = totalTime;
     while (time > 0) {
       time -= Time.deltaTime;
+      
       hudManager.TimerChange(time);
       yield return null;
     }
 
-    if (time <= 0) time = 0;
+    if (time <= 0) {
+      time = 0;
+      hudManager.TimerChange(time);
+      DataManager.AllowControl = false;
+      DataManager.GameOver = true;
+
+      string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
+
+      hudManager.OverlayText(gameOverText);
+    }
   }
 
 }

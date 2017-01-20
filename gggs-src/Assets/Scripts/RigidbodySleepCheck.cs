@@ -25,7 +25,8 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
         if (DataManager.Score >= DataManager.HighScore) {
           print ("new high score!");
-          DataManager.UpdateHighScore();
+          DataManager.NewHighScore = true;
+          // DataManager.UpdateHighScore();
           hudManager.HighScoreChange();
         }
 

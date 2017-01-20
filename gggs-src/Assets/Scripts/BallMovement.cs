@@ -11,7 +11,6 @@ public class BallMovement : MonoBehaviour {
   private Transform cam;
   [SerializeField]
   private float speed;
-  private bool allowControl;
 
   private Controls controls;
 
@@ -26,16 +25,15 @@ public class BallMovement : MonoBehaviour {
     player = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody>();
 
-    allowControl = true;
+    DataManager.AllowControl = true;
 	}
 	
 	private void Update () {
 		dir = controls.Move;
-
 	}
 
   private void FixedUpdate() {
-    if (dir != Vector3.zero && allowControl) {
+    if (dir != Vector3.zero && DataManager.AllowControl) {
       rb.AddForce(dir.x * 1 * speed * cam.transform.right);
       rb.AddForce(dir.y * 1 * speed * cam.transform.forward);
     }
