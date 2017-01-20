@@ -29,7 +29,6 @@ public class BallMovement : MonoBehaviour {
     player = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody>();
 
-    DataManager.AllowControl = true;
 	}
 	
 	private void Update() {

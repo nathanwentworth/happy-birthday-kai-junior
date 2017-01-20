@@ -29,16 +29,24 @@ public class CannonLaunch : MonoBehaviour {
 
     dir = controls.Move;
 
-		if (controls.Jump.WasPressed) {
-      cannonBallInst.GetComponent<Rigidbody>().velocity = Vector3.zero;
-      cannonBallInst.transform.position = spawnPoint.transform.position;
-      cannonBallInst.transform.rotation = spawnPoint.transform.rotation;
-      cannonBallInst.SetActive(true);
-      cannonBallInst.GetComponent<Rigidbody>().AddForce(-cannonBallInst.transform.forward * 1000);
+    if (controls.Jump.WasPressed && DataManager.AllowControl) {
+      FireCannon();
     }
+
+		
 	}
 
   private void FixedUpdate() {
-    gameObject.transform.Rotate(dir.y * Time.deltaTime * 10, dir.x * Time.deltaTime * 10, 0);
+    if (DataManager.AllowControl) {
+      gameObject.transform.Rotate(dir.y * Time.deltaTime * 10, dir.x * Time.deltaTime * 10, 0);
+    }
+  }
+
+  private void FireCannon() {
+    cannonBallInst.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    cannonBallInst.transform.position = spawnPoint.transform.position;
+    cannonBallInst.transform.rotation = spawnPoint.transform.rotation;
+    cannonBallInst.SetActive(true);
+    cannonBallInst.GetComponent<Rigidbody>().AddForce(-cannonBallInst.transform.forward * 1000);
   }
 }

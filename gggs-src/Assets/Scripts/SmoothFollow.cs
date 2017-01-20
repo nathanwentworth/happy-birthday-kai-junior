@@ -37,8 +37,21 @@ public class SmoothFollow : MonoBehaviour {
     // currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
 
     if (targetName == "Ball") {
+      transform.position = new Vector3(
+        Mathf.Lerp(transform.position.x, target.transform.position.x + xOffset, Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.y, target.transform.position.y + yOffset, Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed)
+      );
 
     } else if (targetName == "Cannon(Clone)") {
+
+      transform.position = new Vector3(
+        Mathf.Lerp(transform.position.x, target.transform.position.x + xOffset, Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.y, target.transform.position.y + (yOffset + 3f), Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.z, target.transform.position.z + (zOffset - 0.5f), Time.deltaTime * speed)
+      );
+
+
       wantedRotationAngleY = target.eulerAngles.y - 180;
       wantedRotationAngleX = -(target.eulerAngles.x - 15);
       currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
