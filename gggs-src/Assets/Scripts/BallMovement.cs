@@ -20,7 +20,7 @@ public class BallMovement : MonoBehaviour {
   }
 
   private void Awake() {
-    GameObject camObj = GameObject.Find("Main Camera");
+    GameObject camObj = GameObject.Find("CameraRelativePos");
     cam = camObj.transform;
   }
 
@@ -40,8 +40,9 @@ public class BallMovement : MonoBehaviour {
       rb.AddForce(dir.x * speed * cam.transform.right);
       rb.AddForce(dir.y * speed * cam.transform.forward);
 
-      print ("forward " + cam.transform.forward);
-      print ("right " + cam.transform.right);
+      // forward needs a flat thing! child an object under the camera that is always 0,0,0 for rotation
+
+      print ("velo " + rb.velocity.magnitude);
     }
   }
 }
