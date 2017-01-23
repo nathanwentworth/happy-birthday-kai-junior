@@ -21,6 +21,7 @@ public static class DataManager {
   public static int CumulativeScore { get; set; }
 
   public static bool AllowControl { get; set; }
+  public static bool Paused { get; set; }
   public static bool GameOver { get; set; }
 
   public static List<LevelData> levels { get; private set; }

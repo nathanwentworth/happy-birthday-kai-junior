@@ -19,11 +19,14 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private GameObject overlayPanel;
+  [SerializeField]
+  private GameObject pausePanel;
 
   private void Start() {
     ScoreChange();
     HighScoreChange();
     CumulativeScoreChange();
+    PausePanelDisplay(false);
   }
 
   public void UpdateScoreDisplays() {
@@ -56,5 +59,9 @@ public class HUDManager : MonoBehaviour {
 
   public void HideOverlay() {
     overlayPanel.SetActive(false);
+  }
+
+  public void PausePanelDisplay(bool paused) {
+    pausePanel.SetActive(paused);
   }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameFunctions : MonoBehaviour {
 
   private Controls controls;
+  private HUDManager hudManager;
 
   [SerializeField]
   private Weapon selectedWeapon;
@@ -23,6 +24,7 @@ public class GameFunctions : MonoBehaviour {
   }
 
   private void Awake() {
+    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
     DataManager.GameOver = false;
     DataManager.Score = 0;
 
@@ -35,6 +37,9 @@ public class GameFunctions : MonoBehaviour {
     if (controls.Interact.WasPressed) {
       DataManager.ResetHighScore();
     }
+    if (controls.Pause.WasPressed) {
+      Pause();
+    }
     if (controls.Confirm.WasPressed && DataManager.GameOver) {
       DataManager.GameOver = false;
       Debug.Log("Reloading scene: " + SceneManager.GetActiveScene().name);
@@ -42,4 +47,11 @@ public class GameFunctions : MonoBehaviour {
     }
 	
 	}
+
+  public void Pause() {
+    DataManager.Paused = !DataManager.Paused;
+    bool paused = DataManager.Paused;
+    Time.timeScale = (paused) ? 0.000001f : 1f;
+    hudManager.PausePanelDisplay(paused);
+  }
 }
