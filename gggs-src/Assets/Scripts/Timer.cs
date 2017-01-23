@@ -7,16 +7,21 @@ public class Timer : MonoBehaviour {
   private HUDManager hudManager;
 
   [SerializeField]
-  private float defaultTime;
+  private float gameTime;
+  [SerializeField]
+  private float countDownTime;
 
   private void Awake() {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 
-    StartTimer(defaultTime);
+    DataManager.AllowControl = false;
+
+    StartCoroutine(CountDownTimer(countDownTime));
   }
 
   public void StartTimer(float totalTime) {
     StartCoroutine(TimerCoroutine(totalTime));
+    DataManager.AllowControl = true;
   }
 
   private IEnumerator TimerCoroutine(float totalTime) {
@@ -24,7 +29,7 @@ public class Timer : MonoBehaviour {
     while (time > 0) {
       time -= Time.deltaTime;
       
-      hudManager.TimerChange(time);
+      hudManager.TimerChange(Mathf.Round(time));
       yield return null;
     }
 
@@ -44,6 +49,21 @@ public class Timer : MonoBehaviour {
     string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
 
     hudManager.OverlayText(gameOverText);
+  }
+
+  private IEnumerator CountDownTimer(float countDownTime) {
+    hudManager.OverlayText("");
+    yield return new WaitForSeconds(1);
+    float time = countDownTime;
+    while (time > 0) {
+      time -= Time.deltaTime;
+
+      hudManager.OverlayText(Mathf.Round(time) + "");
+      yield return null;
+    }
+
+    hudManager.HideOverlay();
+    StartTimer(gameTime);
   }
 
 }

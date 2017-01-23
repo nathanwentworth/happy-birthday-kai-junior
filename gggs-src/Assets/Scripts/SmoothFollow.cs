@@ -4,6 +4,7 @@ using System.Collections;
 public class SmoothFollow : MonoBehaviour {
     
   public Transform target;
+  private Rigidbody targetRb;
   public float speed = 3f;
 
   public float xOffset = 0f;
@@ -16,17 +17,18 @@ public class SmoothFollow : MonoBehaviour {
 
   private void Awake() {
     target = GameObject.FindWithTag("Player").GetComponent<Transform>();
+    targetRb = target.GetComponent<Rigidbody>();
     targetName = target.name;
   }
 
   private void FixedUpdate () {
     if (!target) return;
 
-    transform.position = new Vector3(
-      Mathf.Lerp(transform.position.x, target.transform.position.x + xOffset, Time.deltaTime * speed),
-      Mathf.Lerp(transform.position.y, target.transform.position.y + yOffset, Time.deltaTime * speed),
-      Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed)
-    );
+    // transform.position = new Vector3(
+    //   Mathf.Lerp(transform.position.x, target.transform.position.x + xOffset, Time.deltaTime * speed),
+    //   Mathf.Lerp(transform.position.y, target.transform.position.y + yOffset, Time.deltaTime * speed),
+    //   Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed)
+    // );
 
 
     float wantedRotationAngleY = target.eulerAngles.y;
@@ -36,12 +38,19 @@ public class SmoothFollow : MonoBehaviour {
     float currentRotationAngleX = transform.eulerAngles.x;
     // currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
 
-    if (targetName == "Ball") {
+    if (targetName == "Ball(Clone)") {
       transform.position = new Vector3(
         Mathf.Lerp(transform.position.x, target.transform.position.x + xOffset, Time.deltaTime * speed),
         Mathf.Lerp(transform.position.y, target.transform.position.y + yOffset, Time.deltaTime * speed),
         Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed)
       );
+
+
+
+      // transform.rotation = Quaternion.LookRotation(targetRb.velocity.normalized);
+      Debug.Log(Quaternion.LookRotation(targetRb.velocity.normalized));
+
+
 
     } else if (targetName == "Cannon(Clone)") {
 
@@ -56,11 +65,11 @@ public class SmoothFollow : MonoBehaviour {
       wantedRotationAngleX = -(target.eulerAngles.x - 15);
       currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
       currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
+      var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
+      transform.rotation = currentRotation;
+
     }
 
-
-    var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
-    transform.rotation = currentRotation;
-    transform.position += currentRotation * Vector3.forward * zOffset;
+    transform.position += transform.rotation * Vector3.forward * zOffset;
   }
 }

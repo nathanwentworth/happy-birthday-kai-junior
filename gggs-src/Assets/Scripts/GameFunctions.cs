@@ -25,7 +25,6 @@ public class GameFunctions : MonoBehaviour {
   private void Awake() {
     DataManager.GameOver = false;
     DataManager.Score = 0;
-    DataManager.AllowControl = true;
 
 
     GameObject.Instantiate(weapons[(int)selectedWeapon]);

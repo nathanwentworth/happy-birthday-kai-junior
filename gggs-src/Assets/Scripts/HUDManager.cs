@@ -24,13 +24,12 @@ public class HUDManager : MonoBehaviour {
     ScoreChange();
     HighScoreChange();
     CumulativeScoreChange();
-    HideOverlay();
   }
 
   public void UpdateScoreDisplays() {
     ScoreChange();
     HighScoreChange();
-    CumulativeScoreChange();    
+    CumulativeScoreChange();
   }
 
   public void ScoreChange() {

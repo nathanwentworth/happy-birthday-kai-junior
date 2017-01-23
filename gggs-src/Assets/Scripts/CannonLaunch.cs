@@ -8,8 +8,12 @@ public class CannonLaunch : MonoBehaviour {
   private GameObject cannonBall;
   [SerializeField]
   private GameObject spawnPoint;
+  [SerializeField]
+  private int numBalls;
 
   private GameObject cannonBallInst;
+  private List<GameObject> cannonBalls;
+  private bool allowFire = true;
 
   private Controls controls;
 
@@ -20,16 +24,22 @@ public class CannonLaunch : MonoBehaviour {
     controls = Controls.DefaultBindings();
   }
 
-	private void Start () {
-		cannonBallInst = GameObject.Instantiate(cannonBall);
-    cannonBallInst.SetActive(false);
-	}
-	
-  private	void Update () {
+  private void Awake() {
+
+    cannonBalls = new List<GameObject>();
+
+    for (int i = 0; i < numBalls; i++) {
+      cannonBallInst = GameObject.Instantiate(cannonBall);
+      cannonBallInst.SetActive(false);
+      cannonBalls.Add(cannonBallInst);
+    }
+  }
+
+  private	void Update() {
 
     dir = controls.Move;
 
-    if (controls.Jump.WasPressed && DataManager.AllowControl) {
+    if (controls.Jump.WasPressed && DataManager.AllowControl && allowFire) {
       FireCannon();
     }
 
@@ -43,10 +53,27 @@ public class CannonLaunch : MonoBehaviour {
   }
 
   private void FireCannon() {
-    cannonBallInst.GetComponent<Rigidbody>().velocity = Vector3.zero;
-    cannonBallInst.transform.position = spawnPoint.transform.position;
-    cannonBallInst.transform.rotation = spawnPoint.transform.rotation;
-    cannonBallInst.SetActive(true);
-    cannonBallInst.GetComponent<Rigidbody>().AddForce(-cannonBallInst.transform.forward * 1000);
+    for (int i = 0; i < cannonBalls.Count; i++) {
+      if (!cannonBalls[i].activeInHierarchy) {
+        cannonBalls[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+        cannonBalls[i].transform.position = spawnPoint.transform.position;
+        cannonBalls[i].transform.rotation = spawnPoint.transform.rotation;
+        cannonBalls[i].SetActive(true);
+        cannonBalls[i].GetComponent<Rigidbody>().AddForce(-cannonBalls[i].transform.forward * 1000);
+
+        allowFire = false;
+        StartCoroutine(AllowFireTimer());
+
+        return;
+      }
+    }
+
   }
+
+private IEnumerator AllowFireTimer() {
+  yield return new WaitForSeconds(0.5f);
+  allowFire = true;
+}
+
+  
 }
