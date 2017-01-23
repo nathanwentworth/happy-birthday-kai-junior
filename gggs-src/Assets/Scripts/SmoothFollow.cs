@@ -3,8 +3,11 @@ using System.Collections;
 
 public class SmoothFollow : MonoBehaviour {
     
-  public Transform target;
+  private Transform target;
   private Rigidbody targetRb;
+
+  private Transform camera;
+
   public float speed = 3f;
 
   public float xOffset = 0f;
@@ -14,11 +17,16 @@ public class SmoothFollow : MonoBehaviour {
   private Vector3 targetVector;
 
   private string targetName;
+  private Controls controls;
+
+  private void OnEnable() {
+    controls = Controls.DefaultBindings();
+  }
 
   private void Awake() {
-    target = GameObject.FindWithTag("Player").GetComponent<Transform>();
-    targetRb = target.GetComponent<Rigidbody>();
-    targetName = target.name;
+    camera = GameObject.Find("Main Camera").GetComponent<Transform>();
+
+    StartCoroutine(FindPlayer());
   }
 
   private void FixedUpdate () {
@@ -45,10 +53,14 @@ public class SmoothFollow : MonoBehaviour {
         Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed)
       );
 
-
+      wantedRotationAngleY = transform.eulerAngles.y;
+      wantedRotationAngleY += controls.Look * 100;
+      currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
+      var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
+      transform.rotation = currentRotation;
 
       // transform.rotation = Quaternion.LookRotation(targetRb.velocity.normalized);
-      Debug.Log(Quaternion.LookRotation(targetRb.velocity.normalized));
+
 
 
 
@@ -71,5 +83,21 @@ public class SmoothFollow : MonoBehaviour {
     }
 
     transform.position += transform.rotation * Vector3.forward * zOffset;
+  }
+
+  private IEnumerator FindPlayer() {
+    var checks = 0;
+    while (target == null && checks < 10) {
+      if (GameObject.FindWithTag("Player") != null) {
+        target = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        targetRb = target.GetComponent<Rigidbody>();
+        targetName = target.name;    
+      } else {
+        Debug.LogError("Can't find player");
+      }
+
+      yield return null;
+    }
+
   }
 }

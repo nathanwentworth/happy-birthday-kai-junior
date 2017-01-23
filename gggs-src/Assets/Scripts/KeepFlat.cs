@@ -5,7 +5,8 @@ using UnityEngine;
 public class KeepFlat : MonoBehaviour {
 	
 	private void FixedUpdate () {
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.identity, Time.deltaTime * 100);
+    Quaternion rot = Quaternion.Euler(0, transform.rotation.y, 0);
+		transform.rotation = rot;
 	}
 
 }
