@@ -10,11 +10,15 @@ public static class DataManager {
   public static int Score {
     get {
       return score;
-    } set {
+    }
+    set {
       score = value;
       if (score > highScore) highScore = score;
     }
   }
+
+
+  public static Weapon SelectedWeapon { get; set; }
 
   public static int HighScore { get { return highScore; } set { highScore = value; } }
   public static bool NewHighScore { get; set; }
@@ -35,15 +39,8 @@ public static class DataManager {
   }
 
   public static void SetLevelData() {
-
-
-
     
   }
-
-
-
-
 
   public static void Save() {
 
@@ -61,4 +58,9 @@ public class LevelData {
   public string levelName;
   public int scoreGoal;
 
+}
+
+public enum Weapon {
+  Ball,
+  Cannon
 }

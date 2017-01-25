@@ -36,10 +36,6 @@ public class SmoothFollow : MonoBehaviour {
     StartCoroutine(FindPlayer());
   }
 
-  private void Start() {
-    
-  }
-
   private void FixedUpdate() {
     if (!followTarget) return;
     else if (!playerTarget) return;

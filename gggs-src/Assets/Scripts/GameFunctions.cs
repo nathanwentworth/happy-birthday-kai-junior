@@ -8,25 +8,27 @@ public class GameFunctions : MonoBehaviour {
   private Controls controls;
   private HUDManager hudManager;
 
-  [SerializeField]
+  // [SerializeField]
   private Weapon selectedWeapon;
 
   [SerializeField]
   private GameObject[] weapons;
-
-  private enum Weapon {
-    Ball,
-    Cannon
-  }
 
   private void OnEnable() {
     controls = Controls.DefaultBindings();
   }
 
   private void Awake() {
-    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    if (hudManager == null) {
+      hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    }
+    Debug.Log("timescale is now " + Time.timeScale);
+    if (DataManager.Paused) {
+      Pause();
+    }
     DataManager.GameOver = false;
     DataManager.Score = 0;
+    selectedWeapon = DataManager.SelectedWeapon;
 
 
     GameObject.Instantiate(weapons[(int)selectedWeapon]);

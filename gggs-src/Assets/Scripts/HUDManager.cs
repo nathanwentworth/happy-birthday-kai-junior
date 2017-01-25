@@ -2,31 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour {
 
-  [SerializeField]
   private Text scoreText;
-  [SerializeField]
   private Text highScoreText;
-  [SerializeField]
   private Text cumulativeScoreText;
-  [SerializeField]
   private Text timerText;
-  [SerializeField]
   private Text overlayText;
 
 
-  [SerializeField]
   private GameObject overlayPanel;
-  [SerializeField]
   private GameObject pausePanel;
+
+  private void Awake() {
+
+    scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+    highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
+    cumulativeScoreText = GameObject.Find("CumulativeScoreText").GetComponent<Text>();
+    timerText = GameObject.Find("TimerText").GetComponent<Text>();
+    overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
+
+    overlayPanel = GameObject.Find("OverlayPanel").gameObject;
+    pausePanel = GameObject.Find("PausePanel").gameObject;
+
+  }
 
   private void Start() {
     ScoreChange();
     HighScoreChange();
     CumulativeScoreChange();
-    PausePanelDisplay(false);
   }
 
   public void UpdateScoreDisplays() {
@@ -52,7 +58,7 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void OverlayText(string text) {
-    if (!overlayPanel.activeSelf) overlayPanel.SetActive(true);
+    if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) overlayPanel.GetComponent<CanvasGroup>().alpha = 1;
 
     overlayText.text = text;
   }
@@ -62,6 +68,15 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void PausePanelDisplay(bool paused) {
-    pausePanel.SetActive(paused);
+    if (pausePanel == null) {
+      pausePanel = GameObject.Find("PausePanel").gameObject;
+    }
+    Debug.Log("object called in pause display: " + pausePanel);
+    pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
   }
+
+  public void LoadScene(string scene) {
+    SceneManager.LoadScene(scene);
+  }
+
 }
