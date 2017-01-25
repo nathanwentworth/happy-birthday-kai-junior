@@ -42,6 +42,7 @@ public class SmoothFollow : MonoBehaviour {
 
   private void FixedUpdate() {
     if (!followTarget) return;
+    else if (!playerTarget) return;
 
     Follow();
     Rotate();
