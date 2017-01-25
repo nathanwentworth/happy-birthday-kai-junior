@@ -58,13 +58,23 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void OverlayText(string text) {
-    if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) overlayPanel.GetComponent<CanvasGroup>().alpha = 1;
+    if (overlayPanel == null) {
+      overlayPanel = GameObject.Find("PausePanel").gameObject;
+    }
+
+    if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) {
+      overlayPanel.GetComponent<CanvasGroup>().alpha = 1;
+      overlayPanel.GetComponent<CanvasGroup>().interactable = true;
+      overlayPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
 
     overlayText.text = text;
   }
 
   public void HideOverlay() {
-    overlayPanel.SetActive(false);
+    overlayPanel.GetComponent<CanvasGroup>().alpha = 0;
+    overlayPanel.GetComponent<CanvasGroup>().interactable = false;
+    overlayPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
   }
 
   public void PausePanelDisplay(bool paused) {
@@ -73,6 +83,8 @@ public class HUDManager : MonoBehaviour {
     }
     Debug.Log("object called in pause display: " + pausePanel);
     pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
+    pausePanel.GetComponent<CanvasGroup>().interactable = paused;
+    pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = paused;
   }
 
   public void LoadScene(string scene) {
