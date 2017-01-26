@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameFunctions : MonoBehaviour {
 
   private Controls controls;
-  private HUDManager hudManager;
+  private static HUDManager hudManager;
 
   // [SerializeField]
   private Weapon selectedWeapon;
@@ -20,8 +20,11 @@ public class GameFunctions : MonoBehaviour {
 
   private void Awake() {
     if (hudManager == null) {
+      // @REFACTOR
+      // potentially slow. FindObjectOfType is slower than GameObject.Find()
       hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
     }
+
     Debug.Log("timescale is now " + Time.timeScale);
     if (DataManager.Paused) {
       Pause();
@@ -36,12 +39,15 @@ public class GameFunctions : MonoBehaviour {
 
 	private void Update () {
 
+    // @DEBUG
     if (controls.Interact.WasPressed) {
       DataManager.ResetHighScore();
     }
     if (controls.Pause.WasPressed) {
       Pause();
+      
     }
+    // @DEBUG
     if (controls.Confirm.WasPressed && DataManager.GameOver) {
       DataManager.GameOver = false;
       Debug.Log("Reloading scene: " + SceneManager.GetActiveScene().name);
@@ -56,4 +62,6 @@ public class GameFunctions : MonoBehaviour {
     Time.timeScale = (paused) ? 0.000001f : 1f;
     hudManager.PausePanelDisplay(paused);
   }
+
+
 }

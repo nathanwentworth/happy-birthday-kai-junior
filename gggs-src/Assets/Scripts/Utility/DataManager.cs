@@ -38,19 +38,6 @@ public static class DataManager {
     HighScore = 0;
   }
 
-  public static void SetLevelData() {
-    
-  }
-
-  public static void Save() {
-
-  }
-
-  public static void Load() {
-
-  }
-
-
 }
 
 public class LevelData {

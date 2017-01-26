@@ -35,6 +35,9 @@ public class HUDManager : MonoBehaviour {
     CumulativeScoreChange();
   }
 
+  // @DEBUG
+  // @REFACTOR
+  // this can probably be removed?
   public void UpdateScoreDisplays() {
     ScoreChange();
     HighScoreChange();

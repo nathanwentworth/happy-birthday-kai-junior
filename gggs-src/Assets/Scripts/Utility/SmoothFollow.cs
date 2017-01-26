@@ -33,7 +33,10 @@ public class SmoothFollow : MonoBehaviour {
     camera = transform.GetChild(0).GetComponent<Transform>();
     followTarget = transform.root;
 
-    StartCoroutine(FindPlayer());
+    if (playerTarget == null) {
+      StartCoroutine(FindPlayer());
+    }
+
   }
 
   private void FixedUpdate() {
@@ -68,7 +71,7 @@ public class SmoothFollow : MonoBehaviour {
   }
 
   public virtual void Rotate() {
-
+    // overridden by SmoothRotate
   }
 
   private IEnumerator FindPlayer() {
@@ -78,8 +81,6 @@ public class SmoothFollow : MonoBehaviour {
         playerTarget = GameObject.FindWithTag("Player").GetComponent<Transform>();
         playerTargetRb = playerTarget.GetComponent<Rigidbody>();
         playerTargetName = playerTarget.name;    
-      } else {
-        Debug.LogError("Can't find player");
       }
 
       yield return null;
