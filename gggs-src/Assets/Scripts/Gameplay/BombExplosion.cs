@@ -17,7 +17,6 @@ public class BombExplosion : MonoBehaviour {
   private IEnumerator Explode() {
     yield return new WaitForSeconds(3);
     Debug.Log("boom!");
-    // @CONTINUE: this doesn't seem to work???? 
     Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
     for (int i = 0; i < colliders.Length; i++) {
       if (colliders[i].GetComponent<Rigidbody>() != null) {

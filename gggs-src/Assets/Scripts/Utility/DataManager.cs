@@ -28,6 +28,10 @@ public static class DataManager {
   public static bool Paused { get; set; }
   public static bool GameOver { get; set; }
 
+  public static bool ObjectIsStillMoving { get; set; }
+  public static float ObjectMovementThreshold { get; set; }
+
+
   public static List<LevelData> levels { get; private set; }
 
   public static void UpdateHighScore() {

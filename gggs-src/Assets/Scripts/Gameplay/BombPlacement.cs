@@ -16,6 +16,10 @@ public class BombPlacement : MonoBehaviour {
   
   [SerializeField]
   private int numberOfBombs;
+  [SerializeField]
+  private float gameOverTime;
+  [SerializeField]
+  private float cameraChangeTime;
 
   private Controls controls;
 
@@ -48,7 +52,8 @@ public class BombPlacement : MonoBehaviour {
   }
 	
 	private void Update() {
-    RayPositionCheck();  
+    RayPositionCheck();
+    Debug.Log(DataManager.ObjectIsStillMoving);
   }
 
   private void RayPositionCheck() {
@@ -91,10 +96,10 @@ public class BombPlacement : MonoBehaviour {
   }
 
   private IEnumerator CameraChangeDelay() {
-    yield return new WaitForSeconds(1);
+    yield return new WaitForSeconds(cameraChangeTime);
 
 
-    StartCoroutine(timer.GameOverDelay());
+    StartCoroutine(timer.GameOverDelay(gameOverTime));
     firstPersonCamera.enabled = false;
     overheadCamera.enabled = true;
 

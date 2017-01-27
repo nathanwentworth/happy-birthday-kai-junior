@@ -39,12 +39,21 @@ public class Timer : MonoBehaviour {
       DataManager.AllowControl = false;
       DataManager.GameOver = true;
 
-      StartCoroutine(GameOverDelay());
+      StartCoroutine(GameOverDelay(3));
     }
   }
 
-  public IEnumerator GameOverDelay() {
-    yield return new WaitForSeconds(3);
+  public IEnumerator GameOverDelay(float wait) {
+    yield return new WaitForSeconds(wait);
+
+
+    // @REFACTOR: this is just bad lol
+    while (DataManager.ObjectIsStillMoving) {
+      Debug.Log("starting wait for srsats");
+      yield return new WaitForSeconds(1);
+      Debug.Log("after wait fors etcon");
+      // yield return null;
+    }
 
     string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
 

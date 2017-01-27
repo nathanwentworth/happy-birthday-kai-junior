@@ -27,6 +27,9 @@ public class HUDManager : MonoBehaviour {
     overlayPanel = GameObject.Find("OverlayPanel").gameObject;
     pausePanel = GameObject.Find("PausePanel").gameObject;
 
+
+    // @DEBUG
+    // @REFACTOR: this shouldn't even be needed
     HideOverlay();
     PausePanelDisplay(false);
 
