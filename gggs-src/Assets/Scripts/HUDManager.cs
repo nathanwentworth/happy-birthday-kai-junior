@@ -65,6 +65,11 @@ public class HUDManager : MonoBehaviour {
       overlayPanel = GameObject.Find("PausePanel").gameObject;
     }
 
+	if (overlayText == null) {
+			overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
+	}
+
+
     if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) {
       overlayPanel.GetComponent<CanvasGroup>().alpha = 1;
       overlayPanel.GetComponent<CanvasGroup>().interactable = true;
