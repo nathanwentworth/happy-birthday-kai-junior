@@ -12,6 +12,7 @@ public class BombPlacement : MonoBehaviour {
   private Camera firstPersonCamera;
   [SerializeField]
   private Camera overheadCamera;
+  private Timer timer;
   
   [SerializeField]
   private int numberOfBombs;
@@ -28,6 +29,7 @@ public class BombPlacement : MonoBehaviour {
   private void Awake() {
 
     firstPersonCamera = GetComponent<Camera>();
+    timer = FindObjectOfType (typeof (Timer)) as Timer;
 
     firstPersonCamera.enabled = true;
     overheadCamera.enabled = false;
@@ -91,6 +93,8 @@ public class BombPlacement : MonoBehaviour {
   private IEnumerator CameraChangeDelay() {
     yield return new WaitForSeconds(1);
 
+
+    StartCoroutine(timer.GameOverDelay());
     firstPersonCamera.enabled = false;
     overheadCamera.enabled = true;
 

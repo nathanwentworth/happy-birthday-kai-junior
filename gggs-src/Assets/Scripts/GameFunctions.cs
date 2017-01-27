@@ -28,13 +28,20 @@ public class GameFunctions : MonoBehaviour {
     Debug.Log("timescale is now " + Time.timeScale);
     if (DataManager.Paused) {
       Pause();
+      Debug.Log("was paused, now it's not!");
+    } else {
+      Debug.Log("not paused on start!");
     }
     DataManager.GameOver = false;
     DataManager.Score = 0;
     selectedWeapon = DataManager.SelectedWeapon;
 
+    if (SceneManager.GetActiveScene().name.StartsWith("main-test")) {
+      GameObject.Instantiate(weapons[(int)selectedWeapon]);
+      
+    }
 
-    GameObject.Instantiate(weapons[(int)selectedWeapon]);
+
   }
 
 	private void Update () {

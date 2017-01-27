@@ -27,6 +27,9 @@ public class HUDManager : MonoBehaviour {
     overlayPanel = GameObject.Find("OverlayPanel").gameObject;
     pausePanel = GameObject.Find("PausePanel").gameObject;
 
+    HideOverlay();
+    PausePanelDisplay(false);
+
   }
 
   private void Start() {
@@ -93,6 +96,11 @@ public class HUDManager : MonoBehaviour {
     pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
     pausePanel.GetComponent<CanvasGroup>().interactable = paused;
     pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = paused;
+  }
+
+  public void Restart() {
+    Scene scene = SceneManager.GetActiveScene();
+    SceneManager.LoadScene(scene.name);
   }
 
   public void LoadScene(string scene) {

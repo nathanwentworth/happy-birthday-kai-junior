@@ -43,7 +43,7 @@ public class Timer : MonoBehaviour {
     }
   }
 
-  private IEnumerator GameOverDelay() {
+  public IEnumerator GameOverDelay() {
     yield return new WaitForSeconds(3);
 
     string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
