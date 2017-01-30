@@ -8,7 +8,7 @@ public class GameFunctions : MonoBehaviour {
   private Controls controls;
   private HUDManager hudManager;
 
-  // [SerializeField]
+  [SerializeField]
   private Weapon selectedWeapon;
 
   [SerializeField]
@@ -28,7 +28,7 @@ public class GameFunctions : MonoBehaviour {
     }
     DataManager.GameOver = false;
     DataManager.Score = 0;
-    selectedWeapon = DataManager.SelectedWeapon;
+    // selectedWeapon = DataManager.SelectedWeapon;
 
 
     GameObject.Instantiate(weapons[(int)selectedWeapon]);
