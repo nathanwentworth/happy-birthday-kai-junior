@@ -6,12 +6,12 @@
  public class TriangleExplosion : MonoBehaviour {
 
   private void Start() {
-    // StartCoroutine(SplitMesh(true));
+     //StartCoroutine(SplitMesh(true));
   }
  
      public IEnumerator SplitMesh (bool destroy)    {
 
-      // yield return new WaitForSeconds(5);
+       //yield return new WaitForSeconds(5);
  
          if(GetComponent<MeshFilter>() == null || GetComponent<SkinnedMeshRenderer>() == null) {
              yield return null;
