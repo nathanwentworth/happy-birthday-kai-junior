@@ -20,7 +20,7 @@ public class BombExplosion : MonoBehaviour {
     Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
     for (int i = 0; i < colliders.Length; i++) {
       if (colliders[i].GetComponent<Rigidbody>() != null) {
-        colliders[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
+        colliders[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
       }
     }
   }
