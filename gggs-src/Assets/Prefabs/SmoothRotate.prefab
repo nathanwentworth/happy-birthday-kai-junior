@@ -39,6 +39,10 @@ GameObject:
   - component: {fileID: 92774939106343964}
   - component: {fileID: 124388793489660392}
   - component: {fileID: 81737456564965242}
+  - component: {fileID: 114994644868566182}
+  - component: {fileID: 114802409744008410}
+  - component: {fileID: 114327362908536296}
+  - component: {fileID: 114134978793928068}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -151,6 +155,45 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1623713950735644}
   m_Enabled: 1
+--- !u!114 &114134978793928068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623713950735644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36936827a1fbc431db45394500588a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 4180024080168282}
+  noiseStrength: 5
+  shakeSpeed: 0.01
+--- !u!114 &114327362908536296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623713950735644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f5677aa325c184f801528d78a73827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reprojectionShader: {fileID: 4800000, guid: 7ca93c1a56ee0154b8c714591d6d211a, type: 3}
+  neighborhood: 1
+  unjitterColorSamples: 1
+  unjitterNeighborhood: 0
+  unjitterReprojection: 0
+  useYCoCg: 0
+  useClipping: 1
+  useDilation: 1
+  useMotionBlur: 1
+  useOptimizations: 1
+  feedbackMin: 0.88
+  feedbackMax: 0.97
+  motionBlurStrength: 0
+  motionBlurIgnoreFF: 1
 --- !u!114 &114344636546654918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,6 +213,23 @@ MonoBehaviour:
   zOffset: -3
   rotationSpeed: 3
   playerTargetName: Ball(Clone)
+--- !u!114 &114802409744008410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623713950735644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b642ff60407fe724bafa6602199213c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocityShader: {fileID: 4800000, guid: 0d7f09e63dd99504ca6e04212a21ec72, type: 3}
+  neighborMaxGen: 0
+  neighborMaxSupport: 1
+  numResident: 0
+  numRendered: 0
+  numDrawCalls: 0
 --- !u!114 &114968400058735572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,6 +249,21 @@ MonoBehaviour:
   zOffset: -0.37
   rotationSpeed: 3
   playerTargetName: Ball(Clone)
+--- !u!114 &114994644868566182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623713950735644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899f97884c6d96b4ca20648ec109a37f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pattern: 12
+  patternScale: 1
+  activeSample: {x: 0, y: 0, z: 0, w: 0}
+  activeIndex: -1
 --- !u!124 &124388793489660392
 Behaviour:
   m_ObjectHideFlags: 1

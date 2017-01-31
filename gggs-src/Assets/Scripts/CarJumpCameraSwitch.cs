@@ -10,8 +10,11 @@ public class CarJumpCameraSwitch : MonoBehaviour {
   private Timer timer;
 
   private void Awake() {
-    carCam = GameObject.Find("CarCamera").GetComponent<Camera>();
+    carCam = GameObject.Find("Main Camera").GetComponent<Camera>();
     timer = FindObjectOfType (typeof (Timer)) as Timer;
+
+    carCam.enabled = true;
+    jumpCam.enabled = false;
   }
 
   private void OnTriggerEnter(Collider other) {
