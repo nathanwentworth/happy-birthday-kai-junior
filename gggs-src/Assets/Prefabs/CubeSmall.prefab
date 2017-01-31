@@ -16,22 +16,22 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4396937594296428}
-  - 33: {fileID: 33091454119325246}
-  - 65: {fileID: 65853917290997854}
-  - 23: {fileID: 23570559677868492}
-  - 54: {fileID: 54772105320995442}
-  - 114: {fileID: 114686584947870442}
-  - 114: {fileID: 114147485522642066}
+  - component: {fileID: 4396937594296428}
+  - component: {fileID: 33091454119325246}
+  - component: {fileID: 65853917290997854}
+  - component: {fileID: 23570559677868492}
+  - component: {fileID: 54772105320995442}
+  - component: {fileID: 114686584947870442}
+  - component: {fileID: 114147485522642066}
   m_Layer: 0
   m_Name: CubeSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4396937594296428
 Transform:
   m_ObjectHideFlags: 1
@@ -41,10 +41,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23570559677868492
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -59,7 +59,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 6cac4e1dd97e04a718c0d03a9ddfe418, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -67,7 +69,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
