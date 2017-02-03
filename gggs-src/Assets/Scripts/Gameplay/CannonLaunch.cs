@@ -60,7 +60,7 @@ public class CannonLaunch : MonoBehaviour {
         cannonBalls[i].transform.position = spawnPoint.transform.position;
         cannonBalls[i].transform.rotation = spawnPoint.transform.rotation;
         cannonBalls[i].SetActive(true);
-        cannonBalls[i].GetComponent<Rigidbody>().AddForce(-cannonBalls[i].transform.forward * launchPower);
+        cannonBalls[i].GetComponent<Rigidbody>().AddForce(-cannonBalls[i].transform.forward * launchPower, ForceMode.Impulse);
 
         allowFire = false;
         StartCoroutine(AllowFireTimer());

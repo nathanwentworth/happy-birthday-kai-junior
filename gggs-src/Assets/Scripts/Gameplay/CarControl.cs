@@ -48,15 +48,11 @@ public class CarControl : MonoBehaviour
 
         dir = controls.Move;
 
-        DataManager.AllowControl = true;
-
-        Debug.Log(dir);
-
         if (DataManager.AllowControl)
         {
 
             //CONTROLS
-            accelerationForce = Mathf.Clamp(dir.y, 0.4f, 1.0f);
+            accelerationForce = dir.y;
             if (controls.Interact.WasPressed) {
                 brakingForce = 1;
             } else {

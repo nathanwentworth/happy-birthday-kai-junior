@@ -8,7 +8,7 @@ public class GameFunctions : MonoBehaviour {
   private Controls controls;
   private static HUDManager hudManager;
 
-  // [SerializeField]
+  [SerializeField]
   private Weapon selectedWeapon;
 
   [SerializeField]
