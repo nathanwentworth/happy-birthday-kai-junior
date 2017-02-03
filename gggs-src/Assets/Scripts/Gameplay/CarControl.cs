@@ -83,11 +83,7 @@ public class CarControl : MonoBehaviour {
   }
 
   private void IsGrounded(WheelCollider right, WheelCollider left) {
-    if (right.isGrounded && left.isGrounded) {
-      grounded = true;
-    } else {
-      grounded = false;
-    }
+    grounded = (right.isGrounded && left.isGrounded);
   }
 
   public void ApplyLocalPositionToVisuals(WheelCollider collider) {
