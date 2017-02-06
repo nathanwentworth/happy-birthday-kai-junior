@@ -27,6 +27,12 @@ public class HUDManager : MonoBehaviour {
     overlayPanel = GameObject.Find("OverlayPanel").gameObject;
     pausePanel = GameObject.Find("PausePanel").gameObject;
 
+
+    // @DEBUG
+    // @REFACTOR: this shouldn't even be needed
+    HideOverlay();
+    PausePanelDisplay(false);
+
   }
 
   private void Start() {
@@ -35,6 +41,9 @@ public class HUDManager : MonoBehaviour {
     CumulativeScoreChange();
   }
 
+  // @DEBUG
+  // @REFACTOR
+  // this can probably be removed?
   public void UpdateScoreDisplays() {
     ScoreChange();
     HighScoreChange();
@@ -62,6 +71,11 @@ public class HUDManager : MonoBehaviour {
       overlayPanel = GameObject.Find("PausePanel").gameObject;
     }
 
+	if (overlayText == null) {
+			overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
+	}
+
+
     if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) {
       overlayPanel.GetComponent<CanvasGroup>().alpha = 1;
       overlayPanel.GetComponent<CanvasGroup>().interactable = true;
@@ -85,6 +99,11 @@ public class HUDManager : MonoBehaviour {
     pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
     pausePanel.GetComponent<CanvasGroup>().interactable = paused;
     pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = paused;
+  }
+
+  public void Restart() {
+    Scene scene = SceneManager.GetActiveScene();
+    SceneManager.LoadScene(scene.name);
   }
 
   public void LoadScene(string scene) {

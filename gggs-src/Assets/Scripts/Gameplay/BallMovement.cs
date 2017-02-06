@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour {
 
-  private Transform player;
   private Rigidbody rb;
 
   private Transform cam;
@@ -26,7 +25,6 @@ public class BallMovement : MonoBehaviour {
 
 
 	private void Start() {
-    player = GetComponent<Transform>();
 		rb = GetComponent<Rigidbody>();
 
 	}

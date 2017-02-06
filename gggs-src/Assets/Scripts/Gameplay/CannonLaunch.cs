@@ -10,13 +10,14 @@ public class CannonLaunch : MonoBehaviour {
   private GameObject spawnPoint;
   [SerializeField]
   private int numBalls;
+  [SerializeField]
+  private int launchPower;
 
   private GameObject cannonBallInst;
   private List<GameObject> cannonBalls;
   private bool allowFire = true;
 
   private Controls controls;
-
 
   private Vector3 dir;
 
@@ -59,7 +60,7 @@ public class CannonLaunch : MonoBehaviour {
         cannonBalls[i].transform.position = spawnPoint.transform.position;
         cannonBalls[i].transform.rotation = spawnPoint.transform.rotation;
         cannonBalls[i].SetActive(true);
-        cannonBalls[i].GetComponent<Rigidbody>().AddForce(-cannonBalls[i].transform.forward * 300000);
+        cannonBalls[i].GetComponent<Rigidbody>().AddForce(-cannonBalls[i].transform.forward * launchPower, ForceMode.Impulse);
 
         allowFire = false;
         StartCoroutine(AllowFireTimer());
@@ -70,10 +71,9 @@ public class CannonLaunch : MonoBehaviour {
 
   }
 
-private IEnumerator AllowFireTimer() {
-  yield return new WaitForSeconds(0.5f);
-  allowFire = true;
-}
-
+  private IEnumerator AllowFireTimer() {
+    yield return new WaitForSeconds(0.5f);
+    allowFire = true;
+  }
   
 }
