@@ -17,6 +17,10 @@ public class CarControl : MonoBehaviour {
   private Rigidbody rigid;
   private int mph;
 
+  private int rotations;
+  private float lastRotation;
+  private float totalRotation;
+
   private Vector2 dir;
   private Controls controls;
 
@@ -39,6 +43,9 @@ public class CarControl : MonoBehaviour {
     if (DataManager.AllowControl) {
       CarInput();
     }
+    if (!grounded) {
+      CheckGroundAngle();
+    }
   }
 
   private void FixedUpdate() {
@@ -53,6 +60,12 @@ public class CarControl : MonoBehaviour {
     if (!grounded) {
       Vector2 rotationalInput = new Vector2 (dir.y, dir.x); 
       rigid.AddRelativeTorque(rotationalInput * 5000);
+    }
+
+    if (controls.Interact.WasPressed) {
+      transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+      transform.rotation = Quaternion.Euler(0, 0, 0);
+      Debug.Log("car reset!");
     }
   }
 
@@ -80,6 +93,22 @@ public class CarControl : MonoBehaviour {
       IsGrounded(axleInfo.rightWheel, axleInfo.leftWheel);
     }
 
+  }
+
+  private void CheckGroundAngle() {
+    RaycastHit hit;
+    if (Physics.Raycast(transform.position, Vector3.down, out hit, 2)) {
+      Vector3 ground = Vector3.RotateTowards(-transform.forward, hit.normal, Time.deltaTime * 10, 0f);
+      // transform.rotation = Quaternion.LookRotation(ground);
+      Debug.Log(Vector3.Angle(transform.position, hit.normal));
+      Debug.Log(hit.normal);
+    }
+  }
+
+  private void RotationCount() {
+    // rotation
+    float rotDiff = Mathf.Abs(transform.rotation.y - lastRotation);
+    
   }
 
   private void IsGrounded(WheelCollider right, WheelCollider left) {
