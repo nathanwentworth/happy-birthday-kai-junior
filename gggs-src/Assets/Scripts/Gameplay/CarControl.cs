@@ -26,12 +26,21 @@ public class CarControl : MonoBehaviour {
 
   private Vector3 groundedVelocity;
 
+  private HUDManager hudManager;
+
   public float MPH { get { return mph; } }
 
   public bool grounded { get; private set; }
+  public bool wasGrounded { get; private set; }
 
   private void OnEnable() {
     controls = Controls.DefaultBindings();
+  }
+
+  private void Awake() {
+    // @REFACTOR
+    // potentially slow
+    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
   }
 
   private void Start() {
@@ -45,6 +54,11 @@ public class CarControl : MonoBehaviour {
     }
     if (!grounded) {
       CheckGroundAngle();
+      RotationCount();
+    } else {
+      StartCoroutine(ClearTrickDisplay(rotations));
+      rotations = 0;
+      totalRotation = 0;
     }
   }
 
@@ -100,15 +114,26 @@ public class CarControl : MonoBehaviour {
     if (Physics.Raycast(transform.position, Vector3.down, out hit, 2)) {
       Vector3 ground = Vector3.RotateTowards(-transform.forward, hit.normal, Time.deltaTime * 10, 0f);
       // transform.rotation = Quaternion.LookRotation(ground);
-      Debug.Log(Vector3.Angle(transform.position, hit.normal));
-      Debug.Log(hit.normal);
     }
   }
 
   private void RotationCount() {
-    // rotation
+    // counts rotations
     float rotDiff = Mathf.Abs(transform.rotation.y - lastRotation);
-    
+    totalRotation += rotDiff;
+
+    int _rotations = (int)(totalRotation % 180);
+
+    if (_rotations != rotations) {
+      rotations = _rotations;
+    }
+
+    if (rotations > 0) {
+      hudManager.CarTrickTextChange("SICK " + (rotations * 180));
+    }
+
+
+    lastRotation = transform.rotation.y;
   }
 
   private void IsGrounded(WheelCollider right, WheelCollider left) {
@@ -128,6 +153,14 @@ public class CarControl : MonoBehaviour {
 
     visualWheel.transform.position = position;
     visualWheel.transform.rotation = rotation;
+  }
+
+  private IEnumerator ClearTrickDisplay(int lastRotCount) {
+    yield return new WaitForSeconds(2);
+
+    if (lastRotCount == rotations) {
+      hudManager.CarTrickTextChange("");
+    }
   }
 
 
