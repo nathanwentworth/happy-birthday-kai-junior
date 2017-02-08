@@ -161,7 +161,6 @@ public class CarControl : MonoBehaviour {
 
     if (runComboCountdown && comboCount > 0) {
       comboTimer -= Time.deltaTime;
-      Debug.Log("comboTimer: " + comboTimer);
       hudManager.ComboCounterImageChange(comboTimer);
     }
 
@@ -185,6 +184,7 @@ public class CarControl : MonoBehaviour {
 
     if (_grounded != grounded) {
       grounded = _grounded;
+      DataManager.Grounded = _grounded;
       groundedChange = true;
       if (grounded) {
         comboTrickCounted = false;

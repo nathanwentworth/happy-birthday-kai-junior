@@ -77,7 +77,6 @@ public class HUDManager : MonoBehaviour {
 
   public void ComboCounterImageChange(float time) {
     comboCounterImage.fillAmount = (time / 6f);
-    Debug.Log("fillAmount " + (time / 6f));
   }
 
   public void OverlayText(string text) {
