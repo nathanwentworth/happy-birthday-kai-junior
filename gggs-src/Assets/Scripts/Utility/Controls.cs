@@ -5,34 +5,42 @@ public class Controls : PlayerActionSet
 {
   public PlayerAction Jump;
   public PlayerAction Interact;
+  public PlayerAction Reset;
   public PlayerAction Confirm;
   public PlayerAction Pause;
-  public PlayerAction ToggleLook;
+  public PlayerAction Brake;
   public PlayerAction Left;
   public PlayerAction Right;
   public PlayerAction Up;
   public PlayerAction Down;
   public PlayerAction LookLeft;
   public PlayerAction LookRight;
+  public PlayerAction RollLeft;
+  public PlayerAction RollRight;
   public PlayerTwoAxisAction Move;
   public PlayerOneAxisAction Look;
+  public PlayerOneAxisAction Roll;
 
 
   public Controls()
   {
     Jump = CreatePlayerAction( "Jump" );
     Interact = CreatePlayerAction( "Interact" );
+    Reset = CreatePlayerAction( "Reset" );
     Confirm = CreatePlayerAction( "Confirm" );
     Pause = CreatePlayerAction( "Pause" );
-    ToggleLook = CreatePlayerAction( "Toggle Look" );
+    Brake = CreatePlayerAction( "Brake" );
     Left = CreatePlayerAction( "Move Left" );
     Right = CreatePlayerAction( "Move Right" );
     Up = CreatePlayerAction( "Move Up" );
     Down = CreatePlayerAction( "Move Down" );
     LookLeft = CreatePlayerAction( "Look Left" );
     LookRight = CreatePlayerAction( "Look Right" );
+    RollLeft = CreatePlayerAction( "Roll Left" );
+    RollRight = CreatePlayerAction( "Roll Right" );
     Move = CreateTwoAxisPlayerAction( Left, Right, Down, Up );
     Look = CreateOneAxisPlayerAction( LookLeft, LookRight);
+    Roll = CreateOneAxisPlayerAction( RollLeft, RollRight);
   }
 
 
@@ -46,14 +54,17 @@ public class Controls : PlayerActionSet
     controls.Interact.AddDefaultBinding( Key.E );
     controls.Interact.AddDefaultBinding( InputControlType.Action2 );
 
+    controls.Reset.AddDefaultBinding( Key.R );
+    controls.Reset.AddDefaultBinding( InputControlType.Action3 );
+
     controls.Confirm.AddDefaultBinding( Key.Return );
     controls.Confirm.AddDefaultBinding( InputControlType.Action2 );
 
     controls.Pause.AddDefaultBinding( Key.Escape );
     controls.Pause.AddDefaultBinding( InputControlType.Command );
 
-    controls.ToggleLook.AddDefaultBinding( Mouse.LeftButton );
-    controls.ToggleLook.AddDefaultBinding( InputControlType.DPadDown );
+    controls.Brake.AddDefaultBinding( Key.Space );
+    controls.Brake.AddDefaultBinding( InputControlType.Action4 );
 
     // controls.Jump.AddDefaultBinding( Mouse.LeftButton );
 
@@ -82,6 +93,11 @@ public class Controls : PlayerActionSet
     controls.LookRight.AddDefaultBinding( Mouse.PositiveX );
     controls.LookLeft.AddDefaultBinding( InputControlType.RightStickLeft );
     controls.LookRight.AddDefaultBinding( InputControlType.RightStickRight );
+
+    controls.RollLeft.AddDefaultBinding( Key.Q );
+    controls.RollRight.AddDefaultBinding( Key.E );
+    // controls.RollLeft.AddDefaultBinding( InputControlType.RightStickLeft );
+    // controls.RollRight.AddDefaultBinding( InputControlType.RightStickRight );
 
 
     controls.ListenOptions.IncludeUnknownControllers = true;
