@@ -80,15 +80,15 @@ public class CarControl : MonoBehaviour {
   private void CarInput() {
     // car controls
     accelerationForce = dir.y;
-    brakingForce = (controls.Interact.IsPressed) ? 1 : 0;
+    brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
-      Vector2 rotationalInput = new Vector2 (dir.y, dir.x); 
+      Vector3 rotationalInput = new Vector3 (dir.y, dir.x, controls.Roll);
       rigid.AddRelativeTorque(rotationalInput * 5000);
     }
 
     // @DEBUG: hopefully won't need this when a real respawn thing is implemented
-    if (controls.Interact.WasPressed) {
+    if (controls.Reset.WasPressed) {
       transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
       transform.rotation = Quaternion.Euler(0, 0, 0);
       Debug.Log("car reset!");
@@ -97,8 +97,9 @@ public class CarControl : MonoBehaviour {
 
   private void CarMotor() {
     mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
+    Debug.Log("mph: " + mph);
     float motor = maxMotorTorque * (accelerationForce * 3f);
-    float steering = maxSteeringAngle * dir.x / ((150f - (mph * 0.75f)) / 150f);
+    float steering = maxSteeringAngle * dir.x / ((200f - (mph * 0.75f)) / 200f);
 
     foreach (AxleInfo axleInfo in axleInfos) {
 
