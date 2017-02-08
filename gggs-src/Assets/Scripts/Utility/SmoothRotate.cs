@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SmoothRotate : SmoothFollow {
 
-  public override void Rotate() {
+  public override sealed void Rotate() {
     base.Rotate();
+
     float wantedRotationAngleY = playerTarget.eulerAngles.y;
     float wantedRotationAngleX = playerTarget.eulerAngles.x;
-    // wantedRotationAngleY = playerTarget.eulerAngles.y
+
     float currentRotationAngleY = transform.eulerAngles.y;
     float currentRotationAngleX = transform.eulerAngles.x;
 
@@ -33,11 +34,11 @@ public class SmoothRotate : SmoothFollow {
       currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
       var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
       transform.rotation = currentRotation;
-    } else if (playerTargetName == "Goblin") {
+    } else if (playerTargetName.StartsWith("Goblin") && DataManager.Grounded) {
       wantedRotationAngleY = playerTarget.eulerAngles.y;
-      wantedRotationAngleX = playerTarget.eulerAngles.x;
+      // wantedRotationAngleX = playerTarget.eulerAngles.x;
       currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
-      currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
+      // currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
       var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
       transform.rotation = currentRotation;
     }
