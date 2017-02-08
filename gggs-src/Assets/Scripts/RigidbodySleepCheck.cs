@@ -28,8 +28,13 @@ public class RigidbodySleepCheck : MonoBehaviour {
           knockedOver = true;
           Renderer rend = GetComponent<Renderer>();
           rend.material.color = Color.black;
-          DataManager.Score += points;
-          DataManager.CumulativeScore += points;
+
+          int _points = points;
+
+          _points *= DataManager.Combo;
+
+          DataManager.Score += _points;
+          DataManager.CumulativeScore += _points;
           hudManager.ScoreChange();
           hudManager.CumulativeScoreChange();
 

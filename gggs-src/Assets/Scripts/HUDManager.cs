@@ -14,6 +14,8 @@ public class HUDManager : MonoBehaviour {
   private Text carTrickText;
   private Text comboCounterText;
 
+  private Image comboCounterImage;
+
 
   private GameObject overlayPanel;
   private GameObject pausePanel;
@@ -28,6 +30,8 @@ public class HUDManager : MonoBehaviour {
 
     carTrickText = GameObject.Find("CarTrickText").GetComponent<Text>();
     comboCounterText = GameObject.Find("ComboCounterText").GetComponent<Text>();
+
+    comboCounterImage = GameObject.Find("ComboCounterImage").GetComponent<Image>();
 
     overlayPanel = GameObject.Find("OverlayPanel").gameObject;
     pausePanel = GameObject.Find("PausePanel").gameObject;
@@ -71,6 +75,11 @@ public class HUDManager : MonoBehaviour {
     timerText.text = "Time Left: " + t;
   }
 
+  public void ComboCounterImageChange(float time) {
+    comboCounterImage.fillAmount = (time / 6f);
+    Debug.Log("fillAmount " + (time / 6f));
+  }
+
   public void OverlayText(string text) {
     if (overlayPanel == null) {
       overlayPanel = GameObject.Find("PausePanel").gameObject;
@@ -94,7 +103,7 @@ public class HUDManager : MonoBehaviour {
     carTrickText.text = "" + text;
   }
 
-  public void ComboCounter(string text) {
+  public void ComboCounterTextChange(string text) {
     comboCounterText.text = "" + text;
   }
 
