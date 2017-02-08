@@ -33,11 +33,11 @@ public class SmoothRotate : SmoothFollow {
       currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
       var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
       transform.rotation = currentRotation;
-    } else if (playerTargetName == "Goblin") {
+    } else if (playerTargetName.StartsWith("Goblin")) {
       wantedRotationAngleY = playerTarget.eulerAngles.y;
-      wantedRotationAngleX = playerTarget.eulerAngles.x;
+      // wantedRotationAngleX = playerTarget.eulerAngles.x;
       currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
-      currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
+      // currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
       var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
       transform.rotation = currentRotation;
     }

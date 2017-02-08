@@ -62,7 +62,9 @@ public class CarControl : MonoBehaviour {
     if (!grounded) {
       CheckGroundAngle();
       RotationCount();
-      comboTimer = 6f;
+      if (comboCount > 1) {
+        comboTimer = 6f;
+      }
     } else {
       StartCoroutine(ClearTrickDisplay(rotations));
       ComboCountdown();
@@ -99,7 +101,7 @@ public class CarControl : MonoBehaviour {
     float steering = maxSteeringAngle * dir.x / ((150f - (mph * 0.75f)) / 150f);
 
     foreach (AxleInfo axleInfo in axleInfos) {
-      
+
       if (axleInfo.steering) {
         axleInfo.leftWheel.steerAngle = steering;
         axleInfo.rightWheel.steerAngle = steering;
@@ -163,20 +165,19 @@ public class CarControl : MonoBehaviour {
       hudManager.ComboCounterImageChange(comboTimer);
     }
 
-    if (comboTimer <= 0 && comboCount > 1) {
-      comboCount--;
-      DataManager.Combo = comboCount;
-      comboTimer = 6f;
-      comboText = comboCount + "x";
-      hudManager.ComboCounterTextChange(comboText);
-    } else if (comboTimer <= 0 && comboCount <= 0) {
-      runComboCountdown = false;
-      comboText = "";
-      hudManager.ComboCounterTextChange(comboText);
+    if (comboTimer <= 0) {
+      if (comboCount > 1) {
+        comboCount--;
+        DataManager.Combo = comboCount;
+        comboTimer = 6f;
+        comboText = comboCount + "x";
+        hudManager.ComboCounterTextChange(comboText);        
+      } else {
+        runComboCountdown = false;
+        comboText = "";
+        hudManager.ComboCounterTextChange(comboText);  
+      }
     }
-
-    
-
   }
 
   private void IsGrounded(WheelCollider right, WheelCollider left) {
@@ -227,3 +228,4 @@ public class AxleInfo {
   public bool motor; // is this wheel attached to motor?
   public bool steering; // does this wheel apply steer angle?
 }
+
