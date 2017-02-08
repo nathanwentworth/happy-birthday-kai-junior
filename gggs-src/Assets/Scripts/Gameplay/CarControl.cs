@@ -83,7 +83,7 @@ public class CarControl : MonoBehaviour {
     brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
-      Vector3 rotationalInput = new Vector3 (dir.y, dir.x, controls.Roll);
+      Vector3 rotationalInput = new Vector3 (dir.y, dir.x, -controls.Roll);
       rigid.AddRelativeTorque(rotationalInput * 5000);
     }
 
