@@ -74,7 +74,7 @@
 			set
 			{
 #pragma warning disable 0168
-				var dummy = value;
+				// var dummy = value;
 #pragma warning restore 0168
 			}
 		}
@@ -91,7 +91,7 @@
 			set
 			{
 #pragma warning disable 0168
-				var dummy = value;
+				// var dummy = value;
 #pragma warning restore 0168
 			}
 		}

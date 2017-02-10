@@ -28,6 +28,7 @@ public class SaveLoad : MonoBehaviour {
 		// autoload
 		Load();
 	}
+
 	private void OnDisable() {
 		// autosave
 		Save();
@@ -70,5 +71,4 @@ class PlayerData {
 	public int cumulativeScore;
 
 	public List<string> itemsOwned;
-
 }

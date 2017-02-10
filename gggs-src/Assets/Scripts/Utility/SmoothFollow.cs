@@ -33,7 +33,10 @@ public class SmoothFollow : MonoBehaviour {
     camera = transform.GetChild(0).GetComponent<Transform>();
     followTarget = transform.root;
 
-    StartCoroutine(FindPlayer());
+    if (playerTarget == null) {
+      StartCoroutine(FindPlayer());
+    }
+
   }
 
   private void FixedUpdate() {
@@ -49,7 +52,7 @@ public class SmoothFollow : MonoBehaviour {
 
       transform.position = new Vector3(
         Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.y, followTarget.transform.position.y + yOffset, Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.y, followTarget.transform.position.y + (yOffset + 4f), Time.deltaTime * speed),
         Mathf.Lerp(transform.position.z, followTarget.transform.position.z + zOffset, Time.deltaTime * speed)
       );
 
@@ -61,6 +64,14 @@ public class SmoothFollow : MonoBehaviour {
         Mathf.Lerp(transform.position.z, followTarget.transform.position.z + (zOffset - 0.5f), Time.deltaTime * speed)
       );
 
+    } else if (playerTargetName.StartsWith("Goblin")) {
+
+      transform.position = new Vector3(
+        Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.y, followTarget.transform.position.y + (yOffset + 4f), Time.deltaTime * speed),
+        Mathf.Lerp(transform.position.z, followTarget.transform.position.z + zOffset, Time.deltaTime * speed)
+      );
+
     }
 
     transform.position += transform.rotation * Vector3.forward * zOffset;
@@ -68,7 +79,7 @@ public class SmoothFollow : MonoBehaviour {
   }
 
   public virtual void Rotate() {
-
+    // overridden by SmoothRotate
   }
 
   private IEnumerator FindPlayer() {
@@ -78,8 +89,6 @@ public class SmoothFollow : MonoBehaviour {
         playerTarget = GameObject.FindWithTag("Player").GetComponent<Transform>();
         playerTargetRb = playerTarget.GetComponent<Rigidbody>();
         playerTargetName = playerTarget.name;    
-      } else {
-        Debug.LogError("Can't find player");
       }
 
       yield return null;
