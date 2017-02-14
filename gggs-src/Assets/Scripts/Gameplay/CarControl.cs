@@ -6,6 +6,7 @@ using System;
 
 public class CarControl : MonoBehaviour {
 
+  [Header("Wheel/Motor Variables")]
   public List<AxleInfo> axleInfos; // the information about each individual axle
   public float maxMotorTorque; // maximum torque the motor can apply to wheel
   public float maxSteeringAngle; // maximum steer angle the wheel can have
@@ -17,13 +18,33 @@ public class CarControl : MonoBehaviour {
   private Rigidbody rigid;
   private int mph;
 
+  [Header("Air Control Variables")]
+  [SerializeField]
+  [Range(0.1f, 1f)]
+  private float pitchMulti;
+  [SerializeField]
+  [Range(0.1f, 1f)]
+  private float yawMulti;
+  [SerializeField]
+  [Range(0.1f, 1f)]
+  private float rollMulti;
+  [SerializeField]
+  private float airControlForce;
+  [SerializeField]
+  [Range(1, 10)]
+  private float autoRotationSpeed;
+  [SerializeField]
+  [Range(1, 100)]
+  private float autoRotationCheckHeight;
+
+
   private int rotations; // how many 180 rotations the car has done
   private float lastRotation; // the degree of the last y rotation
   private float totalRotation; // total y rotations since being not grounded
 
-  private float comboTimer; // how much time is left to continue the combo timer
   [SerializeField]
   private float comboTimerDefault;
+  private float comboTimer; // how much time is left to continue the combo timer
   private int comboCount; // current combo counter
   private bool runComboCountdown;
   private bool comboTrickCounted;
@@ -60,7 +81,9 @@ public class CarControl : MonoBehaviour {
       CarInput();
     }
     if (!grounded) {
-      CheckGroundAngle();
+      if (dir == Vector2.zero) {
+        CheckGroundAngle();
+      }
       RotationCount();
       if (comboCount > 1) {
         comboTimer = 6f;
@@ -83,8 +106,8 @@ public class CarControl : MonoBehaviour {
     brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
-      Vector3 rotationalInput = new Vector3 (dir.y, dir.x, -controls.Roll);
-      rigid.AddRelativeTorque(rotationalInput * 5000);
+      Vector3 rotationalInput = new Vector3 (dir.y * pitchMulti, dir.x * yawMulti, -controls.Roll * rollMulti);
+      rigid.AddRelativeTorque(rotationalInput * airControlForce);
     }
 
     // @DEBUG: hopefully won't need this when a real respawn thing is implemented
@@ -124,9 +147,14 @@ public class CarControl : MonoBehaviour {
 
   private void CheckGroundAngle() {
     RaycastHit hit;
-    if (Physics.Raycast(transform.position, Vector3.down, out hit, 2)) {
-      Vector3 ground = Vector3.RotateTowards(-transform.forward, hit.normal, Time.deltaTime * 10, 0f);
-      // transform.rotation = Quaternion.LookRotation(ground);
+    if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
+      // Vector3 ground = Vector3.RotateTowards(-transform.forward, hit.normal, Time.deltaTime * 1, 0f);
+      // transform.rotation.SetLookRotation(transform.forward, hit.normal);
+      Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
+      Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
+      transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
+      Debug.Log("normal rotataion: " + Quaternion.LookRotation(hit.normal) + ", current rotation " + transform.rotation);
+
     }
   }
 
@@ -175,7 +203,7 @@ public class CarControl : MonoBehaviour {
       } else {
         runComboCountdown = false;
         comboText = "";
-        hudManager.ComboCounterTextChange(comboText);  
+        hudManager.ComboCounterTextChange(comboText);
       }
     }
   }

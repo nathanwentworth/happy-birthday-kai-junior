@@ -178,7 +178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1501965483553726
 GameObject:
   m_ObjectHideFlags: 1
@@ -1014,6 +1014,10 @@ MonoBehaviour:
   maxSteeringAngle: 14
   maxBrakingTorque: 3000
   controllerDeadzone: 0.15
+  pitchMulti: 1
+  yawMulti: 1
+  rollMulti: 0.5
+  airControlForce: 5000
   comboTimerDefault: 6
 --- !u!114 &114864950473086910
 MonoBehaviour:
