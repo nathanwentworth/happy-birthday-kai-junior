@@ -9,6 +9,7 @@ public class Controls : PlayerActionSet
   public PlayerAction Confirm;
   public PlayerAction Pause;
   public PlayerAction Brake;
+  public PlayerAction Push;
   public PlayerAction Left;
   public PlayerAction Right;
   public PlayerAction Up;
@@ -30,6 +31,7 @@ public class Controls : PlayerActionSet
     Confirm = CreatePlayerAction( "Confirm" );
     Pause = CreatePlayerAction( "Pause" );
     Brake = CreatePlayerAction( "Brake" );
+    Push = CreatePlayerAction( "Push" );
     Left = CreatePlayerAction( "Move Left" );
     Right = CreatePlayerAction( "Move Right" );
     Up = CreatePlayerAction( "Move Up" );
@@ -63,8 +65,11 @@ public class Controls : PlayerActionSet
     controls.Pause.AddDefaultBinding( Key.Escape );
     controls.Pause.AddDefaultBinding( InputControlType.Command );
 
-    controls.Brake.AddDefaultBinding( Key.Space );
+    controls.Brake.AddDefaultBinding( Key.LeftShift );
     controls.Brake.AddDefaultBinding( InputControlType.Action4 );
+
+    controls.Push.AddDefaultBinding( Key.Space );
+    controls.Push.AddDefaultBinding( InputControlType.Action1 );
 
     // controls.Jump.AddDefaultBinding( Mouse.LeftButton );
 
