@@ -47,7 +47,7 @@ public class GameFunctions : MonoBehaviour {
 	private void Update () {
 
     // @DEBUG
-    if (controls.Interact.WasPressed) {
+    if (controls.Reset.WasPressed) {
       DataManager.ResetHighScore();
     }
     if (controls.Pause.WasPressed) {
