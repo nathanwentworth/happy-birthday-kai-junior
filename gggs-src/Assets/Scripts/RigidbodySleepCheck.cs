@@ -8,8 +8,13 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private bool knockedOver;
   private int points;
   private HUDManager hudManager;
+  private float threshold;
 
 	private void Start () {
+    if (DataManager.ObjectMovementThreshold == 0) {
+      DataManager.ObjectMovementThreshold = 1;
+    }
+    threshold = DataManager.ObjectMovementThreshold;
     points = GetComponent<ObjectDataContainer>().ObjectPoints;
     knockedOver = false;
 		rb = GetComponent<Rigidbody>();
@@ -18,23 +23,45 @@ public class RigidbodySleepCheck : MonoBehaviour {
 	
 	private void OnCollisionStay (Collision other) {
     if (other.gameObject.GetComponent<Rigidbody>() != null) {
-  		if (!rb.IsSleeping() && !knockedOver && rb.velocity.magnitude > 2) {
-        knockedOver = true;
-        Renderer rend = GetComponent<Renderer>();
-        rend.material.color = Color.black;
-        DataManager.Score += points;
-        DataManager.CumulativeScore += points;
-        hudManager.ScoreChange();
-        hudManager.CumulativeScoreChange();
+      if (!knockedOver) {
+    		if (rb.velocity.magnitude > 2) {
+          knockedOver = true;
+          Renderer rend = GetComponent<Renderer>();
+          rend.material.color = Color.black;
 
-        if (DataManager.Score >= DataManager.HighScore) {
-          DataManager.NewHighScore = true;
-          hudManager.HighScoreChange();
+          int _points = points;
+
+          _points *= DataManager.Combo;
+
+          DataManager.Score += _points;
+          DataManager.CumulativeScore += _points;
+          hudManager.ScoreChange();
+          hudManager.CumulativeScoreChange();
+
+          if (DataManager.Score >= DataManager.HighScore) {
+            DataManager.NewHighScore = true;
+            hudManager.HighScoreChange();
+          }
+
+          StartCoroutine(CheckMoveState());
+
+          
         }
-
-        this.enabled = false;
       }
     }
 	}
+
+  // @REFACTOR: this whole script can be done betttttttttter
+
+  private IEnumerator CheckMoveState() {
+    while (rb.velocity.magnitude > threshold) {
+      DataManager.ObjectIsStillMoving = true;
+      yield return null;
+    }
+
+    DataManager.ObjectIsStillMoving = false;
+
+    this.enabled = false;
+  }
 
 }

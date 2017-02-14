@@ -65,6 +65,11 @@ public class FirstPersonDrifter: MonoBehaviour
     }
  
     void FixedUpdate() {
+
+        if (DataManager.AllowControl) {
+
+
+
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
         // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
@@ -141,6 +146,7 @@ public class FirstPersonDrifter: MonoBehaviour
  
         // Move the controller, and set grounded true or false depending on whether we're standing on something
         grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
+        }
     }
  
     // Store point that we're in contact with for use in FixedUpdate if needed

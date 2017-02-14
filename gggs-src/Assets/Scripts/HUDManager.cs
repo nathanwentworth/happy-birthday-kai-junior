@@ -11,6 +11,10 @@ public class HUDManager : MonoBehaviour {
   private Text cumulativeScoreText;
   private Text timerText;
   private Text overlayText;
+  private Text carTrickText;
+  private Text comboCounterText;
+
+  private Image comboCounterImage;
 
 
   private GameObject overlayPanel;
@@ -24,8 +28,19 @@ public class HUDManager : MonoBehaviour {
     timerText = GameObject.Find("TimerText").GetComponent<Text>();
     overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
 
+    carTrickText = GameObject.Find("CarTrickText").GetComponent<Text>();
+    comboCounterText = GameObject.Find("ComboCounterText").GetComponent<Text>();
+
+    comboCounterImage = GameObject.Find("ComboCounterImage").GetComponent<Image>();
+
     overlayPanel = GameObject.Find("OverlayPanel").gameObject;
     pausePanel = GameObject.Find("PausePanel").gameObject;
+
+
+    // @DEBUG
+    // @REFACTOR: this shouldn't even be needed
+    HideOverlay();
+    PausePanelDisplay(false);
 
   }
 
@@ -60,14 +75,18 @@ public class HUDManager : MonoBehaviour {
     timerText.text = "Time Left: " + t;
   }
 
+  public void ComboCounterImageChange(float time) {
+    comboCounterImage.fillAmount = (time / 6f);
+  }
+
   public void OverlayText(string text) {
     if (overlayPanel == null) {
       overlayPanel = GameObject.Find("PausePanel").gameObject;
     }
 
-	if (overlayText == null) {
-			overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
-	}
+  	if (overlayText == null) {
+  			overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
+  	}
 
 
     if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) {
@@ -77,6 +96,14 @@ public class HUDManager : MonoBehaviour {
     }
 
     overlayText.text = text;
+  }
+
+  public void CarTrickTextChange(string text) {
+    carTrickText.text = "" + text;
+  }
+
+  public void ComboCounterTextChange(string text) {
+    comboCounterText.text = "" + text;
   }
 
   public void HideOverlay() {
@@ -93,6 +120,11 @@ public class HUDManager : MonoBehaviour {
     pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
     pausePanel.GetComponent<CanvasGroup>().interactable = paused;
     pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = paused;
+  }
+
+  public void Restart() {
+    Scene scene = SceneManager.GetActiveScene();
+    SceneManager.LoadScene(scene.name);
   }
 
   public void LoadScene(string scene) {

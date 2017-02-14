@@ -9,9 +9,17 @@ public class BombPlacement : MonoBehaviour {
   private GameObject bombsInst;
   private List<GameObject> bombs;
   private int bombsPlaced;
+  private Camera firstPersonCamera;
+  [SerializeField]
+  private Camera overheadCamera;
+  private Timer timer;
   
   [SerializeField]
   private int numberOfBombs;
+  [SerializeField]
+  private float gameOverTime;
+  [SerializeField]
+  private float cameraChangeTime;
 
   private Controls controls;
 
@@ -23,6 +31,13 @@ public class BombPlacement : MonoBehaviour {
   }
 
   private void Awake() {
+
+    firstPersonCamera = GetComponent<Camera>();
+    timer = FindObjectOfType (typeof (Timer)) as Timer;
+
+    firstPersonCamera.enabled = true;
+    overheadCamera.enabled = false;
+
 
     bombsPlaced = 0;
 
@@ -37,7 +52,8 @@ public class BombPlacement : MonoBehaviour {
   }
 	
 	private void Update() {
-    RayPositionCheck();  
+    RayPositionCheck();
+    Debug.Log(DataManager.ObjectIsStillMoving);
   }
 
   private void RayPositionCheck() {
@@ -66,6 +82,7 @@ public class BombPlacement : MonoBehaviour {
         if (bombsPlaced == 3) {
           for (int j = 0; j < numberOfBombs; j++) {
             bombs[j].GetComponent<BombExplosion>().enabled = true;
+            StartCoroutine(CameraChangeDelay());
           }
         }
 
@@ -75,6 +92,16 @@ public class BombPlacement : MonoBehaviour {
         return;
       }
     }
+
+  }
+
+  private IEnumerator CameraChangeDelay() {
+    yield return new WaitForSeconds(cameraChangeTime);
+
+
+    StartCoroutine(timer.GameOverDelay(gameOverTime));
+    firstPersonCamera.enabled = false;
+    overheadCamera.enabled = true;
 
   }
 

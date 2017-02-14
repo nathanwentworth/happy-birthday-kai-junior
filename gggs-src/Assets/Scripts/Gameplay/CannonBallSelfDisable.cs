@@ -9,7 +9,7 @@ public class CannonBallSelfDisable : MonoBehaviour {
   }
 
   private IEnumerator Disable() {
-    yield return new WaitForSeconds(3);
+    yield return new WaitForSeconds(10);
     gameObject.SetActive(false);
   }
 

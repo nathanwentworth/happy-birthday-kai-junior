@@ -8,7 +8,7 @@ public class GameFunctions : MonoBehaviour {
   private Controls controls;
   private static HUDManager hudManager;
 
-  // [SerializeField]
+  [SerializeField]
   private Weapon selectedWeapon;
 
   [SerializeField]
@@ -28,19 +28,26 @@ public class GameFunctions : MonoBehaviour {
     Debug.Log("timescale is now " + Time.timeScale);
     if (DataManager.Paused) {
       Pause();
+      Debug.Log("was paused, now it's not!");
+    } else {
+      Debug.Log("not paused on start!");
     }
     DataManager.GameOver = false;
     DataManager.Score = 0;
     selectedWeapon = DataManager.SelectedWeapon;
 
+    if (SceneManager.GetActiveScene().name.StartsWith("main-test")) {
+      GameObject.Instantiate(weapons[(int)selectedWeapon]);
+      
+    }
 
-    GameObject.Instantiate(weapons[(int)selectedWeapon]);
+
   }
 
 	private void Update () {
 
     // @DEBUG
-    if (controls.Interact.WasPressed) {
+    if (controls.Reset.WasPressed) {
       DataManager.ResetHighScore();
     }
     if (controls.Pause.WasPressed) {
