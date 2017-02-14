@@ -102,7 +102,8 @@ public class CarControl : MonoBehaviour {
 
   private void CarInput() {
     // car controls
-    accelerationForce = dir.y;
+    // accelerationForce = dir.y;
+    accelerationForce = (controls.Push.IsPressed) ? 1 : 0;
     brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
@@ -148,13 +149,10 @@ public class CarControl : MonoBehaviour {
   private void CheckGroundAngle() {
     RaycastHit hit;
     if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
-      // Vector3 ground = Vector3.RotateTowards(-transform.forward, hit.normal, Time.deltaTime * 1, 0f);
-      // transform.rotation.SetLookRotation(transform.forward, hit.normal);
       Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
       Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
+      // checks normal of surface below, slerps to match the same direction outwards
       transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
-      Debug.Log("normal rotataion: " + Quaternion.LookRotation(hit.normal) + ", current rotation " + transform.rotation);
-
     }
   }
 
