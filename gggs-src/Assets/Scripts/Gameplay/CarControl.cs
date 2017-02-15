@@ -8,15 +8,18 @@ public class CarControl : MonoBehaviour {
 
   [Header("Wheel/Motor Variables")]
   public List<AxleInfo> axleInfos; // the information about each individual axle
-  public float maxMotorTorque; // maximum torque the motor can apply to wheel
-  public float maxSteeringAngle; // maximum steer angle the wheel can have
-  public float maxBrakingTorque; // how fast should you brake
-  public float controllerDeadzone = 0.15f;
-
-  private float accelerationForce = 0;
-  private float brakingForce = 0;
-  private Rigidbody rigid;
-  private int mph;
+  [SerializeField]
+  [Range(500, 10000)]
+  private float maxMotorTorque; // maximum torque the motor can apply to wheel
+  [SerializeField]
+  [Range(1, 30)]
+  private float maxSteeringAngle; // maximum steer angle the wheel can have
+  [SerializeField]
+  [Range(500, 10000)]
+  private float maxBrakingTorque; // how fast should you brake
+  [SerializeField]
+  [Range(0.01f, 1f)]
+  private float controllerDeadzone = 0.15f;
 
   [Header("Air Control Variables")]
   [SerializeField]
@@ -36,11 +39,22 @@ public class CarControl : MonoBehaviour {
   [SerializeField]
   [Range(1, 100)]
   private float autoRotationCheckHeight;
+  [SerializeField]
+  [Range(0, 6)]
+  private float autoRotationTimerDefault;
 
+  // private variables
+
+  private float accelerationForce = 0;
+  private float brakingForce = 0;
+  private Rigidbody rigid;
+  private int mph;
 
   private int rotations; // how many 180 rotations the car has done
   private float lastRotation; // the degree of the last y rotation
   private float totalRotation; // total y rotations since being not grounded
+
+  private float autoRotationCountdown;
 
   [SerializeField]
   private float comboTimerDefault;
@@ -73,42 +87,62 @@ public class CarControl : MonoBehaviour {
 
   private void Start() {
     rigid = GetComponent<Rigidbody>();
+    autoRotationCountdown = autoRotationTimerDefault;
   }
 
   private void Update() {
     dir = controls.Move;
     if (DataManager.AllowControl) {
       CarInput();
+      if (dir != Vector2.zero) {
+        autoRotationCountdown = autoRotationTimerDefault;
+      }
     }
     if (!grounded) {
-      if (dir == Vector2.zero) {
-        CheckGroundAngle();
-      }
       RotationCount();
+
       if (comboCount > 1) {
         comboTimer = 6f;
       }
+
+      if (autoRotationCountdown > 0) {
+        autoRotationCountdown -= Time.deltaTime;
+      }
+
     } else {
+      // grounded
       StartCoroutine(ClearTrickDisplay(rotations));
       ComboCountdown();
       rotations = 0;
       totalRotation = 0;
+      autoRotationCountdown = autoRotationTimerDefault;
     }
+
   }
 
   private void FixedUpdate() {
     CarMotor();
+    if (!grounded && autoRotationCountdown <= 0) {
+      CheckGroundAngle();
+    }
   }
 
   private void CarInput() {
     // car controls
     // accelerationForce = dir.y;
     accelerationForce = (controls.Push.IsPressed) ? 1 : 0;
+    // float pushForce = (controls.Push.WasPressed) ? 1 : 0;
     brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
       Vector3 rotationalInput = new Vector3 (dir.y * pitchMulti, dir.x * yawMulti, -controls.Roll * rollMulti);
       rigid.AddRelativeTorque(rotationalInput * airControlForce);
+    } else {
+      // rigid.AddForce(pushForce * transform.forward * 10, ForceMode.VelocityChange);
+    }
+
+    if (mph < 8) {
+      rigid.AddTorque(transform.up * dir.x * 0.2f, ForceMode.VelocityChange);
     }
 
     // @DEBUG: hopefully won't need this when a real respawn thing is implemented
@@ -121,7 +155,7 @@ public class CarControl : MonoBehaviour {
 
   private void CarMotor() {
     mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
-    Debug.Log("mph: " + mph);
+    // Debug.Log("VRROM VROOOOOOM BITCH");
     float motor = maxMotorTorque * (accelerationForce * 3f);
     float steering = maxSteeringAngle * dir.x / ((200f - (mph * 0.75f)) / 200f);
 
@@ -147,13 +181,26 @@ public class CarControl : MonoBehaviour {
   }
 
   private void CheckGroundAngle() {
-//    RaycastHit hit;
-//    if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
-//      Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
-//      Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
-      // checks normal of surface below, slerps to match the same direction outwards
-//      transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
-//    }
+    // RaycastHit hit;
+
+    // if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
+
+    //   Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
+    //   Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
+    //   // checks normal of surface below, slerps to match the same direction outwards
+    //   Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal, transform.up) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
+
+    //   Debug.Log("hit.normal " + hit.normal);
+
+    //   Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
+    //   transform.rotation = Quaternion.Euler(currentRotationVector);
+
+    // }
+
+    Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0), autoRotationSpeed * Time.deltaTime);
+
+    transform.rotation = currentRotation;
+
   }
 
   private void RotationCount() {
@@ -171,7 +218,6 @@ public class CarControl : MonoBehaviour {
         if (!comboTrickCounted) {
           comboCount++;
           DataManager.Combo = comboCount;
-          Debug.Log("Combo: " + comboCount);
           hudManager.ComboCounterTextChange(comboCount + "x");
           comboTrickCounted = true;
         }
