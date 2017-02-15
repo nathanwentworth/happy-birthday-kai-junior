@@ -174,7 +174,7 @@ public class CarControl : MonoBehaviour {
     // @DEBUG: hopefully won't need this when a real respawn thing is implemented
     if (controls.Reset.WasPressed) {
       transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-      transform.rotation = Quaternion.Euler(0, -transform.rotation.eulerAngles.y, 0);
+      transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y - 180, 0);
       Debug.Log("car reset!");
     }
   }
