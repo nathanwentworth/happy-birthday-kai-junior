@@ -68,7 +68,7 @@ public class CarControl : MonoBehaviour {
 
   public Vector3 defaultRespawnPoint { get; private set; }
   public Quaternion defaultRespawnDirection { get; private set; }
-  
+
   private Vector3 respawnPoint;
   private Quaternion respawnDirection;
 
@@ -123,12 +123,13 @@ public class CarControl : MonoBehaviour {
       rotations = 0;
       totalRotation = 0;
       autoRotationCountdown = autoRotationTimerDefault;
+
+      if (controls.SetRespawn.WasPressed) {
+        SetRespawnPoint();
+      }
     }
 
-    if (controls.SetRespawn.WasPressed) {
-      SetRespawnPoint();
-    }
-    else if (controls.GoToRespawn.WasPressed) {
+    if (controls.GoToRespawn.WasPressed) {
       RespawnAtSetPoint();
     }
 
@@ -173,7 +174,7 @@ public class CarControl : MonoBehaviour {
     // @DEBUG: hopefully won't need this when a real respawn thing is implemented
     if (controls.Reset.WasPressed) {
       transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-      transform.rotation = Quaternion.Euler(0, 0, 0);
+      transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
       Debug.Log("car reset!");
     }
   }
