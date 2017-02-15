@@ -66,6 +66,9 @@ public class CarControl : MonoBehaviour {
   private Vector2 dir;
   private Controls controls;
 
+  public Vector3 defaultRespawnPoint { get; private set; }
+  public Quaternion defaultRespawnDirection { get; private set; }
+  
   private Vector3 respawnPoint;
   private Quaternion respawnDirection;
 
@@ -91,6 +94,7 @@ public class CarControl : MonoBehaviour {
   private void Start() {
     rigid = GetComponent<Rigidbody>();
     autoRotationCountdown = autoRotationTimerDefault;
+    defaultRespawnPoint = transform.position;
   }
 
   private void Update() {
