@@ -147,13 +147,13 @@ public class CarControl : MonoBehaviour {
   }
 
   private void CheckGroundAngle() {
-    RaycastHit hit;
-    if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
-      Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
-      Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
+//    RaycastHit hit;
+//    if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
+//      Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
+//      Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
       // checks normal of surface below, slerps to match the same direction outwards
-      transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
-    }
+//      transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
+//    }
   }
 
   private void RotationCount() {
