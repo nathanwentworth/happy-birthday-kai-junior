@@ -130,15 +130,15 @@ public class CarControl : MonoBehaviour {
   private void CarInput() {
     // car controls
     // accelerationForce = dir.y;
-    // accelerationForce = (controls.Push.IsPressed) ? 1 : 0;
-    float pushForce = (controls.Push.WasPressed) ? 1 : 0;
+    accelerationForce = (controls.Push.IsPressed) ? 1 : 0;
+    // float pushForce = (controls.Push.WasPressed) ? 1 : 0;
     brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
       Vector3 rotationalInput = new Vector3 (dir.y * pitchMulti, dir.x * yawMulti, -controls.Roll * rollMulti);
       rigid.AddRelativeTorque(rotationalInput * airControlForce);
     } else {
-      rigid.AddForce(pushForce * transform.forward * 10, ForceMode.VelocityChange);
+      // rigid.AddForce(pushForce * transform.forward * 10, ForceMode.VelocityChange);
     }
 
     if (mph < 8) {
@@ -183,11 +183,19 @@ public class CarControl : MonoBehaviour {
 
   private void CheckGroundAngle() {
     RaycastHit hit;
+
     if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
+
       Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
       Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
       // checks normal of surface below, slerps to match the same direction outwards
       Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
+      Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
+      transform.rotation = Quaternion.Euler(currentRotationVector);
+
+    } else {
+
+      Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(Vector3.zero), autoRotationSpeed * Time.deltaTime);
       Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
       transform.rotation = Quaternion.Euler(currentRotationVector);
 
