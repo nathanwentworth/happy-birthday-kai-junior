@@ -87,7 +87,7 @@ public class CarControl : MonoBehaviour {
 
   private void Start() {
     rigid = GetComponent<Rigidbody>();
-    autoRotationCountdown = 0;
+    autoRotationCountdown = autoRotationTimerDefault;
   }
 
   private void Update() {
@@ -107,8 +107,6 @@ public class CarControl : MonoBehaviour {
 
       if (autoRotationCountdown > 0) {
         autoRotationCountdown -= Time.deltaTime;
-      } else {
-        CheckGroundAngle();
       }
 
     } else {
@@ -120,11 +118,13 @@ public class CarControl : MonoBehaviour {
       autoRotationCountdown = autoRotationTimerDefault;
     }
 
-    Debug.Log("autoRotationCountdown " + autoRotationCountdown);
   }
 
   private void FixedUpdate() {
     CarMotor();
+    if (!grounded && autoRotationCountdown <= 0) {
+      CheckGroundAngle();
+    }
   }
 
   private void CarInput() {
@@ -156,7 +156,6 @@ public class CarControl : MonoBehaviour {
   private void CarMotor() {
     mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
     // Debug.Log("VRROM VROOOOOOM BITCH");
-    Debug.Log("mph: " + mph);
     float motor = maxMotorTorque * (accelerationForce * 3f);
     float steering = maxSteeringAngle * dir.x / ((200f - (mph * 0.75f)) / 200f);
 
@@ -182,24 +181,26 @@ public class CarControl : MonoBehaviour {
   }
 
   private void CheckGroundAngle() {
-    RaycastHit hit;
+    // RaycastHit hit;
 
-    if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
+    // if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
 
-      Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
-      Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
-      // checks normal of surface below, slerps to match the same direction outwards
-      Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
-      Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
-      transform.rotation = Quaternion.Euler(currentRotationVector);
+    //   Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
+    //   Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
+    //   // checks normal of surface below, slerps to match the same direction outwards
+    //   Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal, transform.up) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
 
-    } else {
+    //   Debug.Log("hit.normal " + hit.normal);
 
-      Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(Vector3.zero), autoRotationSpeed * Time.deltaTime);
-      Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
-      transform.rotation = Quaternion.Euler(currentRotationVector);
+    //   Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
+    //   transform.rotation = Quaternion.Euler(currentRotationVector);
 
-    }
+    // }
+
+    Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0), autoRotationSpeed * Time.deltaTime);
+
+    transform.rotation = currentRotation;
+
   }
 
   private void RotationCount() {
@@ -217,7 +218,6 @@ public class CarControl : MonoBehaviour {
         if (!comboTrickCounted) {
           comboCount++;
           DataManager.Combo = comboCount;
-          Debug.Log("Combo: " + comboCount);
           hudManager.ComboCounterTextChange(comboCount + "x");
           comboTrickCounted = true;
         }
