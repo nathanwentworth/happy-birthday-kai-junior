@@ -66,6 +66,9 @@ public class CarControl : MonoBehaviour {
   private Vector2 dir;
   private Controls controls;
 
+  private Vector3 respawnPoint;
+  private Quaternion respawnDirection;
+
   private Vector3 groundedVelocity;
 
   private HUDManager hudManager;
@@ -118,6 +121,13 @@ public class CarControl : MonoBehaviour {
       autoRotationCountdown = autoRotationTimerDefault;
     }
 
+    if (controls.SetRespawn.WasPressed) {
+      SetRespawnPoint();
+    }
+    else if (controls.GoToRespawn.WasPressed) {
+      RespawnAtSetPoint();
+    }
+
   }
 
   private void FixedUpdate() {
@@ -125,6 +135,17 @@ public class CarControl : MonoBehaviour {
     if (!grounded && autoRotationCountdown <= 0) {
       CheckGroundAngle();
     }
+  }
+
+  private void SetRespawnPoint() {
+    respawnPoint = transform.position;
+    respawnDirection = transform.rotation;
+  }
+
+  private void RespawnAtSetPoint() {
+    transform.position = respawnPoint;
+    transform.rotation = respawnDirection;
+    rigid.velocity = Vector3.zero;
   }
 
   private void CarInput() {
