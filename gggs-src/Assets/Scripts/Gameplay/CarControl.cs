@@ -6,63 +6,187 @@ using System;
 
 public class CarControl : MonoBehaviour {
 
+  [Header("Wheel/Motor Variables")]
   public List<AxleInfo> axleInfos; // the information about each individual axle
-  public float maxMotorTorque; // maximum torque the motor can apply to wheel
-  public float maxSteeringAngle; // maximum steer angle the wheel can have
-  public float maxBrakingTorque; // how fast should you brake
-  public float controllerDeadzone = 0.15f;
+  [SerializeField]
+  [Range(500, 10000)]
+  private float maxMotorTorque; // maximum torque the motor can apply to wheel
+  [SerializeField]
+  [Range(1, 30)]
+  private float maxSteeringAngle; // maximum steer angle the wheel can have
+  [SerializeField]
+  [Range(500, 10000)]
+  private float maxBrakingTorque; // how fast should you brake
+  [SerializeField]
+  [Range(0.01f, 1f)]
+  private float controllerDeadzone = 0.15f;
+
+  [Header("Air Control Variables")]
+  [SerializeField]
+  [Range(0.1f, 1f)]
+  private float pitchMulti;
+  [SerializeField]
+  [Range(0.1f, 1f)]
+  private float yawMulti;
+  [SerializeField]
+  [Range(0.1f, 1f)]
+  private float rollMulti;
+  [SerializeField]
+  private float airControlForce;
+  [SerializeField]
+  [Range(1, 10)]
+  private float autoRotationSpeed;
+  [SerializeField]
+  [Range(1, 100)]
+  private float autoRotationCheckHeight;
+  [SerializeField]
+  [Range(0, 6)]
+  private float autoRotationTimerDefault;
+
+  // private variables
 
   private float accelerationForce = 0;
   private float brakingForce = 0;
   private Rigidbody rigid;
   private int mph;
 
+  private int rotations; // how many 180 rotations the car has done
+  private float lastRotation; // the degree of the last y rotation
+  private float totalRotation; // total y rotations since being not grounded
+
+  private float autoRotationCountdown;
+
+  [SerializeField]
+  private float comboTimerDefault;
+  private float comboTimer; // how much time is left to continue the combo timer
+  private int comboCount; // current combo counter
+  private bool runComboCountdown;
+  private bool comboTrickCounted;
+
   private Vector2 dir;
   private Controls controls;
 
+  public Vector3 defaultRespawnPoint { get; private set; }
+  public Quaternion defaultRespawnDirection { get; private set; }
+
+  private Vector3 respawnPoint;
+  private Quaternion respawnDirection;
+
   private Vector3 groundedVelocity;
+
+  private HUDManager hudManager;
 
   public float MPH { get { return mph; } }
 
-  public bool grounded { get; private set; }
+  private bool grounded;
+  private bool groundedChange;
 
   private void OnEnable() {
     controls = Controls.DefaultBindings();
   }
 
+  private void Awake() {
+    // @REFACTOR
+    // potentially slow
+    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+  }
+
   private void Start() {
     rigid = GetComponent<Rigidbody>();
+    autoRotationCountdown = autoRotationTimerDefault;
+    defaultRespawnPoint = transform.position;
   }
 
   private void Update() {
     dir = controls.Move;
     if (DataManager.AllowControl) {
       CarInput();
+      if (dir != Vector2.zero) {
+        autoRotationCountdown = autoRotationTimerDefault;
+      }
     }
+    if (!grounded) {
+      RotationCount();
+
+      if (comboCount > 1) {
+        comboTimer = 6f;
+      }
+
+      if (autoRotationCountdown > 0) {
+        autoRotationCountdown -= Time.deltaTime;
+      }
+
+    } else {
+      // grounded
+      StartCoroutine(ClearTrickDisplay(rotations));
+      ComboCountdown();
+      rotations = 0;
+      totalRotation = 0;
+      autoRotationCountdown = autoRotationTimerDefault;
+
+      if (controls.SetRespawn.WasPressed) {
+        SetRespawnPoint();
+      }
+    }
+
+    if (controls.GoToRespawn.WasPressed) {
+      RespawnAtSetPoint();
+    }
+
   }
 
   private void FixedUpdate() {
     CarMotor();
+    if (!grounded && autoRotationCountdown <= 0) {
+      CheckGroundAngle();
+    }
+  }
+
+  private void SetRespawnPoint() {
+    respawnPoint = transform.position;
+    respawnDirection = transform.rotation;
+  }
+
+  private void RespawnAtSetPoint() {
+    transform.position = respawnPoint;
+    transform.rotation = respawnDirection;
+    rigid.velocity = Vector3.zero;
   }
 
   private void CarInput() {
     // car controls
-    accelerationForce = dir.y;
-    brakingForce = (controls.Interact.IsPressed) ? 1 : 0;
+    // accelerationForce = dir.y;
+    accelerationForce = (controls.Push.IsPressed) ? 1 : 0;
+    // float pushForce = (controls.Push.WasPressed) ? 1 : 0;
+    brakingForce = (controls.Brake.IsPressed) ? 1 : 0;
 
     if (!grounded) {
-      Vector2 rotationalInput = new Vector2 (dir.y, dir.x); 
-      rigid.AddRelativeTorque(rotationalInput * 5000);
+      Vector3 rotationalInput = new Vector3 (dir.y * pitchMulti, dir.x * yawMulti, -controls.Roll * rollMulti);
+      rigid.AddRelativeTorque(rotationalInput * airControlForce);
+    } else {
+      // rigid.AddForce(pushForce * transform.forward * 10, ForceMode.VelocityChange);
+    }
+
+    if (mph < 8) {
+      rigid.AddTorque(transform.up * dir.x * 0.2f, ForceMode.VelocityChange);
+    }
+
+    // @DEBUG: hopefully won't need this when a real respawn thing is implemented
+    if (controls.Reset.WasPressed) {
+      transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+      transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y - 180, 0);
+      Debug.Log("car reset!");
     }
   }
 
   private void CarMotor() {
     mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
+    // Debug.Log("VRROM VROOOOOOM BITCH");
     float motor = maxMotorTorque * (accelerationForce * 3f);
-    float steering = maxSteeringAngle * dir.x / ((150f - (mph * 0.75f)) / 150f);
+    float steering = maxSteeringAngle * dir.x / ((200f - (mph * 0.75f)) / 200f);
 
     foreach (AxleInfo axleInfo in axleInfos) {
-      
+
       if (axleInfo.steering) {
         axleInfo.leftWheel.steerAngle = steering;
         axleInfo.rightWheel.steerAngle = steering;
@@ -82,11 +206,91 @@ public class CarControl : MonoBehaviour {
 
   }
 
+  private void CheckGroundAngle() {
+    // RaycastHit hit;
+
+    // if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
+
+    //   Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
+    //   Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
+    //   // checks normal of surface below, slerps to match the same direction outwards
+    //   Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal, transform.up) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
+
+    //   Debug.Log("hit.normal " + hit.normal);
+
+    //   Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
+    //   transform.rotation = Quaternion.Euler(currentRotationVector);
+
+    // }
+
+    Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0), autoRotationSpeed * Time.deltaTime);
+
+    transform.rotation = currentRotation;
+
+  }
+
+  private void RotationCount() {
+    // counts rotations
+    float rotDiff = Mathf.Abs(transform.rotation.y - lastRotation);
+    totalRotation += rotDiff;
+
+    int _rotations = (int)(totalRotation % 180);
+
+    if (_rotations != rotations) {
+      rotations = _rotations;
+
+      if (rotations > 0) {
+        hudManager.CarTrickTextChange("SICK " + (rotations * 180));
+        if (!comboTrickCounted) {
+          comboCount++;
+          DataManager.Combo = comboCount;
+          hudManager.ComboCounterTextChange(comboCount + "x");
+          comboTrickCounted = true;
+        }
+      }
+    }
+
+
+
+    lastRotation = transform.rotation.y;
+  }
+
+  private void ComboCountdown() {
+    string comboText = "";
+
+    if (runComboCountdown && comboCount > 0) {
+      comboTimer -= Time.deltaTime;
+      hudManager.ComboCounterImageChange(comboTimer);
+    }
+
+    if (comboTimer <= 0) {
+      if (comboCount > 1) {
+        comboCount--;
+        DataManager.Combo = comboCount;
+        comboTimer = 6f;
+        comboText = comboCount + "x";
+        hudManager.ComboCounterTextChange(comboText);        
+      } else {
+        runComboCountdown = false;
+        comboText = "";
+        hudManager.ComboCounterTextChange(comboText);
+      }
+    }
+  }
+
   private void IsGrounded(WheelCollider right, WheelCollider left) {
-    if (right.isGrounded && left.isGrounded) {
-      grounded = true;
+    bool _grounded = (right.isGrounded && left.isGrounded);
+
+    if (_grounded != grounded) {
+      grounded = _grounded;
+      DataManager.Grounded = _grounded;
+      groundedChange = true;
+      if (grounded) {
+        comboTrickCounted = false;
+        runComboCountdown = true;
+      }
     } else {
-      grounded = false;
+      groundedChange = false;
     }
   }
 
@@ -105,6 +309,14 @@ public class CarControl : MonoBehaviour {
     visualWheel.transform.rotation = rotation;
   }
 
+  private IEnumerator ClearTrickDisplay(int lastRotCount) {
+    yield return new WaitForSeconds(2);
+
+    if (lastRotCount == rotations) {
+      hudManager.CarTrickTextChange("");
+    }
+  }
+
 
 }
 
@@ -115,3 +327,4 @@ public class AxleInfo {
   public bool motor; // is this wheel attached to motor?
   public bool steering; // does this wheel apply steer angle?
 }
+
