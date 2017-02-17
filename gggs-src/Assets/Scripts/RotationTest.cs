@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RotationTest : MonoBehaviour {
-	
 
   private float autoRotationCheckHeight = 10f;
   private float autoRotationSpeed = 10f;
 
-	// Update is called once per frame
 	void Update () {
+
     RaycastHit hit;
 
     if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
@@ -27,5 +26,6 @@ public class RotationTest : MonoBehaviour {
       transform.rotation = Quaternion.Euler(currentRotationVector);
 
     }
+
 	}
 }
