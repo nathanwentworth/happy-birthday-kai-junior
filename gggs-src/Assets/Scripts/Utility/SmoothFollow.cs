@@ -48,7 +48,7 @@ public class SmoothFollow : MonoBehaviour {
   }
 
   private void Follow() {
-    if (playerTargetName == "Ball(Clone)") {
+    if (playerTargetName.StartsWith("Ball")) {
 
       transform.position = new Vector3(
         Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
@@ -56,7 +56,7 @@ public class SmoothFollow : MonoBehaviour {
         Mathf.Lerp(transform.position.z, followTarget.transform.position.z + zOffset, Time.deltaTime * speed)
       );
 
-    } else if (playerTargetName == "Cannon(Clone)") {
+    } else if (playerTargetName.StartsWith("Cannon")) {
 
       transform.position = new Vector3(
         Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
