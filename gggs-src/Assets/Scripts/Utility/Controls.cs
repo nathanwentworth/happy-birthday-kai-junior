@@ -5,19 +5,28 @@ public class Controls : PlayerActionSet
 {
   public PlayerAction Jump;
   public PlayerAction Interact;
+
+  public PlayerAction SetRespawn;
+  public PlayerAction GoToRespawn;
+
   public PlayerAction Reset;
   public PlayerAction Confirm;
   public PlayerAction Pause;
+
   public PlayerAction Brake;
   public PlayerAction Push;
+
   public PlayerAction Left;
   public PlayerAction Right;
   public PlayerAction Up;
   public PlayerAction Down;
+
   public PlayerAction LookLeft;
   public PlayerAction LookRight;
+
   public PlayerAction RollLeft;
   public PlayerAction RollRight;
+
   public PlayerTwoAxisAction Move;
   public PlayerOneAxisAction Look;
   public PlayerOneAxisAction Roll;
@@ -27,6 +36,10 @@ public class Controls : PlayerActionSet
   {
     Jump = CreatePlayerAction( "Jump" );
     Interact = CreatePlayerAction( "Interact" );
+
+    SetRespawn = CreatePlayerAction( "Set Respawn" );
+    GoToRespawn = CreatePlayerAction( "Go To Respawn" );
+
     Reset = CreatePlayerAction( "Reset" );
     Confirm = CreatePlayerAction( "Confirm" );
     Pause = CreatePlayerAction( "Pause" );
@@ -52,6 +65,15 @@ public class Controls : PlayerActionSet
 
     controls.Jump.AddDefaultBinding( Key.Space );
     controls.Jump.AddDefaultBinding( InputControlType.Action1 );
+
+    controls.Interact.AddDefaultBinding( Key.E );
+    controls.Interact.AddDefaultBinding( InputControlType.Action2 );
+
+    controls.SetRespawn.AddDefaultBinding( Key.O );
+    controls.SetRespawn.AddDefaultBinding( InputControlType.LeftBumper );
+
+    controls.GoToRespawn.AddDefaultBinding( Key.P );
+    controls.GoToRespawn.AddDefaultBinding( InputControlType.RightBumper );
 
     controls.Interact.AddDefaultBinding( Key.E );
     controls.Interact.AddDefaultBinding( InputControlType.Action2 );

@@ -116,6 +116,7 @@ public class CarControl : MonoBehaviour {
       rotations = 0;
       totalRotation = 0;
       autoRotationCountdown = autoRotationTimerDefault;
+
     }
 
   }
@@ -142,13 +143,13 @@ public class CarControl : MonoBehaviour {
     }
 
     if (mph < 8) {
-      rigid.AddTorque(transform.up * dir.x * 0.2f, ForceMode.VelocityChange);
+      transform.Rotate(transform.up * dir.x * 1f);
     }
 
     // @DEBUG: hopefully won't need this when a real respawn thing is implemented
     if (controls.Reset.WasPressed) {
       transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-      transform.rotation = Quaternion.Euler(0, 0, 0);
+      transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y - 180, 0);
       Debug.Log("car reset!");
     }
   }
