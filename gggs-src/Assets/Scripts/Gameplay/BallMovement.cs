@@ -38,8 +38,6 @@ public class BallMovement : MonoBehaviour {
       rb.AddForce(dir.x * speed * cam.transform.right);
       rb.AddForce(dir.y * speed * cam.transform.forward);
 
-      Debug.Log(cam.transform.forward);
-
       // forward needs a flat thing! child an object under the camera that is always 0,0,0 for rotation
     }
   }

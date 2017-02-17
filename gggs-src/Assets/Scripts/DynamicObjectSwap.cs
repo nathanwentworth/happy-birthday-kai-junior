@@ -5,13 +5,24 @@ using UnityEngine;
 public class DynamicObjectSwap : MonoBehaviour {
 
   [SerializeField]
-  private GameObject objectToSwap;
+  private GameObject objectToSwapPrefab;
+  private GameObject objectToSwapScene;
 
-  private void OnCollisionEnter(Collision other) {
+  private void Awake() {
+
+    objectToSwapScene = Instantiate(objectToSwapPrefab, transform.position, transform.rotation);
+    objectToSwapScene.SetActive(false);
+
+  }
+
+  private void OnTriggerEnter(Collider other) {
+
     if (other.gameObject.tag == "Player") {
-      Instantiate(objectToSwap, transform.position, transform.rotation);
       gameObject.SetActive(false);
+
+      objectToSwapScene.SetActive(true);
     }
+
   }
 
 }
