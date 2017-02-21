@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114158649956525322}
   - component: {fileID: 54773089028602650}
   - component: {fileID: 114499440589761746}
+  - component: {fileID: 114084141888035322}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Player
@@ -98,6 +99,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114084141888035322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744459608482564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18eea0e8a9c4e4e8fb38abb37b53d409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114158649956525322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,7 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff99f863e4fe84fd0a91f220a1b6909c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4500
+  airSpeed: 2500
+  groundedSpeed: 4500
 --- !u!114 &114499440589761746
 MonoBehaviour:
   m_ObjectHideFlags: 1
