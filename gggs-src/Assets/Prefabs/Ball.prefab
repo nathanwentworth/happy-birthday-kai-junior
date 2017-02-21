@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 23811204044547116}
   - component: {fileID: 114158649956525322}
   - component: {fileID: 54773089028602650}
+  - component: {fileID: 114499440589761746}
+  - component: {fileID: 114084141888035322}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Player
@@ -38,8 +40,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1744459608482564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.63, y: 2.36, z: 16.72}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 299.6, y: 100.4, z: 248.7}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -89,7 +91,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1744459608482564}
   serializedVersion: 2
-  m_Mass: 600
+  m_Mass: 400
   m_Drag: 0
   m_AngularDrag: 0.5
   m_UseGravity: 1
@@ -97,6 +99,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114084141888035322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744459608482564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18eea0e8a9c4e4e8fb38abb37b53d409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114158649956525322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,7 +121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff99f863e4fe84fd0a91f220a1b6909c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4500
+  airSpeed: 2500
+  groundedSpeed: 4500
+--- !u!114 &114499440589761746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744459608482564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf2bc63188184719a9c691dc38536a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135440856162426558
 SphereCollider:
   m_ObjectHideFlags: 1
