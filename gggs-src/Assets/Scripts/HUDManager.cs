@@ -116,6 +116,7 @@ public class HUDManager : MonoBehaviour {
     if (pausePanel == null) {
       pausePanel = GameObject.Find("PausePanel").gameObject;
     }
+    Screen.lockCursor = !paused;
     Debug.Log("object called in pause display: " + pausePanel);
     pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
     pausePanel.GetComponent<CanvasGroup>().interactable = paused;

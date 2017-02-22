@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class BallMovement : MonoBehaviour {
@@ -37,7 +38,23 @@ public class BallMovement : MonoBehaviour {
 
     grounded = Physics.Raycast(transform.position, -Vector3.up, 6);
 
+    if (controls.Reset.WasPressed) {
+      Restart();
+    }
+    if (controls.Confirm.WasPressed) {
+      MainMenu();
+    }
+
 	}
+
+  public void Restart() {
+    Scene scene = SceneManager.GetActiveScene();
+    SceneManager.LoadScene(scene.name);
+  }
+
+  public void MainMenu() {
+    SceneManager.LoadScene("options-test");
+  }
 
   private void FixedUpdate() {
     if (dir != Vector3.zero && DataManager.AllowControl) {

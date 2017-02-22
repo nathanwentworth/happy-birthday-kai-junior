@@ -13,6 +13,10 @@ public class MainMenuFunctions : MonoBehaviour {
   [SerializeField]
   private InputField otherText;
 
+  private void Start() {
+    Screen.lockCursor = false;
+  }
+
   private void Update() {
     otherButtonText.text = "Load " + otherText.text;
   }

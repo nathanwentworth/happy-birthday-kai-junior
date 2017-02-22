@@ -37,12 +37,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657862, g: 0.49641502, b: 0.57481813, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657832, g: 0.49641502, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 7
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -71,7 +71,8 @@ LightmapSettings:
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000001, guid: 168f9d2a6eac04d398307b79e2ee76e0,
+    type: 2}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
 NavMeshSettings:
@@ -1301,7 +1302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff99f863e4fe84fd0a91f220a1b6909c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4500
+  airSpeed: 3500
+  groundedSpeed: 4500
 --- !u!23 &385593761
 MeshRenderer:
   m_ObjectHideFlags: 0
