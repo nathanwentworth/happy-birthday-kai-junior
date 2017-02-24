@@ -20,8 +20,13 @@ public class SmoothRotate : SmoothFollow {
     );
 
     wantedRotationAngleY = transform.eulerAngles.y;
-    wantedRotationAngleY += controls.Look * 100 * rotationSpeed * Time.deltaTime;
+    wantedRotationAngleY += controls.Look.X * 100 * rotationSpeed * Time.deltaTime;
     currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
+
+    wantedRotationAngleX = transform.eulerAngles.x;
+    wantedRotationAngleX += controls.Look.Y * 100 * -rotationSpeed * Time.deltaTime;
+    currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
+
     var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
     transform.rotation = currentRotation;
       

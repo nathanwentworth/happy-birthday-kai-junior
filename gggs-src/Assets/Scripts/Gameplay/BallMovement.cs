@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -57,6 +57,13 @@ public class BallMovement : MonoBehaviour {
   }
 
   private void FixedUpdate() {
+
+    Transform _cam = cam.transform;
+
+    Vector3 _camPos = _cam.position;
+
+    // _camPos
+
     if (dir != Vector3.zero && DataManager.AllowControl) {
 
       float speed = (grounded) ? groundedSpeed : airSpeed;
