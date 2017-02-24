@@ -13,7 +13,7 @@ public static class DataManager {
     }
     set {
       score = value;
-      if (score > highScore) highScore = score;
+      // if (score > highScore) highScore = score;
     }
   }
 

@@ -80,7 +80,7 @@ public class Timer : MonoBehaviour {
 
     string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
 
-    hudManager.OverlayText(gameOverText + HighScoreListDisplay());
+    hudManager.OverlayText(gameOverText + "\n" + HighScoreListDisplay());
   }
 
   private string HighScoreListDisplay() {
@@ -95,7 +95,7 @@ public class Timer : MonoBehaviour {
     }
 
     for (int i = 0; i < listLength; i++) {
-      scoresDisp += highScoreList[i] + " ";
+      scoresDisp += highScoreList[i] + "\n";
     }
 
     return scoresDisp;

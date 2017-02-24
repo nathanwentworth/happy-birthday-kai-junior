@@ -40,13 +40,15 @@ public class RigidbodySleepCheck : MonoBehaviour {
           hudManager.CumulativeScoreChange();
 
           if (DataManager.Score > DataManager.HighScore) {
+
+            DataManager.HighScore = DataManager.Score;
+
             DataManager.NewHighScore = true;
             hudManager.HighScoreChange();
           }
 
           StartCoroutine(CheckMoveState());
 
-          
         }
       }
     }
