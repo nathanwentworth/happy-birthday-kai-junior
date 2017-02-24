@@ -12,7 +12,7 @@ public class SaveLoad : MonoBehaviour {
 	private int highScore { get; set; }
 	private int cumulativeScore { get; set; }
 
-	private List<string> itemsOwned { get; set; }
+	private List<int> highScoreList { get; set; }
 	
 	private void Awake() {
 		if (saveLoad == null) {
@@ -40,10 +40,12 @@ public class SaveLoad : MonoBehaviour {
 
 		highScore = DataManager.HighScore;
 		cumulativeScore = DataManager.CumulativeScore;
+		highScoreList = DataManager.HighScoreList;
 		
 		PlayerData data = new PlayerData();
 		data.highScore = highScore;
 		data.cumulativeScore = cumulativeScore;
+		data.highScoreList = highScoreList;
 		
 		bf.Serialize(file, data);
 		file.Close();	
@@ -61,6 +63,10 @@ public class SaveLoad : MonoBehaviour {
 
 			highScore = data.highScore;
 			DataManager.HighScore = highScore;
+
+			highScoreList = data.highScoreList;
+			DataManager.HighScoreList = highScoreList;
+			
 		}
 	}
 }
@@ -70,5 +76,5 @@ class PlayerData {
 	public int highScore;
 	public int cumulativeScore;
 
-	public List<string> itemsOwned;
+	public List<int> highScoreList;
 }

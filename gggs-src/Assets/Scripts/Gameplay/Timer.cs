@@ -5,23 +5,36 @@ using UnityEngine;
 public class Timer : MonoBehaviour {
 
   private HUDManager hudManager;
+  private GameFunctions gameFunctions;
 
   [SerializeField]
-  private float gameTime;
+  private float defaultGameTime;
   [SerializeField]
   private float countDownTime;
 
+  private float gameTime;
+  private bool runTimer;
+
   private void Awake() {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    gameFunctions = FindObjectOfType (typeof (GameFunctions)) as GameFunctions;
 
     DataManager.AllowControl = false;
 
     StartCoroutine(CountDownTimer(countDownTime));
   }
 
-  public void StartTimer(float totalTime) {
-    StartCoroutine(TimerCoroutine(totalTime));
+  public void StartTimer() {
+    runTimer = true;
     DataManager.AllowControl = true;
+  }
+
+  private void TimerLoop() {
+    if (gameTime > 0) {
+      gameTime =- Time.deltaTime;
+    } else {
+      gameTime = 0;
+    }
   }
 
   private IEnumerator TimerCoroutine(float totalTime) {
@@ -72,7 +85,7 @@ public class Timer : MonoBehaviour {
     }
 
     hudManager.HideOverlay();
-    StartTimer(gameTime);
+    StartTimer();
   }
 
 }
