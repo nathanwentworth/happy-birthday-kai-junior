@@ -31,10 +31,12 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
           int _points = points;
 
-          _points *= DataManager.Combo;
+          // _points *= DataManager.Combo;
 
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
+          Debug.Log("gained " + _points + " points");
+          Debug.Log("total points: "  + DataManager.Score);
           hudManager.ScoreChange();
           hudManager.CumulativeScoreChange();
 

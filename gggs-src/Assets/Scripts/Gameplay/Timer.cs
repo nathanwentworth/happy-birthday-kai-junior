@@ -14,6 +14,7 @@ public class Timer : MonoBehaviour {
 
   private float gameTime;
   private bool runTimer;
+  private bool gameOverRun;
 
   private void Awake() {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
@@ -22,24 +23,45 @@ public class Timer : MonoBehaviour {
     DataManager.AllowControl = false;
 
     StartCoroutine(CountDownTimer(countDownTime));
+
+    gameTime = defaultGameTime;
   }
 
   public void StartTimer() {
+    Debug.Log("timer starting");
     runTimer = true;
+    gameOverRun = false;
     DataManager.AllowControl = true;
   }
 
+  private void Update() {
+    TimerLoop();
+  }
+
   private void TimerLoop() {
+
     if (gameTime > 0) {
-      gameTime =- Time.deltaTime;
-    } else {
+      gameTime -= Time.deltaTime;
+    } else if (!gameOverRun) {
       gameTime = 0;
 
       DataManager.AllowControl = false;
       DataManager.GameOver = true;
 
+      List<int> highScoreList = new List<int>();
+
+      highScoreList = DataManager.HighScoreList;
+
+      highScoreList.Add(DataManager.Score);
+      highScoreList.Sort();
+      highScoreList.Reverse();
+
+      DataManager.HighScoreList = highScoreList;
+
+
       StartCoroutine(GameOverDelay(3));
 
+      gameOverRun = true;
     }
 
     hudManager.TimerChange(Mathf.Round(gameTime));
@@ -59,7 +81,25 @@ public class Timer : MonoBehaviour {
 
     string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
 
-    hudManager.OverlayText(gameOverText);
+    hudManager.OverlayText(gameOverText + HighScoreListDisplay());
+  }
+
+  private string HighScoreListDisplay() {
+    List<int> highScoreList = new List<int>();
+    highScoreList = DataManager.HighScoreList;
+    string scoresDisp = "";
+
+    int listLength = (highScoreList.Count > 5) ? 5 : highScoreList.Count;
+
+    for (int i = 0; i < highScoreList.Count; i++) {
+      Debug.Log(highScoreList[i] + " ");
+    }
+
+    for (int i = 0; i < listLength; i++) {
+      scoresDisp += highScoreList[i] + " ";
+    }
+
+    return scoresDisp;
   }
 
   private IEnumerator CountDownTimer(float countDownTime) {
