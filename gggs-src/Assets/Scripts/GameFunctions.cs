@@ -8,12 +8,6 @@ public class GameFunctions : MonoBehaviour {
   private Controls controls;
   private static HUDManager hudManager;
 
-  [SerializeField]
-  private Weapon selectedWeapon;
-
-  [SerializeField]
-  private GameObject[] weapons;
-
   private void OnEnable() {
     controls = Controls.DefaultBindings();
   }
@@ -34,13 +28,6 @@ public class GameFunctions : MonoBehaviour {
     }
     DataManager.GameOver = false;
     DataManager.Score = 0;
-    selectedWeapon = DataManager.SelectedWeapon;
-
-    if (SceneManager.GetActiveScene().name.StartsWith("main-test")) {
-      GameObject.Instantiate(weapons[(int)selectedWeapon]);
-      
-    }
-
 
   }
 
