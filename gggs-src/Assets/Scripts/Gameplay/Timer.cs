@@ -73,9 +73,8 @@ public class Timer : MonoBehaviour {
 
     // @REFACTOR: this is just bad lol
     while (DataManager.ObjectIsStillMoving) {
-      Debug.Log("starting wait for srsats");
+      Debug.Log("starting wait for objects to stop moving");
       yield return new WaitForSeconds(1);
-      Debug.Log("after wait fors etcon");
       // yield return null;
     }
 

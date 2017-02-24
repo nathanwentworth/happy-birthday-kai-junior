@@ -27,6 +27,7 @@ public class GameFunctions : MonoBehaviour {
       Debug.Log("not paused on start!");
     }
     DataManager.GameOver = false;
+    DataManager.NewHighScore = false;
     DataManager.Score = 0;
 
   }
