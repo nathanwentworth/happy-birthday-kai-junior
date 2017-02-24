@@ -19,32 +19,18 @@ public class SmoothRotate : SmoothFollow {
       Mathf.Lerp(transform.position.z, playerTarget.transform.position.z, Time.deltaTime * speed * 100)
     );
 
-    if (playerTargetName.StartsWith("Ball")) {
+    wantedRotationAngleY = transform.eulerAngles.y;
+    wantedRotationAngleY += controls.Look.X * 100 * rotationSpeed * Time.deltaTime;
+    currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
 
-      wantedRotationAngleY = transform.eulerAngles.y;
-      wantedRotationAngleY += controls.Look * 100;
-      currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
-      var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
-      transform.rotation = currentRotation;
+    wantedRotationAngleX = transform.eulerAngles.x;
+    wantedRotationAngleX += controls.Look.Y * 100 * -rotationSpeed * Time.deltaTime;
+    wantedRotationAngleX = Mathf.Clamp(wantedRotationAngleX, minLookX, maxLookX);
+    currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
+
+
+    var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
+    transform.rotation = currentRotation;
       
-    } else if (playerTargetName.StartsWith("Cannon")) {
-
-      wantedRotationAngleY = playerTarget.eulerAngles.y - 180;
-      wantedRotationAngleX = -(playerTarget.eulerAngles.x - 15);
-      currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
-      currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
-      var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
-      transform.rotation = currentRotation;
-
-    } else if (playerTargetName.StartsWith("Goblin") && DataManager.Grounded) {
-
-      wantedRotationAngleY = playerTarget.eulerAngles.y;
-      // wantedRotationAngleX = playerTarget.eulerAngles.x;
-      currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngleY, rotationSpeed * Time.deltaTime);
-      // currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
-      var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
-      transform.rotation = currentRotation;
-      
-    }
   }
 }

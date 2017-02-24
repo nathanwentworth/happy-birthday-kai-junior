@@ -23,12 +23,14 @@ public class Controls : PlayerActionSet
 
   public PlayerAction LookLeft;
   public PlayerAction LookRight;
+  public PlayerAction LookDown;
+  public PlayerAction LookUp;
 
   public PlayerAction RollLeft;
   public PlayerAction RollRight;
 
   public PlayerTwoAxisAction Move;
-  public PlayerOneAxisAction Look;
+  public PlayerTwoAxisAction Look;
   public PlayerOneAxisAction Roll;
 
 
@@ -51,10 +53,12 @@ public class Controls : PlayerActionSet
     Down = CreatePlayerAction( "Move Down" );
     LookLeft = CreatePlayerAction( "Look Left" );
     LookRight = CreatePlayerAction( "Look Right" );
+    LookDown = CreatePlayerAction( "Look Down" );
+    LookUp = CreatePlayerAction( "Look Up" );
     RollLeft = CreatePlayerAction( "Roll Left" );
     RollRight = CreatePlayerAction( "Roll Right" );
     Move = CreateTwoAxisPlayerAction( Left, Right, Down, Up );
-    Look = CreateOneAxisPlayerAction( LookLeft, LookRight);
+    Look = CreateTwoAxisPlayerAction( LookLeft, LookRight, LookDown, LookUp );
     Roll = CreateOneAxisPlayerAction( RollLeft, RollRight);
   }
 
@@ -118,8 +122,13 @@ public class Controls : PlayerActionSet
     // controls.Down.AddDefaultBinding( Mouse.NegativeY );
     controls.LookLeft.AddDefaultBinding( Mouse.NegativeX );
     controls.LookRight.AddDefaultBinding( Mouse.PositiveX );
+    controls.LookDown.AddDefaultBinding( Mouse.NegativeY );
+    controls.LookUp.AddDefaultBinding( Mouse.PositiveY );
+
     controls.LookLeft.AddDefaultBinding( InputControlType.RightStickLeft );
     controls.LookRight.AddDefaultBinding( InputControlType.RightStickRight );
+    controls.LookDown.AddDefaultBinding( InputControlType.RightStickDown );
+    controls.LookUp.AddDefaultBinding( InputControlType.RightStickUp);
 
     controls.RollLeft.AddDefaultBinding( Key.Q );
     controls.RollRight.AddDefaultBinding( Key.E );
