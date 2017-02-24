@@ -43,36 +43,17 @@ public class SmoothFollow : MonoBehaviour {
     if (!followTarget) return;
     else if (!playerTarget) return;
 
-    Follow();
     Rotate();
+    Follow();
   }
 
   private void Follow() {
-    if (playerTargetName.StartsWith("Ball")) {
 
-      transform.position = new Vector3(
-        Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.y, followTarget.transform.position.y + (yOffset + 4f), Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.z, followTarget.transform.position.z + zOffset, Time.deltaTime * speed)
-      );
-
-    } else if (playerTargetName.StartsWith("Cannon")) {
-
-      transform.position = new Vector3(
-        Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.y, followTarget.transform.position.y + (yOffset + 3f), Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.z, followTarget.transform.position.z + (zOffset - 0.5f), Time.deltaTime * speed)
-      );
-
-    } else if (playerTargetName.StartsWith("Goblin")) {
-
-      transform.position = new Vector3(
-        Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.y, followTarget.transform.position.y + (yOffset + 4f), Time.deltaTime * speed),
-        Mathf.Lerp(transform.position.z, followTarget.transform.position.z + zOffset, Time.deltaTime * speed)
-      );
-
-    }
+    transform.position = new Vector3(
+      Mathf.Lerp(transform.position.x, followTarget.transform.position.x + xOffset, Time.deltaTime * speed),
+      Mathf.Lerp(transform.position.y, followTarget.transform.position.y + (yOffset + 4f), Time.deltaTime * speed),
+      Mathf.Lerp(transform.position.z, followTarget.transform.position.z + zOffset, Time.deltaTime * speed)
+    );
 
     transform.position += transform.rotation * Vector3.forward * zOffset;
 
