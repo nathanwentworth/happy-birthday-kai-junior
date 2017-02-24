@@ -8,10 +8,21 @@ public class MenuItems : MonoBehaviour {
   [MenuItem ("Kaiju/Make Destructible")]
   static void MakeObjectDestructible () {
     for (int i = 0; i < Selection.gameObjects.Length; i++) {
-      Selection.gameObjects[i].AddComponent<BoxCollider>();
-      Selection.gameObjects[i].AddComponent<Rigidbody>();
-      Selection.gameObjects[i].AddComponent<RigidbodySleepCheck>();
-      Selection.gameObjects[i].AddComponent<ObjectDataContainer>();
+      GameObject go = Selection.gameObjects[i];
+
+      if (go.GetComponent<BoxCollider>() == null && go.GetComponent<MeshCollider>() == null && go.GetComponent<SphereCollider>() == null && go.GetComponent<CapsuleCollider>() == null) {
+        go.AddComponent<BoxCollider>();
+      }
+      if (go.GetComponent<Rigidbody>() == null) {
+        go.AddComponent<Rigidbody>();
+      }
+      if (go.GetComponent<RigidbodySleepCheck>() == null) {
+        go.AddComponent<RigidbodySleepCheck>();
+      }
+      if (go.GetComponent<ObjectDataContainer>() == null) {
+        go.AddComponent<ObjectDataContainer>();
+      }
+
     }
   }
 

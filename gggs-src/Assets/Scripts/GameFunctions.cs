@@ -57,5 +57,9 @@ public class GameFunctions : MonoBehaviour {
     hudManager.PausePanelDisplay(paused);
   }
 
+  public void HighScoreStore() {
+    DataManager.HighScoreList.Sort();
+  }
+
 
 }

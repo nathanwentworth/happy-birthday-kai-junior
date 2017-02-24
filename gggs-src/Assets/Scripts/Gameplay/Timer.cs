@@ -34,26 +34,15 @@ public class Timer : MonoBehaviour {
       gameTime =- Time.deltaTime;
     } else {
       gameTime = 0;
-    }
-  }
 
-  private IEnumerator TimerCoroutine(float totalTime) {
-    float time = totalTime;
-    while (time > 0) {
-      time -= Time.deltaTime;
-      
-      hudManager.TimerChange(Mathf.Round(time));
-      yield return null;
-    }
-
-    if (time <= 0) {
-      time = 0;
-      hudManager.TimerChange(time);
       DataManager.AllowControl = false;
       DataManager.GameOver = true;
 
       StartCoroutine(GameOverDelay(3));
+
     }
+
+    hudManager.TimerChange(Mathf.Round(gameTime));
   }
 
   public IEnumerator GameOverDelay(float wait) {
