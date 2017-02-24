@@ -78,9 +78,7 @@ public class Timer : MonoBehaviour {
       // yield return null;
     }
 
-    string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
-
-    hudManager.OverlayText(gameOverText + "\n" + HighScoreListDisplay());
+    hudManager.GameOverDisplay(HighScoreListDisplay(), DataManager.NewHighScore);
   }
 
   private string HighScoreListDisplay() {

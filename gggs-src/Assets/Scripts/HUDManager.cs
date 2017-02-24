@@ -9,15 +9,21 @@ public class HUDManager : MonoBehaviour {
   private Text scoreText;
   private Text highScoreText;
   private Text cumulativeScoreText;
+
+  private Text highScoreListText;
+
   private Text timerText;
   private Text overlayText;
+  
   private Text carTrickText;
   private Text comboCounterText;
 
   private Image comboCounterImage;
 
+  private GameObject newHighScoreText;
 
   private GameObject overlayPanel;
+  private GameObject gameOverPanel;
   private GameObject pausePanel;
 
   private void Awake() {
@@ -25,6 +31,9 @@ public class HUDManager : MonoBehaviour {
     scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
     highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
     cumulativeScoreText = GameObject.Find("CumulativeScoreText").GetComponent<Text>();
+    
+    highScoreListText = GameObject.Find("HighScoreListText").GetComponent<Text>();
+
     timerText = GameObject.Find("TimerText").GetComponent<Text>();
     overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
 
@@ -33,7 +42,10 @@ public class HUDManager : MonoBehaviour {
 
     comboCounterImage = GameObject.Find("ComboCounterImage").GetComponent<Image>();
 
+    newHighScoreText = GameObject.Find("NewHighScoreText").gameObject;
+    
     overlayPanel = GameObject.Find("OverlayPanel").gameObject;
+    gameOverPanel = GameObject.Find("GameOverPanel").gameObject;
     pausePanel = GameObject.Find("PausePanel").gameObject;
 
 
@@ -41,6 +53,13 @@ public class HUDManager : MonoBehaviour {
     // @REFACTOR: this shouldn't even be needed
     HideOverlay();
     PausePanelDisplay(false);
+
+    gameOverPanel.GetComponent<CanvasGroup>().alpha = 0;
+    gameOverPanel.GetComponent<CanvasGroup>().interactable = false;
+    gameOverPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+
+    newHighScoreText.SetActive(false);
 
   }
 
@@ -96,6 +115,16 @@ public class HUDManager : MonoBehaviour {
     }
 
     overlayText.text = text;
+  }
+
+  public void GameOverDisplay(string highScores, bool newHighScore) {
+    gameOverPanel.GetComponent<CanvasGroup>().alpha = 1;
+    gameOverPanel.GetComponent<CanvasGroup>().interactable = true;
+    gameOverPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+    highScoreListText.text = highScores;
+
+    newHighScoreText.SetActive(newHighScore);
   }
 
   public void CarTrickTextChange(string text) {
