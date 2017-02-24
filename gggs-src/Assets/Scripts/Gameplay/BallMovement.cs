@@ -58,18 +58,20 @@ public class BallMovement : MonoBehaviour {
 
   private void FixedUpdate() {
 
-    Transform _cam = cam.transform;
+    Quaternion _cam = cam.transform.rotation;
 
-    Vector3 _camPos = _cam.position;
+    _cam.eulerAngles = new Vector3 ( 0, _cam.eulerAngles.y, _cam.eulerAngles.z );
 
-    // _camPos
 
     if (dir != Vector3.zero && DataManager.AllowControl) {
 
       float speed = (grounded) ? groundedSpeed : airSpeed;
 
-      rb.AddForce(dir.x * speed * cam.transform.right);
-      rb.AddForce(dir.y * speed * cam.transform.forward);
+      // rb.AddForce(dir.x * speed * _cam.transform.right);
+      // rb.AddForce(dir.y * speed * _cam.transform.forward);
+
+      rb.AddForce(dir.x * speed * (_cam * Vector3.right));
+      rb.AddForce(dir.y * speed * (_cam * Vector3.forward));
 
       // forward needs a flat thing! child an object under the camera that is always 0,0,0 for rotation
     }

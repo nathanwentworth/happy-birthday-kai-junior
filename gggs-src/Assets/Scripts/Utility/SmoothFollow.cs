@@ -17,6 +17,12 @@ public class SmoothFollow : MonoBehaviour {
   public float yOffset = 0f;
   public float zOffset = -3f;
   public float rotationSpeed = 3.0f;
+
+  public float minLookX;
+  public float maxLookX;
+
+
+
   private Vector3 playerTargetVector;
 
   [HideInInspector]
