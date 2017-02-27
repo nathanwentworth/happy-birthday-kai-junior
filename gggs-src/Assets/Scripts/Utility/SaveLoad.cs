@@ -11,6 +11,7 @@ public class SaveLoad : MonoBehaviour {
 	
 	private int highScore { get; set; }
 	private int cumulativeScore { get; set; }
+	private string lastEnteredName { get; set; }
 
 	private List<LevelData> levelDataList { get; set; }
 	
@@ -40,11 +41,13 @@ public class SaveLoad : MonoBehaviour {
 
 		highScore = DataManager.HighScore;
 		cumulativeScore = DataManager.CumulativeScore;
+		lastEnteredName = DataManager.LastEnteredHighScoreName;
 		levelDataList = DataManager.LevelDataList;
 		
 		PlayerData data = new PlayerData();
 		data.highScore = highScore;
 		data.cumulativeScore = cumulativeScore;
+		data.lastEnteredName = lastEnteredName;
 		data.levelDataList = levelDataList;
 		
 		bf.Serialize(file, data);
@@ -58,11 +61,14 @@ public class SaveLoad : MonoBehaviour {
 			PlayerData data = (PlayerData)bf.Deserialize(file);
 			file.Close();
 
+			highScore = data.highScore;
+			DataManager.HighScore = highScore;
+
 			cumulativeScore = data.cumulativeScore;
 			DataManager.CumulativeScore = cumulativeScore;
 
-			highScore = data.highScore;
-			DataManager.HighScore = highScore;
+			lastEnteredName = data.lastEnteredName;
+			DataManager.LastEnteredHighScoreName = lastEnteredName;
 
 			levelDataList = data.levelDataList;
 			DataManager.LevelDataList = levelDataList;
@@ -76,7 +82,8 @@ class PlayerData {
 	public int highScore;
 	public int cumulativeScore;
 
-	public List<HighScoreData> highScoreList;
+	public string lastEnteredName;
+
 	public List<LevelData> levelDataList;
 
 	// @CONTINUE: this needs to save a different HighScoreData object for 
