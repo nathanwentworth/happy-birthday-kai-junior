@@ -35,7 +35,7 @@ public static class DataManager {
   public static float ObjectMovementThreshold { get; set; }
 
 
-  public static List<LevelData> levels { get; private set; }
+  public static List<LevelData> LevelDataList { get; set; }
 
   public static List<HighScoreData> HighScoreList { get; set; }
 
@@ -46,13 +46,6 @@ public static class DataManager {
   public static void ResetHighScore() {
     HighScore = 0;
   }
-
-}
-
-public class LevelData {
-
-  public string levelName;
-  public int scoreGoal;
 
 }
 

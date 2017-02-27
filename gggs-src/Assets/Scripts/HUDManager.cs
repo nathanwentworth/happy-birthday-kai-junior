@@ -51,7 +51,10 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private GameObject pausePanel;
 
-  private bool nameEntered;
+  private bool acceptTextEntry = false;
+
+  List<LevelData> levelDataList = new List<LevelData>();
+  List<HighScoreData> highScoreList = new List<HighScoreData>();
 
   private void Awake() {
 
@@ -82,7 +85,7 @@ public class HUDManager : MonoBehaviour {
   }
 
   private void Update() {
-    if (DataManager.GameOver && !nameEntered) {
+    if (acceptTextEntry) {
       GetKeyboardInput();
     }
   }
@@ -146,24 +149,53 @@ public class HUDManager : MonoBehaviour {
     highScoreListText.text = "";
 
     newHighScoreText.SetActive(DataManager.NewHighScore);
+    acceptTextEntry = true;
   }
 
   public void HighScoreEntry(string name) {
     int _score = DataManager.Score;
 
-    List<HighScoreData> highScoreList = new List<HighScoreData>();
-
-    if (DataManager.HighScoreList != null) {
-      highScoreList = DataManager.HighScoreList;
-    }
+    Scene scene = SceneManager.GetActiveScene();
+    string sceneName = scene.name;
 
     HighScoreData hs = new HighScoreData(name, _score);
 
-    highScoreList.Add(hs);
-    highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
-    highScoreList.Reverse();
+    // List<LevelData> levelDataList = new List<LevelData>();
 
-    DataManager.HighScoreList = highScoreList;
+    if (DataManager.LevelDataList != null) {
+      levelDataList = DataManager.LevelDataList;
+
+      for (int i = 0; i < levelDataList.Count; i++) {
+        if (sceneName == levelDataList[i].levelName) {
+          highScoreList = levelDataList[i].highScores;
+
+          highScoreList.Add(hs);
+          highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
+          highScoreList.Reverse();
+
+          break;
+        } else if (i == levelDataList.Count - 1) {
+          highScoreList.Add(hs);
+          highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
+          highScoreList.Reverse();
+
+          LevelData data = new LevelData(sceneName, highScoreList);
+          levelDataList.Add(data);
+          break;
+        } else {
+          Debug.Log("can't find this level name in the data list");
+        }
+      }
+    } else {
+      highScoreList.Add(hs);
+      highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
+      highScoreList.Reverse();
+
+      LevelData data = new LevelData(sceneName, highScoreList);
+      levelDataList.Add(data);
+    }
+
+    DataManager.LevelDataList = levelDataList;
 
   }
 
@@ -178,7 +210,7 @@ public class HUDManager : MonoBehaviour {
           print("User entered their name: " + nameEntryText.text);
           HighScoreEntry(nameEntryText.text);
           highScoreListText.text = HighScoreListDisplay();
-          nameEntered = true;
+          acceptTextEntry = false;
           nameEntryText.text = "";
           nameEntryHeader.SetActive(false);
           newHighScoreHeaderText.SetActive(true);
@@ -194,8 +226,6 @@ public class HUDManager : MonoBehaviour {
   }
 
   private string HighScoreListDisplay() {
-    List<HighScoreData> highScoreList = new List<HighScoreData>();
-    highScoreList = DataManager.HighScoreList;
     string scoresDisp = "";
 
     int listLength = (highScoreList.Count > 5) ? 5 : highScoreList.Count;

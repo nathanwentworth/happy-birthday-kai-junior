@@ -82,7 +82,7 @@ public class Controls : PlayerActionSet
     controls.Interact.AddDefaultBinding( Key.E );
     controls.Interact.AddDefaultBinding( InputControlType.Action2 );
 
-    controls.Reset.AddDefaultBinding( Key.R );
+    // controls.Reset.AddDefaultBinding( Key.R );
     controls.Reset.AddDefaultBinding( InputControlType.Action3 );
 
     // controls.Confirm.AddDefaultBinding( Key.Return );
