@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour {
   private float countDownTime;
 
   private float gameTime;
-  private bool runTimer;
+  private bool runTimer = false;
   private bool gameOverRun;
 
   private int _score;
@@ -27,6 +27,7 @@ public class Timer : MonoBehaviour {
     StartCoroutine(CountDownTimer(countDownTime));
 
     gameTime = defaultGameTime;
+    hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
   }
 
   public void StartTimer() {
@@ -37,7 +38,9 @@ public class Timer : MonoBehaviour {
   }
 
   private void Update() {
-    TimerLoop();
+    if (runTimer) {
+      TimerLoop();
+    }
   }
 
   private void TimerLoop() {
