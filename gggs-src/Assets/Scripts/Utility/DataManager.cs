@@ -24,7 +24,7 @@ public static class DataManager {
   public static bool NewHighScore { get; set; }
   public static int CumulativeScore { get; set; }
 
-  public static int Combo { get; set; }
+  public static string LastEnteredHighScoreName { get; set; }
 
   public static bool AllowControl { get; set; }
   public static bool Grounded { get; set; }

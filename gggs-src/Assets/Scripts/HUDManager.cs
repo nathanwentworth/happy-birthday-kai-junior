@@ -82,6 +82,9 @@ public class HUDManager : MonoBehaviour {
     // CumulativeScoreChange();
 
     nameEntryText.text = "";
+    if (DataManager.LastEnteredHighScoreName != null && DataManager.LastEnteredHighScoreName != "") {
+      nameEntryText.text = DataManager.LastEnteredHighScoreName;
+    }
   }
 
   private void Update() {
@@ -209,6 +212,7 @@ public class HUDManager : MonoBehaviour {
         if (c == "\n"[0] || c == "\r"[0]) {
           print("User entered their name: " + nameEntryText.text);
           HighScoreEntry(nameEntryText.text);
+          DataManager.LastEnteredHighScoreName = nameEntryText.text;
           highScoreListText.text = HighScoreListDisplay();
           acceptTextEntry = false;
           nameEntryText.text = "";
