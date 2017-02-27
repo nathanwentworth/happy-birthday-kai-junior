@@ -30,6 +30,8 @@ public class GameFunctions : MonoBehaviour {
     DataManager.NewHighScore = false;
     DataManager.Score = 0;
 
+    LockMouse.Lock(true);
+    
   }
 
 	private void Update () {

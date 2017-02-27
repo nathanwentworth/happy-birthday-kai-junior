@@ -16,8 +16,10 @@ public class Timer : MonoBehaviour {
   private bool runTimer;
   private bool gameOverRun;
 
+  private int _score;
+
   private void Awake() {
-    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    hudManager = GetComponent<HUDManager>();
     gameFunctions = FindObjectOfType (typeof (GameFunctions)) as GameFunctions;
 
     DataManager.AllowControl = false;
@@ -48,23 +50,12 @@ public class Timer : MonoBehaviour {
       DataManager.AllowControl = false;
       DataManager.GameOver = true;
 
-      List<int> highScoreList = new List<int>();
-
-      highScoreList = DataManager.HighScoreList;
-
-      highScoreList.Add(DataManager.Score);
-      highScoreList.Sort();
-      highScoreList.Reverse();
-
-      DataManager.HighScoreList = highScoreList;
-
-
       StartCoroutine(GameOverDelay(3));
 
       gameOverRun = true;
     }
 
-    hudManager.TimerChange(Mathf.Round(gameTime));
+    hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
   }
 
   public IEnumerator GameOverDelay(float wait) {
@@ -78,25 +69,8 @@ public class Timer : MonoBehaviour {
       // yield return null;
     }
 
-    hudManager.GameOverDisplay(HighScoreListDisplay(), DataManager.NewHighScore);
-  }
-
-  private string HighScoreListDisplay() {
-    List<int> highScoreList = new List<int>();
-    highScoreList = DataManager.HighScoreList;
-    string scoresDisp = "";
-
-    int listLength = (highScoreList.Count > 5) ? 5 : highScoreList.Count;
-
-    for (int i = 0; i < highScoreList.Count; i++) {
-      Debug.Log(highScoreList[i] + " ");
-    }
-
-    for (int i = 0; i < listLength; i++) {
-      scoresDisp += highScoreList[i] + "\n";
-    }
-
-    return scoresDisp;
+    hudManager.GameOverDisplay();
+    LockMouse.Lock(false);
   }
 
   private IEnumerator CountDownTimer(float countDownTime) {

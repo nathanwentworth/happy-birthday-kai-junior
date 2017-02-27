@@ -37,7 +37,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.CumulativeScore += _points;
 
           hudManager.ScoreChange();
-          hudManager.CumulativeScoreChange();
+          // hudManager.CumulativeScoreChange();
 
           if (DataManager.Score > DataManager.HighScore) {
 

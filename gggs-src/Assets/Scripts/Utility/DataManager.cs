@@ -37,7 +37,7 @@ public static class DataManager {
 
   public static List<LevelData> levels { get; private set; }
 
-  public static List<int> HighScoreList { get; set; }
+  public static List<HighScoreData> HighScoreList { get; set; }
 
   public static void UpdateHighScore() {
     HighScore = Score;

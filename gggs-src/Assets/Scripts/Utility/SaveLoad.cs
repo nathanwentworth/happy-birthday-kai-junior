@@ -12,7 +12,7 @@ public class SaveLoad : MonoBehaviour {
 	private int highScore { get; set; }
 	private int cumulativeScore { get; set; }
 
-	private List<int> highScoreList { get; set; }
+	private List<HighScoreData> highScoreList { get; set; }
 	
 	private void Awake() {
 		if (saveLoad == null) {
@@ -66,7 +66,7 @@ public class SaveLoad : MonoBehaviour {
 
 			highScoreList = data.highScoreList;
 			DataManager.HighScoreList = highScoreList;
-			
+
 		}
 	}
 }
@@ -76,5 +76,16 @@ class PlayerData {
 	public int highScore;
 	public int cumulativeScore;
 
-	public List<int> highScoreList;
+	public List<HighScoreData> highScoreList;
+}
+
+[Serializable]
+public class HighScoreData {
+	public string name;
+	public int score;
+
+	public HighScoreData(string _name, int _score) {
+		name = _name;
+		score = _score;
+	}
 }
