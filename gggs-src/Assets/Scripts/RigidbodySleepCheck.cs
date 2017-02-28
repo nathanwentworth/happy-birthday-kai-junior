@@ -31,21 +31,24 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
           int _points = points;
 
-          _points *= DataManager.Combo;
+          // _points *= DataManager.Combo;
 
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
-          hudManager.ScoreChange();
-          hudManager.CumulativeScoreChange();
 
-          if (DataManager.Score >= DataManager.HighScore) {
+          hudManager.ScoreChange();
+          // hudManager.CumulativeScoreChange();
+
+          if (DataManager.Score > DataManager.HighScore) {
+
+            DataManager.HighScore = DataManager.Score;
+
             DataManager.NewHighScore = true;
             hudManager.HighScoreChange();
           }
 
           StartCoroutine(CheckMoveState());
 
-          
         }
       }
     }

@@ -50,19 +50,6 @@ public class CarControl : MonoBehaviour {
   private Rigidbody rigid;
   private int mph;
 
-  private int rotations; // how many 180 rotations the car has done
-  private float lastRotation; // the degree of the last y rotation
-  private float totalRotation; // total y rotations since being not grounded
-
-  private float autoRotationCountdown;
-
-  [SerializeField]
-  private float comboTimerDefault;
-  private float comboTimer; // how much time is left to continue the combo timer
-  private int comboCount; // current combo counter
-  private bool runComboCountdown;
-  private bool comboTrickCounted;
-
   private Vector2 dir;
   private Controls controls;
 
@@ -87,45 +74,17 @@ public class CarControl : MonoBehaviour {
 
   private void Start() {
     rigid = GetComponent<Rigidbody>();
-    autoRotationCountdown = autoRotationTimerDefault;
   }
 
   private void Update() {
     dir = controls.Move;
     if (DataManager.AllowControl) {
       CarInput();
-      if (dir != Vector2.zero) {
-        autoRotationCountdown = autoRotationTimerDefault;
-      }
     }
-    if (!grounded) {
-      RotationCount();
-
-      if (comboCount > 1) {
-        comboTimer = 6f;
-      }
-
-      if (autoRotationCountdown > 0) {
-        autoRotationCountdown -= Time.deltaTime;
-      }
-
-    } else {
-      // grounded
-      StartCoroutine(ClearTrickDisplay(rotations));
-      ComboCountdown();
-      rotations = 0;
-      totalRotation = 0;
-      autoRotationCountdown = autoRotationTimerDefault;
-
-    }
-
   }
 
   private void FixedUpdate() {
     CarMotor();
-    if (!grounded && autoRotationCountdown <= 0) {
-      CheckGroundAngle();
-    }
   }
 
   private void CarInput() {
@@ -181,78 +140,6 @@ public class CarControl : MonoBehaviour {
 
   }
 
-  private void CheckGroundAngle() {
-    // RaycastHit hit;
-
-    // if (Physics.Raycast(transform.position, Vector3.down, out hit, autoRotationCheckHeight)) {
-
-    //   Debug.DrawLine(transform.position, hit.point, Color.red, 3f, false);
-    //   Debug.DrawRay(hit.point, hit.normal * 10, Color.green, 3f, false);
-    //   // checks normal of surface below, slerps to match the same direction outwards
-    //   Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(hit.normal, transform.up) * Quaternion.Euler(90, 0, 0), autoRotationSpeed * Time.deltaTime);
-
-    //   Debug.Log("hit.normal " + hit.normal);
-
-    //   Vector3 currentRotationVector = new Vector3(currentRotation.eulerAngles.x, transform.eulerAngles.y, currentRotation.eulerAngles.z);
-    //   transform.rotation = Quaternion.Euler(currentRotationVector);
-
-    // }
-
-    Quaternion currentRotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0), autoRotationSpeed * Time.deltaTime);
-
-    transform.rotation = currentRotation;
-
-  }
-
-  private void RotationCount() {
-    // counts rotations
-    float rotDiff = Mathf.Abs(transform.rotation.y - lastRotation);
-    totalRotation += rotDiff;
-
-    int _rotations = (int)(totalRotation % 180);
-
-    if (_rotations != rotations) {
-      rotations = _rotations;
-
-      if (rotations > 0) {
-        hudManager.CarTrickTextChange("SICK " + (rotations * 180));
-        if (!comboTrickCounted) {
-          comboCount++;
-          DataManager.Combo = comboCount;
-          hudManager.ComboCounterTextChange(comboCount + "x");
-          comboTrickCounted = true;
-        }
-      }
-    }
-
-
-
-    lastRotation = transform.rotation.y;
-  }
-
-  private void ComboCountdown() {
-    string comboText = "";
-
-    if (runComboCountdown && comboCount > 0) {
-      comboTimer -= Time.deltaTime;
-      hudManager.ComboCounterImageChange(comboTimer);
-    }
-
-    if (comboTimer <= 0) {
-      if (comboCount > 1) {
-        comboCount--;
-        DataManager.Combo = comboCount;
-        comboTimer = 6f;
-        comboText = comboCount + "x";
-        hudManager.ComboCounterTextChange(comboText);        
-      } else {
-        runComboCountdown = false;
-        comboText = "";
-        hudManager.ComboCounterTextChange(comboText);
-      }
-    }
-  }
-
   private void IsGrounded(WheelCollider right, WheelCollider left) {
     bool _grounded = (right.isGrounded && left.isGrounded);
 
@@ -260,10 +147,6 @@ public class CarControl : MonoBehaviour {
       grounded = _grounded;
       DataManager.Grounded = _grounded;
       groundedChange = true;
-      if (grounded) {
-        comboTrickCounted = false;
-        runComboCountdown = true;
-      }
     } else {
       groundedChange = false;
     }
@@ -287,9 +170,6 @@ public class CarControl : MonoBehaviour {
   private IEnumerator ClearTrickDisplay(int lastRotCount) {
     yield return new WaitForSeconds(2);
 
-    if (lastRotCount == rotations) {
-      hudManager.CarTrickTextChange("");
-    }
   }
 
 
