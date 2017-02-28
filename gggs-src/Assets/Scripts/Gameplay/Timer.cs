@@ -5,42 +5,60 @@ using UnityEngine;
 public class Timer : MonoBehaviour {
 
   private HUDManager hudManager;
+  private GameFunctions gameFunctions;
 
   [SerializeField]
-  private float gameTime;
+  private float defaultGameTime;
   [SerializeField]
   private float countDownTime;
 
+  private float gameTime;
+  private bool runTimer = false;
+  private bool gameOverRun;
+
+  private int _score;
+
   private void Awake() {
-    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    hudManager = GetComponent<HUDManager>();
+    gameFunctions = FindObjectOfType (typeof (GameFunctions)) as GameFunctions;
 
     DataManager.AllowControl = false;
 
     StartCoroutine(CountDownTimer(countDownTime));
+
+    gameTime = defaultGameTime;
+    hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
   }
 
-  public void StartTimer(float totalTime) {
-    StartCoroutine(TimerCoroutine(totalTime));
+  public void StartTimer() {
+    Debug.Log("timer starting");
+    runTimer = true;
+    gameOverRun = false;
     DataManager.AllowControl = true;
   }
 
-  private IEnumerator TimerCoroutine(float totalTime) {
-    float time = totalTime;
-    while (time > 0) {
-      time -= Time.deltaTime;
-      
-      hudManager.TimerChange(Mathf.Round(time));
-      yield return null;
+  private void Update() {
+    if (runTimer) {
+      TimerLoop();
     }
+  }
 
-    if (time <= 0) {
-      time = 0;
-      hudManager.TimerChange(time);
+  private void TimerLoop() {
+
+    if (gameTime > 0) {
+      gameTime -= Time.deltaTime;
+    } else if (!gameOverRun) {
+      gameTime = 0;
+
       DataManager.AllowControl = false;
       DataManager.GameOver = true;
 
       StartCoroutine(GameOverDelay(3));
+
+      gameOverRun = true;
     }
+
+    hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
   }
 
   public IEnumerator GameOverDelay(float wait) {
@@ -49,15 +67,13 @@ public class Timer : MonoBehaviour {
 
     // @REFACTOR: this is just bad lol
     while (DataManager.ObjectIsStillMoving) {
-      Debug.Log("starting wait for srsats");
+      Debug.Log("starting wait for objects to stop moving");
       yield return new WaitForSeconds(1);
-      Debug.Log("after wait fors etcon");
       // yield return null;
     }
 
-    string gameOverText = (DataManager.NewHighScore) ? "GAME OVER\n" + "Score: " + DataManager.Score + "\n" + "NEW HIGH SCORE!" : "GAME OVER\n" + "Score: " + DataManager.Score;
-
-    hudManager.OverlayText(gameOverText);
+    hudManager.GameOverDisplay();
+    LockMouse.Lock(false);
   }
 
   private IEnumerator CountDownTimer(float countDownTime) {
@@ -72,7 +88,7 @@ public class Timer : MonoBehaviour {
     }
 
     hudManager.HideOverlay();
-    StartTimer(gameTime);
+    StartTimer();
   }
 
 }

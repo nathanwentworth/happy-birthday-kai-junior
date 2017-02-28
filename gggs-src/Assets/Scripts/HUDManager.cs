@@ -6,48 +6,91 @@ using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour {
 
+  [Header("HUD Elements")]
+
+  [SerializeField]
   private Text scoreText;
+  [SerializeField]
   private Text highScoreText;
-  private Text cumulativeScoreText;
+  // [SerializeField]
+  // private Text cumulativeScoreText;
+
+  [SerializeField]
   private Text timerText;
+  [SerializeField]
+  private Image timerImage;
+  [SerializeField]
   private Text overlayText;
-  private Text carTrickText;
-  private Text comboCounterText;
 
-  private Image comboCounterImage;
+  [Header("Game Over Display")]
 
+  [SerializeField]
+  private Text highScoreListText;
+  [SerializeField]
+  private Text nameEntryText;
 
+  [SerializeField]
+  private GameObject newHighScoreText;
+  [SerializeField]
+  private GameObject newHighScoreHeaderText;
+  [SerializeField]
+  private GameObject nameEntryHeader;
+
+  [SerializeField]
   private GameObject overlayPanel;
+  [SerializeField]
+  private GameObject gameOverPanel;
+
+  [SerializeField]
+  private Button restartButton;
+  [SerializeField]
+  private Button changeLevelButton;
+
+  [Header("Pause")]
+
+  [SerializeField]
   private GameObject pausePanel;
 
+  private bool acceptTextEntry = false;
+
+  List<LevelData> levelDataList = new List<LevelData>();
+  List<HighScoreData> highScoreList = new List<HighScoreData>();
+
   private void Awake() {
-
-    scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
-    highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
-    cumulativeScoreText = GameObject.Find("CumulativeScoreText").GetComponent<Text>();
-    timerText = GameObject.Find("TimerText").GetComponent<Text>();
-    overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
-
-    carTrickText = GameObject.Find("CarTrickText").GetComponent<Text>();
-    comboCounterText = GameObject.Find("ComboCounterText").GetComponent<Text>();
-
-    comboCounterImage = GameObject.Find("ComboCounterImage").GetComponent<Image>();
-
-    overlayPanel = GameObject.Find("OverlayPanel").gameObject;
-    pausePanel = GameObject.Find("PausePanel").gameObject;
-
 
     // @DEBUG
     // @REFACTOR: this shouldn't even be needed
     HideOverlay();
     PausePanelDisplay(false);
 
+    gameOverPanel.GetComponent<CanvasGroup>().alpha = 0;
+    gameOverPanel.GetComponent<CanvasGroup>().interactable = false;
+    gameOverPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+    newHighScoreText.SetActive(false);
+    nameEntryHeader.SetActive(true);
+    newHighScoreHeaderText.SetActive(false);
+
+    restartButton.interactable = false;
+    changeLevelButton.interactable = false;
+
   }
 
   private void Start() {
     ScoreChange();
     HighScoreChange();
-    CumulativeScoreChange();
+    // CumulativeScoreChange();
+
+    nameEntryText.text = "";
+    if (DataManager.LastEnteredHighScoreName != null && DataManager.LastEnteredHighScoreName != "") {
+      nameEntryText.text = DataManager.LastEnteredHighScoreName;
+    }
+  }
+
+  private void Update() {
+    if (acceptTextEntry) {
+      GetKeyboardInput();
+    }
   }
 
   // @DEBUG
@@ -56,7 +99,7 @@ public class HUDManager : MonoBehaviour {
   public void UpdateScoreDisplays() {
     ScoreChange();
     HighScoreChange();
-    CumulativeScoreChange();
+    // CumulativeScoreChange();
   }
 
   public void ScoreChange() {
@@ -67,16 +110,19 @@ public class HUDManager : MonoBehaviour {
     highScoreText.text = "High Score: " + DataManager.HighScore;
   }
 
-  public void CumulativeScoreChange() {
-    cumulativeScoreText.text = "Cumulative Score: " + DataManager.CumulativeScore;
-  }
+  // public void CumulativeScoreChange() {
+  //   cumulativeScoreText.text = "Cumulative Score: " + DataManager.CumulativeScore;
+  // }
 
-  public void TimerChange(float t) {
-    timerText.text = "Time Left: " + t;
-  }
+  public void TimerChange(float t, float gameTime) {
+    timerText.text = "" + t;
+    timerImage.fillAmount = t / gameTime;
 
-  public void ComboCounterImageChange(float time) {
-    comboCounterImage.fillAmount = (time / 6f);
+    if (t < 10) {
+      timerImage.color = Color.red;
+    } else {
+      timerImage.color = Color.white;
+    }
   }
 
   public void OverlayText(string text) {
@@ -98,12 +144,101 @@ public class HUDManager : MonoBehaviour {
     overlayText.text = text;
   }
 
-  public void CarTrickTextChange(string text) {
-    carTrickText.text = "" + text;
+  public void GameOverDisplay() {
+    gameOverPanel.GetComponent<CanvasGroup>().alpha = 1;
+    gameOverPanel.GetComponent<CanvasGroup>().interactable = true;
+    gameOverPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+    highScoreListText.text = "";
+
+    newHighScoreText.SetActive(DataManager.NewHighScore);
+    acceptTextEntry = true;
   }
 
-  public void ComboCounterTextChange(string text) {
-    comboCounterText.text = "" + text;
+  public void HighScoreEntry(string name) {
+    int _score = DataManager.Score;
+
+    Scene scene = SceneManager.GetActiveScene();
+    string sceneName = scene.name;
+
+    HighScoreData hs = new HighScoreData(name, _score);
+
+    // List<LevelData> levelDataList = new List<LevelData>();
+
+    if (DataManager.LevelDataList != null) {
+      levelDataList = DataManager.LevelDataList;
+
+      for (int i = 0; i < levelDataList.Count; i++) {
+        if (sceneName == levelDataList[i].levelName) {
+          highScoreList = levelDataList[i].highScores;
+
+          highScoreList.Add(hs);
+          highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
+          highScoreList.Reverse();
+
+          break;
+        } else if (i == levelDataList.Count - 1) {
+          highScoreList.Add(hs);
+          highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
+          highScoreList.Reverse();
+
+          LevelData data = new LevelData(sceneName, highScoreList);
+          levelDataList.Add(data);
+          break;
+        } else {
+          Debug.Log("can't find this level name in the data list");
+        }
+      }
+    } else {
+      highScoreList.Add(hs);
+      highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
+      highScoreList.Reverse();
+
+      LevelData data = new LevelData(sceneName, highScoreList);
+      levelDataList.Add(data);
+    }
+
+    DataManager.LevelDataList = levelDataList;
+
+  }
+
+  private void GetKeyboardInput() {
+    foreach (char c in Input.inputString) {
+      if (c == "\b"[0]) {
+        if (nameEntryText.text.Length != 0) {
+          nameEntryText.text = nameEntryText.text.Substring(0, nameEntryText.text.Length - 1);    
+        }
+      } else {
+        if (c == "\n"[0] || c == "\r"[0]) {
+          print("User entered their name: " + nameEntryText.text);
+          HighScoreEntry(nameEntryText.text);
+          DataManager.LastEnteredHighScoreName = nameEntryText.text;
+          highScoreListText.text = HighScoreListDisplay();
+          acceptTextEntry = false;
+          nameEntryText.text = "";
+          nameEntryHeader.SetActive(false);
+          newHighScoreHeaderText.SetActive(true);
+
+          restartButton.interactable = true;
+          changeLevelButton.interactable = true;
+
+        } else if (nameEntryText.text.Length < 16) {
+          nameEntryText.text += c.ToString();
+        }
+      }
+    }
+  }
+
+  private string HighScoreListDisplay() {
+    string scoresDisp = "";
+
+    int listLength = (highScoreList.Count > 5) ? 5 : highScoreList.Count;
+
+    for (int i = 0; i < listLength; i++) {
+      scoresDisp += highScoreList[i].name + ": " + highScoreList[i].score + "\n";
+    }
+
+    return scoresDisp;
   }
 
   public void HideOverlay() {
@@ -116,8 +251,7 @@ public class HUDManager : MonoBehaviour {
     if (pausePanel == null) {
       pausePanel = GameObject.Find("PausePanel").gameObject;
     }
-    Screen.lockCursor = !paused;
-    Debug.Log("object called in pause display: " + pausePanel);
+    LockMouse.Lock(!paused);
     pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
     pausePanel.GetComponent<CanvasGroup>().interactable = paused;
     pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = paused;
