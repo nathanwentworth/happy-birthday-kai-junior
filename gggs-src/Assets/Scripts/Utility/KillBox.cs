@@ -14,6 +14,8 @@ public class KillBox : MonoBehaviour {
       other.transform.rotation = respawnDirection;
       other.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+    } else {
+      other.gameObject.SetActive(false);
     }
 
   }
