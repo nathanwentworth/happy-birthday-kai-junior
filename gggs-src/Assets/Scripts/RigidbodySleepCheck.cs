@@ -65,6 +65,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private IEnumerator CheckMoveState() {
     while (rb.velocity.magnitude > threshold) {
       DataManager.ObjectIsStillMoving = true;
+      Debug.Log(gameObject.name + " is still moving, speed is: " + rb.velocity.magnitude);
       yield return null;
     }
 
