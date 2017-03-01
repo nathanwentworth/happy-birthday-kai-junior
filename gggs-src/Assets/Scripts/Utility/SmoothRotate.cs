@@ -25,7 +25,21 @@ public class SmoothRotate : SmoothFollow {
 
     wantedRotationAngleX = transform.eulerAngles.x;
     wantedRotationAngleX += controls.Look.Y * 100 * -rotationSpeed * Time.deltaTime;
-    wantedRotationAngleX = Mathf.Clamp(wantedRotationAngleX, minLookX, maxLookX);
+
+    Debug.Log(wantedRotationAngleX);
+
+    if (wantedRotationAngleX > 180) {
+      wantedRotationAngleX = wantedRotationAngleX - 360;
+    }
+
+    if (wantedRotationAngleX >= maxLookX) {
+      wantedRotationAngleX = maxLookX;
+    } else if (wantedRotationAngleX <= minLookX) {
+      wantedRotationAngleX = minLookX;
+    }
+
+
+    // wantedRotationAngleX = Mathf.Clamp(wantedRotationAngleX, minLookX, maxLookX);
     currentRotationAngleX = Mathf.LerpAngle(currentRotationAngleX, wantedRotationAngleX, rotationSpeed * Time.deltaTime);
 
 
