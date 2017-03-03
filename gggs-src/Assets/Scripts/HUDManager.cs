@@ -37,8 +37,12 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private GameObject nameEntryHeader;
 
+  [Header("Panels")]
+
   [SerializeField]
   private GameObject overlayPanel;
+  [SerializeField]
+  private GameObject howToPanel;
   [SerializeField]
   private GameObject gameOverPanel;
 
@@ -143,6 +147,12 @@ public class HUDManager : MonoBehaviour {
     }
 
     overlayText.text = text;
+  }
+
+  public void HowToPanelHide() {
+    howToPanel.GetComponent<CanvasGroup>().alpha = 0;
+    howToPanel.GetComponent<CanvasGroup>().interactable = false;
+    howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
   }
 
   public void GameOverDisplay() {
