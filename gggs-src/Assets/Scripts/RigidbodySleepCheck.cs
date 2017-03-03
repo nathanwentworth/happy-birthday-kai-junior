@@ -27,25 +27,28 @@ public class RigidbodySleepCheck : MonoBehaviour {
     		if (rb.velocity.magnitude > 2) {
           knockedOver = true;
           Renderer rend = GetComponent<Renderer>();
-          rend.material.color = Color.black;
+          rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);;
 
           int _points = points;
 
-          _points *= DataManager.Combo;
+          // _points *= DataManager.Combo;
 
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
-          hudManager.ScoreChange();
-          hudManager.CumulativeScoreChange();
 
-          if (DataManager.Score >= DataManager.HighScore) {
+          hudManager.ScoreChange();
+          // hudManager.CumulativeScoreChange();
+
+          if (DataManager.Score > DataManager.HighScore) {
+
+            DataManager.HighScore = DataManager.Score;
+
             DataManager.NewHighScore = true;
             hudManager.HighScoreChange();
           }
 
           StartCoroutine(CheckMoveState());
 
-          
         }
       }
     }

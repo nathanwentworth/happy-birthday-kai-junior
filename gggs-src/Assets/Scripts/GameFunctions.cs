@@ -8,12 +8,6 @@ public class GameFunctions : MonoBehaviour {
   private Controls controls;
   private static HUDManager hudManager;
 
-  [SerializeField]
-  private Weapon selectedWeapon;
-
-  [SerializeField]
-  private GameObject[] weapons;
-
   private void OnEnable() {
     controls = Controls.DefaultBindings();
   }
@@ -33,15 +27,11 @@ public class GameFunctions : MonoBehaviour {
       Debug.Log("not paused on start!");
     }
     DataManager.GameOver = false;
+    DataManager.NewHighScore = false;
     DataManager.Score = 0;
-    selectedWeapon = DataManager.SelectedWeapon;
 
-    if (SceneManager.GetActiveScene().name.StartsWith("main-test")) {
-      GameObject.Instantiate(weapons[(int)selectedWeapon]);
-      
-    }
-
-
+    LockMouse.Lock(true);
+    
   }
 
 	private void Update () {
@@ -68,6 +58,10 @@ public class GameFunctions : MonoBehaviour {
     bool paused = DataManager.Paused;
     Time.timeScale = (paused) ? 0.000001f : 1f;
     hudManager.PausePanelDisplay(paused);
+  }
+
+  public void HighScoreStore() {
+    DataManager.HighScoreList.Sort();
   }
 
 
