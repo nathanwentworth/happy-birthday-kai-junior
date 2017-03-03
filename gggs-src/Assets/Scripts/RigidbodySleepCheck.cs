@@ -22,7 +22,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 	}
 	
 	private void OnCollisionStay (Collision other) {
-    if (other.gameObject.GetComponent<Rigidbody>() != null) {
+    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null) {
       if (!knockedOver) {
     		if (rb.velocity.magnitude > 2) {
           knockedOver = true;
