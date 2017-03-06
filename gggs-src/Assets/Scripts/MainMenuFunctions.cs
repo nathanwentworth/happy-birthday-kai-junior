@@ -6,24 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuFunctions : MonoBehaviour {
 
-  [SerializeField]
-  private Text otherButtonText;
-  [SerializeField]
-  private Button otherButton;
-  [SerializeField]
-  private InputField otherText;
-
   private void Start() {
     Screen.lockCursor = false;
-  }
-
-  private void Update() {
-    otherButtonText.text = "Load " + otherText.text;
-  }
-
-  public void LoadOther() {
-    string scene = otherText.text;
-    LoadScene(scene);
   }
 
   public void LoadScene(string scene) {
