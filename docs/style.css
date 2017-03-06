@@ -21,7 +21,7 @@ html,body {
 
 	background: #222;
 
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Nunito', sans-serif;
 }
 
 /* # defaults */
@@ -54,7 +54,7 @@ pre {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background: url("img/paintover.png") center center fixed;
+	background: url("img/Official-Banner-opt.jpg") center center fixed;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -87,16 +87,27 @@ p {
 	margin: 32px auto;
 }
 
-h1,
-h2,
-h3,
-h4 {
+h1 {
 	font-family: 'Lilita One', cursive;
 	text-align: center;
+	font-size: 6rem;
+  letter-spacing: 0.075em;
+  margin: 0.5em;
+  font-weight: normal;
+  animation: anim-in 1s;
 }
 
-h1 {
-	font-size: 4rem;
+h2 {
+  font-size: 2rem;
+  margin: 0.5em;
+  /*letter-spacing: 0.1em;*/
+  margin-bottom: 1.5em;
+}
+
+.sub-text {
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+  animation: anim-in 1s;
 }
 
 /* # extras */
@@ -141,5 +152,16 @@ hr {
 	h2 { font-size: 2.25rem; }
 	h3 { font-size: 1.75rem; }
 	h4 { font-size: 1.125rem; }	
+}
+
+@keyframes anim-in {
+  from {
+    transform: translateY(-0.5em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
