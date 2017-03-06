@@ -22,12 +22,12 @@ public class RigidbodySleepCheck : MonoBehaviour {
 	}
 	
 	private void OnCollisionStay (Collision other) {
-    if (other.gameObject.GetComponent<Rigidbody>() != null) {
+    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null) {
       if (!knockedOver) {
     		if (rb.velocity.magnitude > 2) {
           knockedOver = true;
           Renderer rend = GetComponent<Renderer>();
-          rend.material.color = Color.black;
+          rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);;
 
           int _points = points;
 
