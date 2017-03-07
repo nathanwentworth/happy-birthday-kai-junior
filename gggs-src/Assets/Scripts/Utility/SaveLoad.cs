@@ -11,8 +11,9 @@ public class SaveLoad : MonoBehaviour {
 	
 	private int highScore { get; set; }
 	private int cumulativeScore { get; set; }
+	private string lastEnteredName { get; set; }
 
-	private List<string> itemsOwned { get; set; }
+	private List<LevelData> levelDataList { get; set; }
 	
 	private void Awake() {
 		if (saveLoad == null) {
@@ -40,10 +41,14 @@ public class SaveLoad : MonoBehaviour {
 
 		highScore = DataManager.HighScore;
 		cumulativeScore = DataManager.CumulativeScore;
+		lastEnteredName = DataManager.LastEnteredHighScoreName;
+		levelDataList = DataManager.LevelDataList;
 		
 		PlayerData data = new PlayerData();
 		data.highScore = highScore;
 		data.cumulativeScore = cumulativeScore;
+		data.lastEnteredName = lastEnteredName;
+		data.levelDataList = levelDataList;
 		
 		bf.Serialize(file, data);
 		file.Close();	
@@ -56,11 +61,18 @@ public class SaveLoad : MonoBehaviour {
 			PlayerData data = (PlayerData)bf.Deserialize(file);
 			file.Close();
 
+			highScore = data.highScore;
+			DataManager.HighScore = highScore;
+
 			cumulativeScore = data.cumulativeScore;
 			DataManager.CumulativeScore = cumulativeScore;
 
-			highScore = data.highScore;
-			DataManager.HighScore = highScore;
+			lastEnteredName = data.lastEnteredName;
+			DataManager.LastEnteredHighScoreName = lastEnteredName;
+
+			levelDataList = data.levelDataList;
+			DataManager.LevelDataList = levelDataList;
+
 		}
 	}
 }
@@ -70,5 +82,35 @@ class PlayerData {
 	public int highScore;
 	public int cumulativeScore;
 
-	public List<string> itemsOwned;
+	public string lastEnteredName;
+
+	public List<LevelData> levelDataList;
+
+	// @CONTINUE: this needs to save a different HighScoreData object for 
+	//            every level. so maybe a dictionary of key value pairs
+	//            <string, List<HighScoreData>> where string is the level
+	//            name? alternatively, nested list where the exterior index
+	//            is the same as the level build index. could cause issues though
+}
+
+[Serializable]
+public class LevelData {
+	public string levelName;
+	public List<HighScoreData> highScores;
+
+	public LevelData(string _levelName, List<HighScoreData> _highScores) {
+		levelName = _levelName;
+		highScores = _highScores;
+	}
+}
+
+[Serializable]
+public class HighScoreData {
+	public string name;
+	public int score;
+
+	public HighScoreData(string _name, int _score) {
+		name = _name;
+		score = _score;
+	}
 }

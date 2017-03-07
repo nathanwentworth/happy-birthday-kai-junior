@@ -7,10 +7,11 @@ public class CarJumpCameraSwitch : MonoBehaviour {
   private Camera jumpCam;
   private Camera carCam;
   private Timer timer;
+
   [Header("Should the Game Over panel be displayed when entered?")]
   [SerializeField]
   private bool gameOver;
-
+  
   private void Awake() {
     carCam = GameObject.Find("Main Camera").GetComponent<Camera>();
     jumpCam = transform.GetChild(0).GetComponent<Camera>();
@@ -25,7 +26,8 @@ public class CarJumpCameraSwitch : MonoBehaviour {
       carCam.enabled = false;
       jumpCam.enabled = true;
       if (gameOver) {
-        StartCoroutine(timer.GameOverDelay(6));
+        StartCoroutine(timer.GameOverDelay(3));
+        timer.runTimer = false;
       }
     }
   }
