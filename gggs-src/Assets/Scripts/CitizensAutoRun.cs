@@ -50,13 +50,22 @@ public class CitizensAutoRun : MonoBehaviour {
       forward = q * Vector3.forward;
 
       anim.SetFloat("Speed", speed);
+  
+      if (anim.GetFloat("Speed") < 3f){
+        anim.speed = speed / 2 + 0.5f;
+      
+      } else if (anim.GetFloat("Speed") > 3f){
+        anim.speed = (speed - 1) / 3;
+        Debug.Log("animation speed: " + anim.GetFloat("Speed"));
+      }
 
-  		transform.Translate(forward * Time.deltaTime * speed);
+      transform.Translate(forward * Time.deltaTime * speed);
       //rb[1].MovePosition(transform.position * (Time.deltaTime * speed));
 
     } else {
       anim.SetBool("Rolling", true);
     }
+
 
 	}
 
