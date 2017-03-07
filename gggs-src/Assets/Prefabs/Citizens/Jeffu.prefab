@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 136869011973505874}
   - component: {fileID: 54411625615411960}
   - component: {fileID: 114346336691679426}
+  - component: {fileID: 23458479421191428}
   m_Layer: 0
   m_Name: Jeffu
   m_TagString: Untagged
@@ -810,6 +811,37 @@ Transform:
   m_Father: {fileID: 4935488358805600}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23458479421191428
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1174366564164364}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &33511706926602278
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -854,7 +886,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1234418611264396}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5922d9d6f1fe64367b2f3ef60732e618, type: 3}
   m_Controller: {fileID: 9100000, guid: 4219cbb1f8ed7458a980453e92bcfaaf, type: 2}
   m_CullingMode: 1
@@ -899,14 +931,14 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1178712514306880}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: bffc0b32777a8470b82a102cd137d329, type: 2}
-  - {fileID: 2100000, guid: cfe7aceca5a8a4c7bae20cdff733d774, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -949,13 +981,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1813101034236210}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: efbce8ae20c73442688842eeca2f8e96, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -998,13 +1030,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1626137648659176}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f7105548a9e30411ea16d172145891bc, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1046,13 +1078,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1119548278364006}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f7105548a9e30411ea16d172145891bc, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1094,13 +1126,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1531201242890580}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f7105548a9e30411ea16d172145891bc, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1143,13 +1175,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1982068782339078}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f7105548a9e30411ea16d172145891bc, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1192,13 +1224,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153288999035356}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 555734613df404ae38ad37033d3a8045, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1241,13 +1273,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1261898046205644}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f7105548a9e30411ea16d172145891bc, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1289,20 +1321,20 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1314493712455576}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0bbf1790e2a024f19a3d366a5a1a5b35, type: 2}
-  - {fileID: 2100000, guid: efbce8ae20c73442688842eeca2f8e96, type: 2}
-  - {fileID: 2100000, guid: b4b97f9306b964c73ae05f55b2bedb8a, type: 2}
   - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
-  - {fileID: 2100000, guid: 60f5c9273947246af899b163421fe781, type: 2}
-  - {fileID: 2100000, guid: 8b055ca740f444578866fc71943811c5, type: 2}
-  - {fileID: 2100000, guid: a0f2af7aca96e4471b8d472543d0b555, type: 2}
-  - {fileID: 2100000, guid: ed5d9d2ab9f204511af9b2a7a2eb780c, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1352,13 +1384,13 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980216881707904}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f7105548a9e30411ea16d172145891bc, type: 2}
+  - {fileID: 2100000, guid: e4105bdae478e4e589671eea01b5c598, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
