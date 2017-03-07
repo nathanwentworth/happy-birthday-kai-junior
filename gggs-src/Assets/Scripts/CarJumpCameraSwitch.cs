@@ -26,7 +26,8 @@ public class CarJumpCameraSwitch : MonoBehaviour {
       carCam.enabled = false;
       jumpCam.enabled = true;
       if (gameOver) {
-        StartCoroutine(timer.GameOverDelay(6));
+        StartCoroutine(timer.GameOverDelay(3));
+        timer.runTimer = false;
       }
     }
   }

@@ -13,11 +13,15 @@ html {font-family: sans-serif;-ms-text-size-adjust: 100%;-webkit-text-size-adjus
 }
 
 html,body {
-	color: #222;
+	color: #fff;
 	line-height: 1.375rem;
 	width: 100%;
 	height: 100%;
 	margin: 0;
+
+	background: #222;
+
+	font-family: 'Nunito', sans-serif;
 }
 
 /* # defaults */
@@ -34,7 +38,77 @@ pre {
 
 /* # site styles */
 
+#mc_embed_signup{
+  clear:left;
+  font: 14px Helvetica,Arial,sans-serif;
+  width:100%;
+}
 
+.full-height {
+	padding: 4rem;
+	min-height: calc(100vh - 8rem);
+}
+
+.upper-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: url("img/Official-Banner-opt.jpg") center center fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.lower-container {
+	background: #222;
+}
+
+.video-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px;
+	height: 0;
+	overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+p {
+	width: 90%;
+	max-width: 480px;
+	margin: 32px auto;
+}
+
+h1 {
+	font-family: 'Lilita One', cursive;
+	text-align: center;
+	font-size: 6rem;
+  letter-spacing: 0.075em;
+  margin: 0.5em;
+  font-weight: normal;
+  animation: anim-in 1s;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 0.5em;
+  /*letter-spacing: 0.1em;*/
+  margin-bottom: 1.5em;
+}
+
+.sub-text {
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+  animation: anim-in 1s;
+}
 
 /* # extras */
 
@@ -52,7 +126,13 @@ hr {
 
 /* ## small screens */
 @media only screen and (max-width: 480px) {
-	h1 { font-size: 2rem; }
+
+  .full-height {
+    padding: 2rem;
+    min-height: calc(100vh - 4rem);
+  }
+
+	h1 { font-size: 3rem; line-height: 1em; }
 	h2 { font-size: 1.625rem; }
 	h3 { font-size: 1.375rem; }
 	h4 { font-size: 1.125rem; }
@@ -72,5 +152,16 @@ hr {
 	h2 { font-size: 2.25rem; }
 	h3 { font-size: 1.75rem; }
 	h4 { font-size: 1.125rem; }	
+}
+
+@keyframes anim-in {
+  from {
+    transform: translateY(-0.5em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 

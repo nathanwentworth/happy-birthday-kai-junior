@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class HUDManager : MonoBehaviour {
 
   [Header("HUD Elements")]
 
   [SerializeField]
-  private Text scoreText;
+  private TextMeshProUGUI scoreText;
   [SerializeField]
-  private Text highScoreText;
+  private TextMeshProUGUI highScoreText;
   // [SerializeField]
   // private Text cumulativeScoreText;
 
   [SerializeField]
-  private Text timerText;
+  private TextMeshProUGUI timerText;
   [SerializeField]
   private Image timerImage;
   [SerializeField]
-  private Text overlayText;
+  private TextMeshProUGUI overlayText;
 
   [Header("Game Over Display")]
 
   [SerializeField]
-  private Text highScoreListText;
+  private TextMeshProUGUI highScoreListText;
   [SerializeField]
-  private Text nameEntryText;
+  private TextMeshProUGUI nameEntryText;
 
   [SerializeField]
   private GameObject newHighScoreText;
@@ -36,8 +37,12 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private GameObject nameEntryHeader;
 
+  [Header("Panels")]
+
   [SerializeField]
   private GameObject overlayPanel;
+  [SerializeField]
+  private GameObject howToPanel;
   [SerializeField]
   private GameObject gameOverPanel;
 
@@ -131,7 +136,7 @@ public class HUDManager : MonoBehaviour {
     }
 
   	if (overlayText == null) {
-  			overlayText = GameObject.Find("OverlayText").GetComponent<Text>();
+  			overlayText = GameObject.Find("OverlayText").GetComponent<TextMeshProUGUI>();
   	}
 
 
@@ -142,6 +147,12 @@ public class HUDManager : MonoBehaviour {
     }
 
     overlayText.text = text;
+  }
+
+  public void HowToPanelHide() {
+    howToPanel.GetComponent<CanvasGroup>().alpha = 0;
+    howToPanel.GetComponent<CanvasGroup>().interactable = false;
+    howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
   }
 
   public void GameOverDisplay() {

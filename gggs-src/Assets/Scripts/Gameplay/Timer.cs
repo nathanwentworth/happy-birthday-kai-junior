@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour {
   private float countDownTime;
 
   private float gameTime;
-  private bool runTimer = false;
+  public bool runTimer = false;
   private bool gameOverRun;
 
   private int _score;
@@ -24,10 +24,16 @@ public class Timer : MonoBehaviour {
 
     DataManager.AllowControl = false;
 
-    StartCoroutine(CountDownTimer(countDownTime));
-
     gameTime = defaultGameTime;
     hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
+
+    StartCoroutine(UnlockMouseDelay());
+  }
+
+  public void StartGame() {
+    StartCoroutine(CountDownTimer(countDownTime));
+    hudManager.HowToPanelHide();
+    LockMouse.Lock(true);
   }
 
   public void StartTimer() {
@@ -89,6 +95,11 @@ public class Timer : MonoBehaviour {
 
     hudManager.HideOverlay();
     StartTimer();
+  }
+
+  private IEnumerator UnlockMouseDelay() {
+    yield return new WaitForSeconds(0.1f);
+    LockMouse.Lock(false);
   }
 
 }
