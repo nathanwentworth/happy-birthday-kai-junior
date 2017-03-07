@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#if UNITYEDTIOR
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -75,3 +77,5 @@ public class MenuItems : MonoBehaviour {
 
 
 }
+
+#endif

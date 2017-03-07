@@ -56,7 +56,7 @@ public class CitizensAutoRun : MonoBehaviour {
       
       } else if (anim.GetFloat("Speed") > 3f){
         anim.speed = (speed - 1) / 3;
-        Debug.Log("animation speed: " + anim.GetFloat("Speed"));
+        // Debug.Log("animation speed: " + anim.GetFloat("Speed"));
       }
 
       transform.Translate(forward * Time.deltaTime * speed);
