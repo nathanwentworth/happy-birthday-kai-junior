@@ -1,4 +1,4 @@
-﻿#if UNITYEDTIOR
+#if UNITY_EDITOR
 
 using System.Collections;
 using System.Collections.Generic;
@@ -78,4 +78,8 @@ public class MenuItems : MonoBehaviour {
 
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 474c64d695b97037b4c0fcb3bc778ccf3674565e
 #endif
