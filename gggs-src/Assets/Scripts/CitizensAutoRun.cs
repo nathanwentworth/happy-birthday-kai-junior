@@ -13,6 +13,8 @@ public class CitizensAutoRun : MonoBehaviour {
   [SerializeField]
   private float centerOfMassYOffset;
 
+
+  private Animator anim;
   private Rigidbody[] rb;
 
   public float speed { get; set; }
@@ -22,6 +24,7 @@ public class CitizensAutoRun : MonoBehaviour {
   private void Start() {
 
     rb = GetComponentsInChildren<Rigidbody>();
+    anim = transform.Find("MeepleJeffu").GetComponent<Animator>();
 
     speed = defaultSpeed;
     kaiju = GameObject.FindWithTag("Player").GetComponent<Transform>();
@@ -31,6 +34,7 @@ public class CitizensAutoRun : MonoBehaviour {
   private void Update() {
 
     if (Physics.Raycast(transform.position, -transform.up, 2f)) {
+      anim.SetBool("Rolling", false);
 
       float distance = Vector3.Distance(transform.position, kaiju.position);
 
@@ -45,10 +49,23 @@ public class CitizensAutoRun : MonoBehaviour {
       Vector3 forward = Vector3.zero;
       forward = q * Vector3.forward;
 
-  		transform.Translate(forward * Time.deltaTime * speed);
+      anim.SetFloat("Speed", speed);
+  
+      if (anim.GetFloat("Speed") < 3f){
+        anim.speed = speed / 2 + 0.5f;
+      
+      } else if (anim.GetFloat("Speed") > 3f){
+        anim.speed = (speed - 1) / 3;
+        // Debug.Log("animation speed: " + anim.GetFloat("Speed"));
+      }
+
+      transform.Translate(forward * Time.deltaTime * speed);
       //rb[1].MovePosition(transform.position * (Time.deltaTime * speed));
 
+    } else {
+      anim.SetBool("Rolling", true);
     }
+
 
 	}
 

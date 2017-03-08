@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class HUDManager : MonoBehaviour {
@@ -22,6 +23,8 @@ public class HUDManager : MonoBehaviour {
   private Image timerImage;
   [SerializeField]
   private TextMeshProUGUI overlayText;
+  [SerializeField]
+  private Button startButton;
 
   [Header("Game Over Display")]
 
@@ -55,6 +58,8 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private GameObject pausePanel;
+
+  private GameObject eventSystem;
 
   private bool acceptTextEntry = false;
 
@@ -90,6 +95,8 @@ public class HUDManager : MonoBehaviour {
     if (DataManager.LastEnteredHighScoreName != null && DataManager.LastEnteredHighScoreName != "") {
       nameEntryText.text = DataManager.LastEnteredHighScoreName;
     }
+
+    eventSystem = GameObject.Find("EventSystem");
   }
 
   private void Update() {
@@ -153,6 +160,8 @@ public class HUDManager : MonoBehaviour {
     howToPanel.GetComponent<CanvasGroup>().alpha = 0;
     howToPanel.GetComponent<CanvasGroup>().interactable = false;
     howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+    startButton.interactable = false;
   }
 
   public void GameOverDisplay() {
@@ -232,6 +241,8 @@ public class HUDManager : MonoBehaviour {
 
           restartButton.interactable = true;
           changeLevelButton.interactable = true;
+
+          eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(restartButton.gameObject);
 
         } else if (nameEntryText.text.Length < 16) {
           nameEntryText.text += c.ToString();

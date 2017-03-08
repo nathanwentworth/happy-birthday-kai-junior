@@ -78,6 +78,8 @@ public class Timer : MonoBehaviour {
       // yield return null;
     }
 
+    DataManager.Score += (int)(gameTime * 100);
+
     hudManager.GameOverDisplay();
     LockMouse.Lock(false);
   }
