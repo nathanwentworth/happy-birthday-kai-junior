@@ -50,7 +50,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
             hudManager.HighScoreChange();
           }
 
-          StartCoroutine(CheckMoveState());
+          // StartCoroutine(CheckMoveState());
 
         }
       }
