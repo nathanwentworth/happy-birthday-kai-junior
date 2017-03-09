@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RigidbodySleepCheck : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private int points;
   private HUDManager hudManager;
   private float threshold;
+  private string sceneName;
 
 	private void Start () {
     if (DataManager.ObjectMovementThreshold == 0) {
@@ -19,6 +21,8 @@ public class RigidbodySleepCheck : MonoBehaviour {
     knockedOver = false;
 		rb = GetComponent<Rigidbody>();
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+
+    sceneName = SceneManager.GetActiveScene().name;
 	}
 	
 	private void OnCollisionStay (Collision other) {
@@ -50,7 +54,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
             hudManager.HighScoreChange();
           }
 
-          // StartCoroutine(CheckMoveState());
+          StartCoroutine(CheckMoveState());
 
         }
       }
@@ -66,7 +70,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   // @REFACTOR: this whole script can be done betttttttttter
 
   private IEnumerator CheckMoveState() {
-		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu")) {
+		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu") && sceneName == "kort-test") {
       DataManager.ObjectIsStillMoving = true;
       yield return null;
     }
