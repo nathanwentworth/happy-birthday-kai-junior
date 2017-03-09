@@ -3683,6 +3683,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: beta
       objectReference: {fileID: 0}
+    - target: {fileID: 114078450276445412, guid: 7b0d1f5b18b4a4ce29c1253d20e8a531,
+        type: 2}
+      propertyPath: m_Text
+      value: NEXT LEVEL
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114156276086189384, guid: 7b0d1f5b18b4a4ce29c1253d20e8a531, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7b0d1f5b18b4a4ce29c1253d20e8a531, type: 2}
@@ -14503,7 +14508,6 @@ GameObject:
   m_Component:
   - component: {fileID: 671254285}
   - component: {fileID: 671254284}
-  - component: {fileID: 671254283}
   - component: {fileID: 671254282}
   m_Layer: 0
   m_Name: EventSystem
@@ -14538,24 +14542,6 @@ MonoBehaviour:
   allowMobileDevice: 1
   allowMouseInput: 1
   focusOnMouseHover: 0
---- !u!114 &671254283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 671254281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &671254284
 MonoBehaviour:
   m_ObjectHideFlags: 0

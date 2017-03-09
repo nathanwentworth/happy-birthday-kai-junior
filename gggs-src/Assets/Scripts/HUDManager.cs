@@ -23,8 +23,8 @@ public class HUDManager : MonoBehaviour {
   private Image timerImage;
   [SerializeField]
   private TextMeshProUGUI overlayText;
-  [SerializeField]
-  private Button startButton;
+  // [SerializeField]
+  // private Button startButton;
 
   [Header("Game Over Display")]
 
@@ -44,8 +44,8 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private GameObject overlayPanel;
-  [SerializeField]
-  private GameObject howToPanel;
+  // [SerializeField]
+  // private GameObject howToPanel;
   [SerializeField]
   private GameObject gameOverPanel;
 
@@ -156,13 +156,13 @@ public class HUDManager : MonoBehaviour {
     overlayText.text = text;
   }
 
-  public void HowToPanelHide() {
-    howToPanel.GetComponent<CanvasGroup>().alpha = 0;
-    howToPanel.GetComponent<CanvasGroup>().interactable = false;
-    howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+  // public void HowToPanelHide() {
+  //   howToPanel.GetComponent<CanvasGroup>().alpha = 0;
+  //   howToPanel.GetComponent<CanvasGroup>().interactable = false;
+  //   howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-    startButton.interactable = false;
-  }
+  //   startButton.interactable = false;
+  // }
 
   public void GameOverDisplay() {
     gameOverPanel.GetComponent<CanvasGroup>().alpha = 1;

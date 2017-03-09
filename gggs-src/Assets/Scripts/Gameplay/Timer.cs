@@ -27,12 +27,12 @@ public class Timer : MonoBehaviour {
     gameTime = defaultGameTime;
     hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
 
-    StartCoroutine(UnlockMouseDelay());
+    StartGame();
   }
 
   public void StartGame() {
     StartCoroutine(CountDownTimer(countDownTime));
-    hudManager.HowToPanelHide();
+    // hudManager.HowToPanelHide();
     LockMouse.Lock(true);
   }
 
