@@ -61,11 +61,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
     }
 	}
 
-  // private void OnCollisionEnter(Collision other) {
-  //   if (rb.velocity.magnitude > 15) {
-  //     gameObject.SetActive(false);
-  //   }
-  // }
 
   // @REFACTOR: this whole script can be done betttttttttter
 
