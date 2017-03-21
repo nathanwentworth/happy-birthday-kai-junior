@@ -17,12 +17,18 @@ public class DynamicObjectSwap : MonoBehaviour {
 
   private void OnTriggerEnter(Collider other) {
 
-    if (other.gameObject.tag == "Player") {
-      gameObject.SetActive(false);
-
-      objectToSwapScene.SetActive(true);
+    if (other.gameObject.GetComponent<Rigidbody>() != null) {
+      if (other.gameObject.tag == "Player" || other.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 2) {
+        SwapModel();
+      }
     }
 
+
+  }
+
+  private void SwapModel() {
+    gameObject.SetActive(false);
+    objectToSwapScene.SetActive(true);
   }
 
 }
