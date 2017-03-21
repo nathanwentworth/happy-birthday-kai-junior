@@ -22,11 +22,9 @@ public class DynamicObjectSwap : MonoBehaviour {
         SwapModel();
       }
     }
-
-
   }
 
-  private void SwapModel() {
+  public void SwapModel() {
     gameObject.SetActive(false);
     objectToSwapScene.SetActive(true);
   }
