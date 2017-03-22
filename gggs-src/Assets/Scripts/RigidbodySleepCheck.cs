@@ -39,7 +39,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
 
     while (_mass == 0 && i < ObjectProperties.Count) {
-      if (ObjectProperties[i].name.StartsWith(objName)) {
+      if (ObjectProperties[i].name == objName) {
         _mass = ObjectProperties[i].mass;
         _points = ObjectProperties[i].points;
       }
