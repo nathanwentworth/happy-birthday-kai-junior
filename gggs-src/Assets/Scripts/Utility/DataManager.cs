@@ -34,6 +34,7 @@ public static class DataManager {
   public static bool ObjectIsStillMoving { get; set; }
   public static float ObjectMovementThreshold { get; set; }
 
+  public static List<ObjectData> ObjectProperties { get; set; }
 
   public static List<LevelData> LevelDataList { get; set; }
 

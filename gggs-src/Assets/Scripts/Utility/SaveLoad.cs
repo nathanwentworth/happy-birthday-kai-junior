@@ -74,6 +74,26 @@ public class SaveLoad : MonoBehaviour {
 			DataManager.LevelDataList = levelDataList;
 
 		}
+
+		if (File.Exists(Application.persistentDataPath + "/Data/score-spreadsheet.csv")) {
+			StreamReader file = new StreamReader(Application.persistentDataPath + "/Data/score-spreadsheet.csv");
+
+			string line = "";
+			string[] row = new string [3];
+
+
+			while ((line = file.ReadLine()) != null) {
+				row = line.Split(',');
+
+				int j, k;
+
+				if (Int32.TryParse(row[1], out j) && Int32.TryParse(row[2], out k)) {
+					ObjectData data = new ObjectData(row[0], j, k);
+					DataManager.ObjectProperties.Add(data);
+				}
+
+			}
+		}
 	}
 }
 
@@ -114,3 +134,18 @@ public class HighScoreData {
 		score = _score;
 	}
 }
+
+[Serializable]
+public class ObjectData {
+  public string name;
+  public int mass;
+  public int points;
+
+  public ObjectData(string _name, int _mass, int _points) {
+  	name = _name;
+		mass = _mass;
+		points = _points;
+  }
+}
+
+
