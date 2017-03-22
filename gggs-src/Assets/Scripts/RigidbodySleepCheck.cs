@@ -11,18 +11,38 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private HUDManager hudManager;
   private float threshold;
   private string sceneName;
+  private string objName;
 
 	private void Start () {
+
+    objName = gameObject.name;
+
     if (DataManager.ObjectMovementThreshold == 0) {
       DataManager.ObjectMovementThreshold = 1;
     }
     threshold = DataManager.ObjectMovementThreshold;
-    points = GetComponent<ObjectDataContainer>().ObjectPoints;
     knockedOver = false;
-		rb = GetComponent<Rigidbody>();
+    rb = GetComponent<Rigidbody>();
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 
     sceneName = SceneManager.GetActiveScene().name;
+
+    int _mass = 0;
+    int _points = 0;
+    int i = 0;
+
+    List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
+
+    while (_mass == 0 && i < ObjectProperties.Count) {
+      if (ObjectProperties[i].name.StartsWith(objName)) {
+        _mass = ObjectProperties[i].mass;
+        _points = ObjectProperties[i].points;
+      }
+      i++;
+    }
+
+    rb.mass = (_mass != null) ? _mass : 1;
+    points = (_points != null) ? _points : 1;
 	}
 	
 	private void OnCollisionStay (Collision other) {
