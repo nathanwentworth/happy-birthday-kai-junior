@@ -81,6 +81,8 @@ public class SaveLoad : MonoBehaviour {
 			string line = "";
 			string[] row = new string [3];
 
+			List<ObjectData> ObjectProperties = new List<ObjectData>();
+
 
 			while ((line = file.ReadLine()) != null) {
 				row = line.Split(',');
@@ -89,10 +91,12 @@ public class SaveLoad : MonoBehaviour {
 
 				if (Int32.TryParse(row[1], out j) && Int32.TryParse(row[2], out k)) {
 					ObjectData data = new ObjectData(row[0], j, k);
-					DataManager.ObjectProperties.Add(data);
+					ObjectProperties.Add(data);
 				}
 
 			}
+
+			DataManager.ObjectProperties = ObjectProperties;
 		}
 	}
 }

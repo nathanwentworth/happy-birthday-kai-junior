@@ -28,6 +28,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     sceneName = SceneManager.GetActiveScene().name;
 
     int _mass = 0;
+    int _points = 0;
     int i = 0;
 
     List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
@@ -35,13 +36,13 @@ public class RigidbodySleepCheck : MonoBehaviour {
     while (_mass == 0 && i < ObjectProperties.Count) {
       if (ObjectProperties[i].name.StartsWith(objName)) {
         _mass = ObjectProperties[i].mass;
-        GetComponent<ObjectDataContainer>().ObjectPoints = ObjectProperties[i].points;
+        _points = ObjectProperties[i].points;
       }
       i++;
     }
 
-    rb.mass = _mass;
-    points = GetComponent<ObjectDataContainer>().ObjectPoints;
+    rb.mass = (_mass != null) ? _mass : 1;
+    points = (_points != null) ? _points : 1;
 	}
 	
 	private void OnCollisionStay (Collision other) {
