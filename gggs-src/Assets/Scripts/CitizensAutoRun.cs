@@ -15,7 +15,6 @@ public class CitizensAutoRun : MonoBehaviour {
 
 
   private Animator anim;
-  private Rigidbody[] rb;
 
   public float speed { get; set; }
 
@@ -23,7 +22,6 @@ public class CitizensAutoRun : MonoBehaviour {
 
   private void Start() {
 
-    rb = GetComponentsInChildren<Rigidbody>();
     anim = transform.Find("MeepleJeffu").GetComponent<Animator>();
 
     speed = defaultSpeed;
@@ -60,7 +58,6 @@ public class CitizensAutoRun : MonoBehaviour {
       }
 
       transform.Translate(forward * Time.deltaTime * speed);
-      //rb[1].MovePosition(transform.position * (Time.deltaTime * speed));
 
     } else {
       anim.SetBool("Rolling", true);

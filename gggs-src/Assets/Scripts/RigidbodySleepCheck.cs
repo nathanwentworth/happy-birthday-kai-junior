@@ -17,6 +17,11 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     objName = gameObject.name;
 
+    if (objName.LastIndexOf(" ") > 0) {
+      objName = objName.Substring(0, objName.LastIndexOf(" "));
+    }
+
+
     if (DataManager.ObjectMovementThreshold == 0) {
       DataManager.ObjectMovementThreshold = 1;
     }
@@ -41,8 +46,8 @@ public class RigidbodySleepCheck : MonoBehaviour {
       i++;
     }
 
-    rb.mass = (_mass != null) ? _mass : 1;
-    points = (_points != null) ? _points : 1;
+    rb.mass = (_mass != 0) ? _mass : 1;
+    points = (_points != 0) ? _points : 1;
 	}
 	
 	private void OnCollisionStay (Collision other) {
