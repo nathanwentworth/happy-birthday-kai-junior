@@ -21,7 +21,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
       objName = objName.Substring(0, objName.LastIndexOf(" "));
     }
 
-
     if (DataManager.ObjectMovementThreshold == 0) {
       DataManager.ObjectMovementThreshold = 1;
     }
@@ -39,12 +38,14 @@ public class RigidbodySleepCheck : MonoBehaviour {
     List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
 
     while (_mass == 0 && i < ObjectProperties.Count) {
-      if (ObjectProperties[i].name.StartsWith(objName)) {
+      if (ObjectProperties[i].name == objName) {
         _mass = ObjectProperties[i].mass;
         _points = ObjectProperties[i].points;
       }
       i++;
     }
+
+    Debug.Log (objName + " volume: " + VolumeOfMesh(GetComponent<MeshFilter>().mesh));
 
     rb.mass = (_mass != 0) ? _mass : 1;
     points = (_points != 0) ? _points : 1;
@@ -85,6 +86,30 @@ public class RigidbodySleepCheck : MonoBehaviour {
       }
     }
 	}
+
+  public float SignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3) {
+    float v321 = p3.x * p2.y * p1.z;
+    float v231 = p2.x * p3.y * p1.z;
+    float v312 = p3.x * p1.y * p2.z;
+    float v132 = p1.x * p3.y * p2.z;
+    float v213 = p2.x * p1.y * p3.z;
+    float v123 = p1.x * p2.y * p3.z;
+    return (1.0f / 6.0f) * (-v321 + v231 + v312 - v132 - v213 + v123);
+  }
+
+  public float VolumeOfMesh(Mesh mesh) {
+    float volume = 0;
+    Vector3[] vertices = mesh.vertices;
+    int[] triangles = mesh.triangles;
+    for (int i = 0; i < mesh.triangles.Length; i += 3) {
+      Vector3 p1 = vertices[triangles[i + 0]];
+      Vector3 p2 = vertices[triangles[i + 1]];
+      Vector3 p3 = vertices[triangles[i + 2]];
+      volume += SignedVolumeOfTriangle(p1, p2, p3);
+    }
+    return Mathf.Abs(volume);
+  }
+
 
 
   // @REFACTOR: this whole script can be done betttttttttter
