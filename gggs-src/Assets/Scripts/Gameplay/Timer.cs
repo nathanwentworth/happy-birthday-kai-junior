@@ -5,7 +5,6 @@ using UnityEngine;
 public class Timer : MonoBehaviour {
 
   private HUDManager hudManager;
-  private GameFunctions gameFunctions;
 
   [SerializeField]
   private float defaultGameTime;
@@ -20,7 +19,6 @@ public class Timer : MonoBehaviour {
 
   private void Awake() {
     hudManager = GetComponent<HUDManager>();
-    gameFunctions = FindObjectOfType (typeof (GameFunctions)) as GameFunctions;
 
     DataManager.AllowControl = false;
 

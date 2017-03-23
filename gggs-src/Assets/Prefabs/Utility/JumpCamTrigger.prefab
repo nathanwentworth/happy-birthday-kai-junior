@@ -40,9 +40,7 @@ GameObject:
   - component: {fileID: 124553146240728872}
   - component: {fileID: 92397167111760404}
   - component: {fileID: 114386860835572104}
-  - component: {fileID: 114592338771945892}
-  - component: {fileID: 114737905531649618}
-  - component: {fileID: 114285163117042072}
+  - component: {fileID: 114780504295344650}
   m_Layer: 0
   m_Name: JumpCam
   m_TagString: Untagged
@@ -56,27 +54,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1608982674710586}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.49441, y: -0.03785216, z: -24.320002}
+  m_LocalRotation: {x: 0.23911768, y: 0.36964354, z: -0.099045746, w: 0.89239925}
+  m_LocalPosition: {x: -7.065, y: 8.918, z: -9.425}
   m_LocalScale: {x: 0.40830877, y: 0.5407475, z: 1}
   m_Children: []
   m_Father: {fileID: 4775587905417966}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30.000002, y: 45.000004, z: 0}
 --- !u!4 &4775587905417966
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1502806626468222}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.62, y: 12.83, z: 41.04}
-  m_LocalScale: {x: 2.449127, y: 1.849292, z: 1}
+  m_LocalRotation: {x: -0, y: -0.2588186, z: -0, w: 0.965926}
+  m_LocalPosition: {x: -763.7, y: 105.6, z: 472.6}
+  m_LocalScale: {x: 12.065869, y: 7.8609834, z: 12.459419}
   m_Children:
   - {fileID: 4269301940641840}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -30.000002, z: 0}
 --- !u!20 &20593373272383462
 Camera:
   m_ObjectHideFlags: 1
@@ -102,11 +100,13 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 0
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -141,32 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0283a148716e8493781377ef1268ad41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOver: 0
---- !u!114 &114285163117042072
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1608982674710586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f5677aa325c184f801528d78a73827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reprojectionShader: {fileID: 4800000, guid: 7ca93c1a56ee0154b8c714591d6d211a, type: 3}
-  neighborhood: 1
-  unjitterColorSamples: 1
-  unjitterNeighborhood: 0
-  unjitterReprojection: 0
-  useYCoCg: 0
-  useClipping: 1
-  useDilation: 1
-  useMotionBlur: 1
-  useOptimizations: 1
-  feedbackMin: 0.88
-  feedbackMax: 0.97
-  motionBlurStrength: 1
-  motionBlurIgnoreFF: 0
+  gameOver: 1
 --- !u!114 &114386860835572104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followPlayer: 0
---- !u!114 &114592338771945892
+--- !u!114 &114780504295344650
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -187,30 +162,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1608982674710586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b642ff60407fe724bafa6602199213c0, type: 3}
+  m_Script: {fileID: 11500000, guid: e6ffff0e474954f3a926daf865cc2eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocityShader: {fileID: 4800000, guid: 0d7f09e63dd99504ca6e04212a21ec72, type: 3}
-  neighborMaxGen: 0
-  neighborMaxSupport: 1
-  numResident: 0
-  numRendered: 0
-  numDrawCalls: 0
---- !u!114 &114737905531649618
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1608982674710586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899f97884c6d96b4ca20648ec109a37f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pattern: 12
-  patternScale: 1
-  activeSample: {x: -0.0625, y: 0.3148148, z: 0.1875, w: -0.018518507}
-  activeIndex: 13
+  _lineColor: {r: 0.23921886, g: 0.234036, b: 0.396, a: 1}
+  _backgroundColor: {r: 1, g: 1, b: 1, a: 0}
+  _lowThreshold: 0.027
+  _highThreshold: 0.026
+  _depthSensitivity: 1
+  _normalSensitivity: 0
+  _fallOffDepth: 288.6
+  _shader: {fileID: 4800000, guid: b8cb1cfbd02c146ccbe95b4baf27a54e, type: 3}
 --- !u!124 &124553146240728872
 Behaviour:
   m_ObjectHideFlags: 1

@@ -8,8 +8,8 @@ public class KillBox : MonoBehaviour {
 
     if (other.gameObject.tag == "Player") {
 
-      Vector3 respawnPoint = other.GetComponent<WaypointRespawningController>().defaultRespawnPoint;
-      Quaternion respawnDirection = other.GetComponent<WaypointRespawningController>().defaultRespawnDirection;
+      Vector3 respawnPoint = Vector3.zero;
+      Quaternion respawnDirection = Quaternion.identity;
       other.transform.position = respawnPoint;
       other.transform.rotation = respawnDirection;
       other.GetComponent<Rigidbody>().velocity = Vector3.zero;
