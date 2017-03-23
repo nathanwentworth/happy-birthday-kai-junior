@@ -119,7 +119,7 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void HighScoreChange() {
-    highScoreText.text = "High Score: " + DataManager.HighScore;
+    highScoreText.text = "";
   }
 
   // public void CumulativeScoreChange() {

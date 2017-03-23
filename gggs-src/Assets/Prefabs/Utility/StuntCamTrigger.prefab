@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114569114874871066}
   - component: {fileID: 114460996330088068}
   - component: {fileID: 114801140248181772}
+  - component: {fileID: 114188498992455926}
   m_Layer: 0
   m_Name: StuntCam
   m_TagString: Untagged
@@ -57,8 +58,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1790456849925100}
   m_LocalRotation: {x: -0, y: 0.9238794, z: -0, w: 0.38268375}
-  m_LocalPosition: {x: 298.6, y: 274.8, z: 248.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -413.72, y: 161.36, z: 314.26}
+  m_LocalScale: {x: 0.2295711, y: 0.22957101, z: 0.2295713}
   m_Children:
   - {fileID: 4866289860045582}
   m_Father: {fileID: 0}
@@ -102,11 +103,13 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -130,6 +133,25 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1847567295962098}
   m_Enabled: 1
+--- !u!114 &114188498992455926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847567295962098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ffff0e474954f3a926daf865cc2eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineColor: {r: 0.23921886, g: 0.234036, b: 0.396, a: 1}
+  _backgroundColor: {r: 1, g: 1, b: 1, a: 0}
+  _lowThreshold: 0.027
+  _highThreshold: 0.026
+  _depthSensitivity: 1
+  _normalSensitivity: 0
+  _fallOffDepth: 288.6
+  _shader: {fileID: 4800000, guid: b8cb1cfbd02c146ccbe95b4baf27a54e, type: 3}
 --- !u!114 &114340112977965910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,8 +177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pattern: 12
   patternScale: 1
-  activeSample: {x: 0, y: 0, z: 0, w: 0}
-  activeIndex: -1
+  activeSample: {x: 0.1875, y: -0.018518507, z: -0.3125, w: -0.35185185}
+  activeIndex: 12
 --- !u!114 &114569114874871066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0283a148716e8493781377ef1268ad41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOver: 0
+  gameOver: 1
 --- !u!114 &114801140248181772
 MonoBehaviour:
   m_ObjectHideFlags: 1
