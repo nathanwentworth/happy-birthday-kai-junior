@@ -45,7 +45,11 @@ public class RigidbodySleepCheck : MonoBehaviour {
       i++;
     }
 
-    Debug.Log (objName + " volume: " + VolumeOfMesh(GetComponent<MeshFilter>().mesh));
+    float volume = VolumeOfMesh(GetComponent<MeshFilter>().mesh);
+
+    // volume *= ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3);
+
+    Debug.Log (objName + " volume: " + volume);
 
     rb.mass = (_mass != 0) ? _mass : 1;
     points = (_points != 0) ? _points : 1;
