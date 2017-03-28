@@ -55,7 +55,21 @@ public class ObjectBehaviors : MonoBehaviour {
   private MeshRenderer meshToToggle;
   private Collider[] timedToggleColliders;
 
+  [Header("Speed Boost")]
 
+  [SerializeField]
+  [Tooltip("Add force to the object when entered")]
+  private bool speedBoost;
+
+  [SerializeField]
+  private float boostForce;
+
+
+
+
+
+
+  // functions
 
   private void Awake() {
     if (objectSwap) {
@@ -86,6 +100,9 @@ public class ObjectBehaviors : MonoBehaviour {
     }
     if (killBox) {
       KillBoxRun(other);
+    }
+    if (speedBoost) {
+      SpeedBoostRun(other);
     }
   }
 
@@ -182,6 +199,14 @@ public class ObjectBehaviors : MonoBehaviour {
     }
 
     StartCoroutine(TimedToggleRun(!onT));
+  }
+
+  private void SpeedBoostRun(Collider other) {
+    if (other.gameObject.GetComponent<Rigidbody>() != null) {
+      Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
+
+      otherRb.AddForce(transform.up * boostForce, ForceMode.VelocityChange);
+    }
   }
 
 

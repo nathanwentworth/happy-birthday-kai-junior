@@ -32,6 +32,18 @@ public class MenuItems : MonoBehaviour {
     }
   }
 
+  [MenuItem ("Kaiju/Add ObjectBehaviors")]
+  static void AddObjectBehaviors() {
+    for (int i = 0; i < Selection.gameObjects.Length; i++) {
+      GameObject go = Selection.gameObjects[i];
+      
+      if (go.GetComponent<ObjectBehaviors>() == null) {
+        go.AddComponent<ObjectBehaviors>();
+      }
+
+    }
+  }
+
   
   [MenuItem ("Kaiju/Initialize Scene")]
   static void InitializeScene () {
