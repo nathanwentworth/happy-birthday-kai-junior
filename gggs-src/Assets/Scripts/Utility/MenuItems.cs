@@ -25,6 +25,9 @@ public class MenuItems : MonoBehaviour {
       if (go.GetComponent<ObjectDataContainer>() == null) {
         go.AddComponent<ObjectDataContainer>();
       }
+      if (go.GetComponent<ObjectBehaviors>() == null) {
+        go.AddComponent<ObjectBehaviors>();
+      }
 
     }
   }
