@@ -36,6 +36,9 @@ public class BallMovement : MonoBehaviour {
 	private void Start() {
 		rb = GetComponent<Rigidbody>();
 
+    DataManager.StartingPosition = transform.position;
+    DataManager.StartingRotation = transform.rotation;
+
 	}
 	
 	private void Update() {

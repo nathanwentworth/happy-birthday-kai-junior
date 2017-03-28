@@ -84,10 +84,12 @@ public class ObjectBehaviors : MonoBehaviour {
     if (timedToggle) {
       TimedToggleInit();
     }
-		
-	}
-	
-	private void Update() {
+    if (objActiveSwitch || objectSwap || killBox || speedBoost) {
+      if (GetComponent<Collider>() == null) {
+        gameObject.AddComponent<Collider>();
+      }
+      GetComponent<Collider>().isTrigger = true;
+    }
 		
 	}
 
@@ -120,6 +122,12 @@ public class ObjectBehaviors : MonoBehaviour {
       rb = GetComponent<Rigidbody>();
     }
     rb.isKinematic = true;
+
+    if (GetComponent<Collider>() == null) {
+      gameObject.AddComponent<Collider>();
+    }
+    GetComponent<Collider>().isTrigger = false;
+
   }
 
   private void RigidbodyActivateOnCollisionRun(Collision other) {
@@ -162,8 +170,8 @@ public class ObjectBehaviors : MonoBehaviour {
   private void KillBoxRun(Collider other) {
     if (other.gameObject.tag == "Player") {
 
-      Vector3 respawnPoint = Vector3.zero;
-      Quaternion respawnDirection = Quaternion.identity;
+      Vector3 respawnPoint = DataManager.StartingPosition;
+      Quaternion respawnDirection = DataManager.StartingRotation;
       other.transform.position = respawnPoint;
       other.transform.rotation = respawnDirection;
       other.GetComponent<Rigidbody>().velocity = Vector3.zero;
