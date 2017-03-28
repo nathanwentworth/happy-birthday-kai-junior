@@ -1263,7 +1263,16 @@ MonoBehaviour:
   rbOnCollision: 0
   hitForce: 0
   objActiveSwitch: 0
-  walls: []
+  objectsToToggle: []
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 0
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 0
+  boostForce: 0
 --- !u!54 &259841058
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2163,10 +2172,6 @@ Prefab:
     - target: {fileID: 4749583816943170, guid: 78f5a7357a08f4dfd806dcfa7c15cc2d, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749583816943170, guid: 78f5a7357a08f4dfd806dcfa7c15cc2d, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -215.39899
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78f5a7357a08f4dfd806dcfa7c15cc2d, type: 2}
@@ -9083,7 +9088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe644666d7764e29a036f18b23cb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitForce: 10
 --- !u!1 &1531856926
 GameObject:
   m_ObjectHideFlags: 0
