@@ -114,6 +114,16 @@ public class RigidbodySleepCheck : MonoBehaviour {
     return Mathf.Abs(volume);
   }
 
+  private IEnumerator DestroyObject() {
+    float t = 1f;
+    while (t > 0) {
+      transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 0, t), Mathf.Lerp(transform.localScale.y, 0, t), Mathf.Lerp(transform.localScale.z, 0, t));
+
+      t -= Time.deltaTime;
+      yield return new WaitForEndOfFrame();
+    }
+  }
+
 
 
   // @REFACTOR: this whole script can be done betttttttttter

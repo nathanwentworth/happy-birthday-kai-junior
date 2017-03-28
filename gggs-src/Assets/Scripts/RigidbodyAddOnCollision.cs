@@ -6,6 +6,9 @@ public class RigidbodyAddOnCollision : MonoBehaviour {
 
   private Rigidbody rb;
 
+  [SerializeField]
+  private float hitForce;
+
 	private void Start () {
     if (GetComponent<Rigidbody>() == null) {
       rb = gameObject.AddComponent<Rigidbody>() as Rigidbody;
@@ -17,8 +20,10 @@ public class RigidbodyAddOnCollision : MonoBehaviour {
 
   private void OnCollisionEnter(Collision other) {
     if (other.gameObject.tag == "Player") {
-      if (rb.isKinematic) {
-        rb.isKinematic = false;
+      if (other.gameObject.GetComponent<Rigidbody>().velocity.magnitude > hitForce) {
+        if (rb.isKinematic) {
+          rb.isKinematic = false;
+        }        
       }
     }
   }

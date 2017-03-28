@@ -14,6 +14,8 @@ public class HUDManager : MonoBehaviour {
   private TextMeshProUGUI scoreText;
   [SerializeField]
   private TextMeshProUGUI highScoreText;
+  [SerializeField]
+  private TextMeshProUGUI speedText;
   // [SerializeField]
   // private Text cumulativeScoreText;
 
@@ -135,6 +137,10 @@ public class HUDManager : MonoBehaviour {
     } else {
       timerImage.color = Color.white;
     }
+  }
+
+  public void SpeedometerDisplay(float speed) {
+    speedText.text = Mathf.Round(speed) + "m/s\n" + Mathf.Round((speed * 2.23694f)) + "mph";
   }
 
   public void OverlayText(string text) {

@@ -72,6 +72,13 @@ public class MenuItems : MonoBehaviour {
       _inControl.name = "InControl";
     }
 
+    if (GameObject.Find("Floor") == null) {
+      GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+      floor.name = "Floor";
+      floor.transform.localScale = new Vector3(200f, 1f, 200f);
+      floor.transform.position = new Vector3(0f, -0.5f, 0f);
+    }
+
 
   }
 
