@@ -62,6 +62,8 @@ public class ObjectBehaviors : MonoBehaviour {
   private bool speedBoost;
 
   [SerializeField]
+  private Vector3 boostDirection;
+  [SerializeField]
   private float boostForce;
 
 
@@ -213,7 +215,9 @@ public class ObjectBehaviors : MonoBehaviour {
     if (other.gameObject.GetComponent<Rigidbody>() != null) {
       Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
 
-      otherRb.AddForce(transform.up * boostForce, ForceMode.VelocityChange);
+      boostDirection = (boostDirection == Vector3.zero) ? new Vector3(0, 1, 0) : boostDirection;
+
+      otherRb.AddForce((transform.rotation * boostDirection) * boostForce, ForceMode.VelocityChange);
     }
   }
 
