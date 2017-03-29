@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 81943133967588472}
   - component: {fileID: 114570966188309576}
   - component: {fileID: 114173538106425120}
-  - component: {fileID: 114473814715019090}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -98,14 +97,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1584961284270992}
-  m_LocalRotation: {x: -0, y: -0.64545166, z: -0, w: 0.76380116}
-  m_LocalPosition: {x: -482.27, y: 98.271, z: 257.19}
+  m_LocalRotation: {x: -0, y: -0.9526637, z: -0, w: -0.30402622}
+  m_LocalPosition: {x: -109.8, y: 6, z: 115}
   m_LocalScale: {x: 0.22957101, y: 0.22957101, z: 0.22957128}
   m_Children:
   - {fileID: 4180608034530840}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -80.399, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -215.39899, z: 0}
 --- !u!20 &20912985058701040
 Camera:
   m_ObjectHideFlags: 1
@@ -136,8 +135,6 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_AllowMSAA: 0
-  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -157,25 +154,6 @@ Behaviour:
   m_GameObject: {fileID: 1135307518977168}
   m_Enabled: 1
 --- !u!114 &114173538106425120
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1135307518977168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ffff0e474954f3a926daf865cc2eaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lineColor: {r: 0.23921886, g: 0.234036, b: 0.396, a: 1}
-  _backgroundColor: {r: 1, g: 1, b: 1, a: 0}
-  _lowThreshold: 0.027
-  _highThreshold: 0.026
-  _depthSensitivity: 1
-  _normalSensitivity: 0
-  _fallOffDepth: 288.6
-  _shader: {fileID: 4800000, guid: b8cb1cfbd02c146ccbe95b4baf27a54e, type: 3}
---- !u!114 &114473814715019090
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
