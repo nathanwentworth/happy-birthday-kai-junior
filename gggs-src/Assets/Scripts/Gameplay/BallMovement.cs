@@ -15,7 +15,10 @@ public class BallMovement : MonoBehaviour {
   private float groundedSpeed;
   private bool grounded;
 
+  private float currentSpeed;
+
   private Controls controls;
+  private HUDManager hudManager;
 
   private Vector3 dir;
 
@@ -24,6 +27,7 @@ public class BallMovement : MonoBehaviour {
   }
 
   private void Awake() {
+    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
     GameObject camObj = GameObject.Find("SmoothCameraFollow");
     cam = camObj.transform;
   }
@@ -32,12 +36,18 @@ public class BallMovement : MonoBehaviour {
 	private void Start() {
 		rb = GetComponent<Rigidbody>();
 
+    DataManager.StartingPosition = transform.position;
+    DataManager.StartingRotation = transform.rotation;
+
 	}
 	
 	private void Update() {
 		dir = controls.Move;
 
     grounded = Physics.Raycast(transform.position, -Vector3.up, 6);
+
+    currentSpeed = rb.velocity.magnitude;
+    hudManager.SpeedometerDisplay(currentSpeed);
 
     if (controls.Reset.WasPressed) {
       Restart();

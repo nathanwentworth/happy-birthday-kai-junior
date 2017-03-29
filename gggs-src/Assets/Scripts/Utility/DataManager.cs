@@ -17,8 +17,8 @@ public static class DataManager {
     }
   }
 
-
-  public static Weapon SelectedWeapon { get; set; }
+  public static Vector3 StartingPosition { get; set; }
+  public static Quaternion StartingRotation { get; set; }
 
   public static int HighScore { get { return highScore; } set { highScore = value; } }
   public static bool NewHighScore { get; set; }
@@ -50,7 +50,3 @@ public static class DataManager {
 
 }
 
-public enum Weapon {
-  Ball,
-  Cannon
-}
