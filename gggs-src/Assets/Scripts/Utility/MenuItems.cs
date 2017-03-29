@@ -25,6 +25,21 @@ public class MenuItems : MonoBehaviour {
       if (go.GetComponent<ObjectDataContainer>() == null) {
         go.AddComponent<ObjectDataContainer>();
       }
+      if (go.GetComponent<ObjectBehaviors>() == null) {
+        go.AddComponent<ObjectBehaviors>();
+      }
+
+    }
+  }
+
+  [MenuItem ("Kaiju/Add ObjectBehaviors")]
+  static void AddObjectBehaviors() {
+    for (int i = 0; i < Selection.gameObjects.Length; i++) {
+      GameObject go = Selection.gameObjects[i];
+      
+      if (go.GetComponent<ObjectBehaviors>() == null) {
+        go.AddComponent<ObjectBehaviors>();
+      }
 
     }
   }
@@ -70,6 +85,13 @@ public class MenuItems : MonoBehaviour {
       Object inControl = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/InControl.prefab", typeof(GameObject));
       GameObject _inControl = PrefabUtility.InstantiatePrefab(inControl) as GameObject;
       _inControl.name = "InControl";
+    }
+
+    if (GameObject.Find("Floor") == null) {
+      GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+      floor.name = "Floor";
+      floor.transform.localScale = new Vector3(200f, 1f, 200f);
+      floor.transform.position = new Vector3(0f, -0.5f, 0f);
     }
 
 
