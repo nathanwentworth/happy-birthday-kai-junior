@@ -6594,6 +6594,7 @@ GameObject:
   - component: {fileID: 656696648}
   - component: {fileID: 656696647}
   - component: {fileID: 656696646}
+  - component: {fileID: 656696650}
   m_Layer: 0
   m_Name: Ramp (4)
   m_TagString: Untagged
@@ -6664,6 +6665,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45.000004}
+--- !u!114 &656696650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 656696645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e3ad7977cd44e56b0afce2a7c092b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rbOnCollision: 0
+  hitForce: 0
+  objActiveSwitch: 0
+  objectsToToggle: []
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 0
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 0
+  boostDirection: {x: 0, y: 0, z: 0}
+  boostForce: 0
 --- !u!1 &672915637
 GameObject:
   m_ObjectHideFlags: 0
@@ -10383,6 +10409,7 @@ GameObject:
   - component: {fileID: 1044609162}
   - component: {fileID: 1044609161}
   - component: {fileID: 1044609160}
+  - component: {fileID: 1044609164}
   m_Layer: 0
   m_Name: Ramp (26)
   m_TagString: Untagged
@@ -10453,6 +10480,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
+--- !u!114 &1044609164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1044609159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e3ad7977cd44e56b0afce2a7c092b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rbOnCollision: 0
+  hitForce: 0
+  objActiveSwitch: 0
+  objectsToToggle: []
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 0
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 1
+  boostDirection: {x: 0, y: 0, z: 0}
+  boostForce: 10
 --- !u!1 &1049911225
 GameObject:
   m_ObjectHideFlags: 0

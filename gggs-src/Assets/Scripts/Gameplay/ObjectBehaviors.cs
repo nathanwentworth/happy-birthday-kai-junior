@@ -215,6 +215,8 @@ public class ObjectBehaviors : MonoBehaviour {
     if (other.gameObject.GetComponent<Rigidbody>() != null) {
       Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
 
+      boostDirection = (boostDirection == Vector3.zero) ? new Vector3(0, 1, 0) : boostDirection;
+
       otherRb.AddForce((transform.rotation * boostDirection) * boostForce, ForceMode.VelocityChange);
     }
   }
