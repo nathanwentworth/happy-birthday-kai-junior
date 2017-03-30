@@ -24,6 +24,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     if (DataManager.ObjectMovementThreshold == 0) {
       DataManager.ObjectMovementThreshold = 1;
     }
+
     threshold = DataManager.ObjectMovementThreshold;
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
@@ -60,21 +61,26 @@ public class RigidbodySleepCheck : MonoBehaviour {
       if (!knockedOver) {
     		if (rb.velocity.magnitude > 2) {
           knockedOver = true;
+
           Renderer rend = null;
-          if (GetComponent<Renderer>() != null) {
-            rend = GetComponent<Renderer>();
-            rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);;
+          if ((rend = GetComponent<Renderer>()) != null) {
+            rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);
           }
 
-          int _points = points;
 
-          // _points *= DataManager.Combo;
+
+          List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
+
+          ObjectsScoredList.Add(objName);
+
+          DataManager.ObjectsScoredList = ObjectsScoredList;
+
+          int _points = points;
 
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
 
           hudManager.ScoreChange();
-          // hudManager.CumulativeScoreChange();
 
           if (DataManager.Score > DataManager.HighScore) {
 

@@ -212,8 +212,8 @@ public class ObjectBehaviors : MonoBehaviour {
   }
 
   private void SpeedBoostRun(Collider other) {
-    if (other.gameObject.GetComponent<Rigidbody>() != null) {
-      Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
+    Rigidbody otherRb = null;
+    if ((otherRb = other.gameObject.GetComponent<Rigidbody>()) != null) {
 
       boostDirection = (boostDirection == Vector3.zero) ? new Vector3(0, 1, 0) : boostDirection;
 

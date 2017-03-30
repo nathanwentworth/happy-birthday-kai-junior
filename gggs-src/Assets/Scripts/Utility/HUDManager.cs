@@ -34,6 +34,8 @@ public class HUDManager : MonoBehaviour {
   private TextMeshProUGUI highScoreListText;
   [SerializeField]
   private TextMeshProUGUI nameEntryText;
+  [SerializeField]
+  private TextMeshProUGUI objectsScoredListText;
 
   [SerializeField]
   private GameObject newHighScoreText;
@@ -41,6 +43,9 @@ public class HUDManager : MonoBehaviour {
   private GameObject newHighScoreHeaderText;
   [SerializeField]
   private GameObject nameEntryHeader;
+
+  [SerializeField]
+  private float gameOverScrollRate;
 
   [Header("Panels")]
 
@@ -179,6 +184,7 @@ public class HUDManager : MonoBehaviour {
 
     newHighScoreText.SetActive(DataManager.NewHighScore);
     acceptTextEntry = true;
+    StartCoroutine(ObjectsScoredDisplay());
   }
 
   public void HighScoreEntry(string name) {
@@ -255,6 +261,45 @@ public class HUDManager : MonoBehaviour {
         }
       }
     }
+  }
+
+  private IEnumerator ObjectsScoredDisplay() {
+    objectsScoredListText.text = "";
+    List<string> ObjectsScoredList = DataManager.ObjectsScoredList;
+    if (ObjectsScoredList != null && ObjectsScoredList.Count > 0) {
+      for (int i = 0; i < ObjectsScoredList.Count; i++) {
+        objectsScoredListText.text += (ObjectsScoredList[i] + "\n");
+      }      
+    } else {
+      objectsScoredListText.text = "You didn't hit any items! Try again next time!";
+    }
+
+    RectTransform gameOverPanelRect = gameOverPanel.GetComponent<RectTransform>();
+
+    float totalHeight = (gameOverPanelRect.rect.height);
+
+    Debug.Log("totalHeight " + totalHeight);
+
+
+    RectTransform rectTransform = objectsScoredListText.GetComponent<RectTransform>();
+    rectTransform.position = new Vector3(rectTransform.position.x, 0, rectTransform.position.z);
+    float height = objectsScoredListText.preferredHeight;
+    Vector3 startPos = rectTransform.position;
+
+    float scrollPos = startPos.y;
+
+    float t = 0;
+    // float time = 0;
+
+    while (scrollPos <= totalHeight) {
+      rectTransform.position = new Vector3(startPos.x, scrollPos, startPos.z);
+      scrollPos += gameOverScrollRate;
+
+      t += Time.deltaTime;
+      
+      yield return new WaitForEndOfFrame();
+    }
+
   }
 
   private string HighScoreListDisplay() {
