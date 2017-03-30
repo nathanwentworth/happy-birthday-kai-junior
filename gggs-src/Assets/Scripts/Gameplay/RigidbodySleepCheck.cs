@@ -46,7 +46,12 @@ public class RigidbodySleepCheck : MonoBehaviour {
       i++;
     }
 
-    float volume = VolumeOfMesh(GetComponent<MeshFilter>().mesh);
+    MeshFilter mesh = null;
+    float volume = -1;
+    if ((mesh = GetComponent<MeshFilter>()) != null) {
+      volume = VolumeOfMesh(GetComponent<MeshFilter>().mesh);
+    }
+
 
     // volume *= ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3);
 
@@ -71,7 +76,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
           List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
 
-          ObjectsScoredList.Add(objName);
+          ObjectsScoredList.Add(objName + " - " + points + "pts");
 
           DataManager.ObjectsScoredList = ObjectsScoredList;
 

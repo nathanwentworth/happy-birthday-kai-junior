@@ -276,7 +276,7 @@ public class HUDManager : MonoBehaviour {
 
     RectTransform gameOverPanelRect = gameOverPanel.GetComponent<RectTransform>();
 
-    float totalHeight = (gameOverPanelRect.rect.height);
+    float totalHeight = gameOverPanelRect.rect.height;
 
     Debug.Log("totalHeight " + totalHeight);
 
@@ -291,7 +291,7 @@ public class HUDManager : MonoBehaviour {
     float t = 0;
     // float time = 0;
 
-    while (scrollPos <= totalHeight) {
+    while (scrollPos <= (height + totalHeight)) {
       rectTransform.position = new Vector3(startPos.x, scrollPos, startPos.z);
       scrollPos += gameOverScrollRate;
 
