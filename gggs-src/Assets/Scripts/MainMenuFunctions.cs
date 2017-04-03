@@ -11,12 +11,16 @@ public class MainMenuFunctions : MonoBehaviour {
 
   [SerializeField]
   private GameObject mainContainerPanel;
+  [SerializeField]
+  private Button firstSelectedMainButton;
 
 
   [SerializeField]
   private GameObject levelGridPanel;
   [SerializeField]
   private GameObject levelSelectPanel;
+  [SerializeField]
+  private Button firstSelectedLevelButton;
   [SerializeField]
   private GameObject[] levelSelectButtons;
   [SerializeField]
@@ -26,7 +30,14 @@ public class MainMenuFunctions : MonoBehaviour {
 
   private bool levelHighlightChanged;
   private bool buttonHighlightChanged;
+  private GameObject currentlySelectedButton;
   private GameObject lastSelectedGameObject;
+
+  private Controls controls;
+
+  private void OnEnable() {
+    controls = Controls.DefaultBindings();
+  }
 
   private void Start() {
     Screen.lockCursor = false;
@@ -38,38 +49,64 @@ public class MainMenuFunctions : MonoBehaviour {
 
   private void Update() {
 
+    if (controls.Cancel.WasPressed) {
+      ToggleDisplayLevelSelect(false);
+      ToggleActiveMainContainer(true);
+    }
+
     buttonHighlightChanged = (lastSelectedGameObject != eventSystem.currentSelectedGameObject);
 
     if (buttonHighlightChanged) {
-      GameObject selectedLevelButton = eventSystem.currentSelectedGameObject;
+      currentlySelectedButton = eventSystem.currentSelectedGameObject;
       for (int i = 0; i < levelSelectButtons.Length; i++) {
-        if (selectedLevelButton == levelSelectButtons[i]) {
+        if (currentlySelectedButton == levelSelectButtons[i]) {
           levelPreviewImage.sprite = levelImages[i];
           break;
         }
       }
+
     }
 
     lastSelectedGameObject = eventSystem.currentSelectedGameObject;
   }
 
   public void ToggleDisplayLevelSelect(bool toggle) {
-    CanvasGroup canvasGroup = levelSelectPanel.GetComponent<CanvasGroup>();
-    canvasGroup.alpha = (toggle) ? 1 : 0;
-    canvasGroup.interactable = toggle;
-    canvasGroup.blocksRaycasts = toggle;
+    Animator anim = null;
+    if ((anim = levelGridPanel.GetComponent<Animator>()) != null) {
+      anim.SetBool("open", toggle);
+    } else {
+      Debug.LogWarning("No animator attached to " + levelGridPanel.name);
+    }
+
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = levelGridPanel.GetComponent<CanvasGroup>()) != null) {
+      // canvasGroup.alpha = (toggle) ? 1 : 0;
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+    } else {
+      Debug.LogWarning("No canvasGroup attached to " + levelGridPanel.name);
+    }
+
+    if (toggle && firstSelectedLevelButton != null) {
+      firstSelectedLevelButton.Select();
+    }
   }
 
   public void ToggleActiveMainContainer(bool toggle) {
     CanvasGroup canvasGroup = mainContainerPanel.GetComponent<CanvasGroup>();
     canvasGroup.interactable = toggle;
-    canvasGroup.blocksRaycasts = toggle;    
+    canvasGroup.blocksRaycasts = toggle;
+    if (toggle) {
+      firstSelectedMainButton.Select();
+    }
   }
 
-  public void ResizeLevelGrid() {
+  private void ResizeLevelGrid() {
     RectTransform levelGridContainerRect = levelGridPanel.GetComponent<RectTransform>();
-    float elemWidth = ((levelGridContainerRect.rect.width - 160) / 3);
     GridLayoutGroup gridLayout = levelGridPanel.GetComponent<GridLayoutGroup>();
+    int rowColMulti = gridLayout.constraintCount;
+    float spacing = gridLayout.spacing.x;
+    float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti + 1) * spacing)) / rowColMulti);
     gridLayout.cellSize = new Vector2(elemWidth, elemWidth);
   }
 
