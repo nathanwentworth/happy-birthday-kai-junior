@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Controls : PlayerActionSet
 {
-  public PlayerAction Reset;
   public PlayerAction Confirm;
   public PlayerAction Cancel;
   public PlayerAction Pause;
@@ -20,12 +19,10 @@ public class Controls : PlayerActionSet
 
   public PlayerTwoAxisAction Move;
   public PlayerTwoAxisAction Look;
-  public PlayerOneAxisAction Roll;
 
 
   public Controls()
   {
-    Reset = CreatePlayerAction( "Reset" );
     Confirm = CreatePlayerAction( "Confirm" );
     Cancel = CreatePlayerAction( "Cancel" );
     Pause = CreatePlayerAction( "Pause" );

@@ -1093,6 +1093,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 466250903}
+--- !u!114 &513026563 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114675170848137482, guid: b6d928d2d322d4da491c38880f413df0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1226692507}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &613671986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,6 +1682,7 @@ GameObject:
   - component: {fileID: 839849666}
   - component: {fileID: 839849667}
   - component: {fileID: 839849665}
+  - component: {fileID: 839849669}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1826,6 +1833,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 839849663}
   m_Mesh: {fileID: 0}
+--- !u!95 &839849669
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 839849663}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c9ba67e8f8bd4d28a3331ac41c2fc3a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &906456056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,9 +2336,9 @@ MonoBehaviour:
   submitButton: 19
   cancelButton: 20
   analogMoveThreshold: 0.5
-  moveRepeatFirstDuration: 0.8
-  moveRepeatDelayDuration: 0.1
-  allowMobileDevice: 1
+  moveRepeatFirstDuration: 0.5
+  moveRepeatDelayDuration: 0.15
+  allowMobileDevice: 0
   allowMouseInput: 1
   focusOnMouseHover: 0
 --- !u!114 &989292644
@@ -3255,7 +3279,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 27
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -3295,7 +3319,7 @@ MonoBehaviour:
   firstSelectedMainButton: {fileID: 916114934}
   levelGridPanel: {fileID: 1222526949}
   levelSelectPanel: {fileID: 29099811}
-  firstSelectedLevelButton: {fileID: 0}
+  firstSelectedLevelButton: {fileID: 513026563}
   levelSelectButtons:
   - {fileID: 1059766321}
   - {fileID: 815396086}

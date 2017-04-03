@@ -93,21 +93,38 @@ public class MainMenuFunctions : MonoBehaviour {
   }
 
   public void ToggleActiveMainContainer(bool toggle) {
-    CanvasGroup canvasGroup = mainContainerPanel.GetComponent<CanvasGroup>();
-    canvasGroup.interactable = toggle;
-    canvasGroup.blocksRaycasts = toggle;
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = mainContainerPanel.GetComponent<CanvasGroup>()) != null) {
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+    } else {
+      Debug.LogWarning("No canvasGroup attached to " + mainContainerPanel.name);
+    }
     if (toggle) {
       firstSelectedMainButton.Select();
     }
   }
 
   private void ResizeLevelGrid() {
-    RectTransform levelGridContainerRect = levelGridPanel.GetComponent<RectTransform>();
-    GridLayoutGroup gridLayout = levelGridPanel.GetComponent<GridLayoutGroup>();
-    int rowColMulti = gridLayout.constraintCount;
-    float spacing = gridLayout.spacing.x;
-    float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti + 1) * spacing)) / rowColMulti);
-    gridLayout.cellSize = new Vector2(elemWidth, elemWidth);
+    RectTransform levelGridContainerRect = null;
+    GridLayoutGroup gridLayout = null;
+
+    if ((levelGridContainerRect = levelGridPanel.GetComponent<RectTransform>()) != null
+      && (gridLayout = levelGridPanel.GetComponent<GridLayoutGroup>()) != null)
+    {
+
+      int rowColMulti = gridLayout.constraintCount;
+      float spacing = gridLayout.spacing.x;
+      float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti + 1) * spacing)) / rowColMulti);
+      gridLayout.cellSize = new Vector2(elemWidth, elemWidth);
+    } else {
+      if (levelGridContainerRect == null) {
+        Debug.LogWarning("No RectTransform attached to " + levelGridPanel.name);
+      } else if (gridLayout == null) {
+        Debug.LogWarning("No GridLayoutGroup attached to " + levelGridPanel.name);
+      }
+    }
+
   }
 
   public void LoadScene(string scene) {
