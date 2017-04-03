@@ -110,8 +110,7 @@ public class MainMenuFunctions : MonoBehaviour {
     GridLayoutGroup gridLayout = null;
 
     if ((levelGridContainerRect = levelGridPanel.GetComponent<RectTransform>()) != null
-      && (gridLayout = levelGridPanel.GetComponent<GridLayoutGroup>()) != null)
-    {
+      && (gridLayout = levelGridPanel.GetComponent<GridLayoutGroup>()) != null) {
 
       int rowColMulti = gridLayout.constraintCount;
       float spacing = gridLayout.spacing.x;
