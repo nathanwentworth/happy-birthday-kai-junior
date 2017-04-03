@@ -14,6 +14,8 @@ public class MainMenuFunctions : MonoBehaviour {
 
 
   [SerializeField]
+  private GameObject levelGridPanel;
+  [SerializeField]
   private GameObject levelSelectPanel;
   [SerializeField]
   private GameObject[] levelSelectButtons;
@@ -31,6 +33,7 @@ public class MainMenuFunctions : MonoBehaviour {
     eventSystem = FindObjectOfType (typeof (EventSystem)) as EventSystem;
     ToggleActiveMainContainer(true);
     ToggleDisplayLevelSelect(false);
+    ResizeLevelGrid();
   }
 
   private void Update() {
@@ -61,6 +64,13 @@ public class MainMenuFunctions : MonoBehaviour {
     CanvasGroup canvasGroup = mainContainerPanel.GetComponent<CanvasGroup>();
     canvasGroup.interactable = toggle;
     canvasGroup.blocksRaycasts = toggle;    
+  }
+
+  public void ResizeLevelGrid() {
+    RectTransform levelGridContainerRect = levelGridPanel.GetComponent<RectTransform>();
+    float elemWidth = ((levelGridContainerRect.rect.width - 160) / 3);
+    GridLayoutGroup gridLayout = levelGridPanel.GetComponent<GridLayoutGroup>();
+    gridLayout.cellSize = new Vector2(elemWidth, elemWidth);
   }
 
   public void LoadScene(string scene) {
