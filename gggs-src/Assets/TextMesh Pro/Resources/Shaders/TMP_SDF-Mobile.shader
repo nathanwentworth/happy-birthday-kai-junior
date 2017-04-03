@@ -1,9 +1,11 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Simplified SDF shader:
 // - No Shading Option (bevel / bump / env map)
 // - No Glow Option
 // - Softness is applied on both side of the outline
 
-Shader "TextMeshPro/Mobile/Distance Field - Masking" {
+Shader "TextMeshPro/Mobile/Distance Field" {
 
 Properties {
 	_FaceColor			("Face Color", Color) = (1,1,1,1)
@@ -41,11 +43,6 @@ Properties {
 	_ClipRect			("Clip Rect", vector) = (-32767, -32767, 32767, 32767)
 	_MaskSoftnessX		("Mask SoftnessX", float) = 0
 	_MaskSoftnessY		("Mask SoftnessY", float) = 0
-	_MaskTex			("Mask Texture", 2D) = "white" {}
-	_MaskInverse		("Inverse", float) = 0
-	_MaskEdgeColor		("Edge Color", Color) = (1,1,1,1)
-	_MaskEdgeSoftness	("Edge Softness", Range(0, 1)) = 0.01
-	_MaskWipeControl	("Wipe Position", Range(0, 1)) = 0.5
 	
 	_StencilComp		("Stencil Comparison", Float) = 8
 	_Stencil			("Stencil ID", Float) = 0
@@ -88,7 +85,6 @@ SubShader {
 		#pragma fragment PixShader
 		#pragma shader_feature __ OUTLINE_ON
 		#pragma shader_feature __ UNDERLAY_ON UNDERLAY_INNER
-		//#pragma shader_feature __ ALPHA_MASK_ON
 
 		#include "UnityCG.cginc"
 		#include "UnityUI.cginc"
@@ -115,10 +111,6 @@ SubShader {
 		#endif
 		};
 
-		float _MaskWipeControl;
-		float _MaskEdgeSoftness;
-		fixed4 _MaskEdgeColor;
-		bool _MaskInverse;
 
 		pixel_t VertShader(vertex_t input)
 		{
@@ -127,7 +119,7 @@ SubShader {
 			float4 vert = input.vertex;
 			vert.x += _VertexOffsetX;
 			vert.y += _VertexOffsetY;
-			float4 vPosition = mul(UNITY_MATRIX_MVP, vert);
+			float4 vPosition = UnityObjectToClipPos(vert);
 
 			float2 pixelSize = vPosition.w;
 			pixelSize /= float2(_ScaleX, _ScaleY) * abs(mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy));
@@ -146,9 +138,9 @@ SubShader {
 			float outline = _OutlineWidth * _ScaleRatioA * 0.5 * scale;
 
 			float opacity = input.color.a;
-					#if (UNDERLAY_ON | UNDERLAY_INNER)
-					opacity = 1.0;
-					#endif
+		#if (UNDERLAY_ON | UNDERLAY_INNER)
+				opacity = 1.0;
+		#endif
 
 			fixed4 faceColor = fixed4(input.color.rgb, opacity) * _FaceColor;
 			faceColor.rgb *= faceColor.a;
@@ -218,30 +210,18 @@ SubShader {
 			{
 				half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 				c *= m.x * m.y;
-
-				float a = abs(_MaskInverse - tex2D(_MaskTex, input.texcoord0.zw).a);
-				float t = a + (1 - _MaskWipeControl) * _MaskEdgeSoftness - _MaskWipeControl;
-				a = saturate(t / _MaskEdgeSoftness);
-				c.rgb = lerp(_MaskEdgeColor.rgb*c.a, c.rgb, a);
-				c *= a;
 			}
 		#else
 			// Alternative implementation to UnityGet2DClipping with support for softness.
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 			c *= m.x * m.y;
-
-			//#if ALPHA_MASK_ON
-			float a = abs(_MaskInverse - tex2D(_MaskTex, input.texcoord0.zw).a);
-			float t = a + (1 - _MaskWipeControl) * _MaskEdgeSoftness - _MaskWipeControl;
-			a = saturate(t / _MaskEdgeSoftness);
-			c.rgb = lerp(_MaskEdgeColor.rgb*c.a, c.rgb, a);
-			c *= a;
-			//#endif
 		#endif
 
 		#if (UNDERLAY_ON | UNDERLAY_INNER)
 			c *= input.texcoord1.z;
 		#endif
+
+			clip(c.a - 0.001);
 
 			return c;
 		}
