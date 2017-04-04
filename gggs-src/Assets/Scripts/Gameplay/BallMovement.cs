@@ -49,9 +49,6 @@ public class BallMovement : MonoBehaviour {
     currentSpeed = rb.velocity.magnitude;
     hudManager.SpeedometerDisplay(currentSpeed);
 
-    if (controls.Reset.WasPressed) {
-      Restart();
-    }
     if (controls.Confirm.WasPressed) {
       MainMenu();
     }
