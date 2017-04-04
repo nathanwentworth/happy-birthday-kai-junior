@@ -7,13 +7,13 @@ public class LevelDataContainer : MonoBehaviour {
   private HUDManager hudManager;
 
   [SerializeField]
-  private float defaultGameTime;
+  private float defaultGameTime = 30f;
   [SerializeField]
-  private float countDownTime;
+  private float countDownTime = 3f;
   [SerializeField]
-  private float scoreGoalInitial;
+  private float scoreGoalInitial = 1000f;
   [SerializeField]
-  private float scoreGoalBonus;
+  private float scoreGoalBonus = 1500f;
 
   private float gameTime;
   public bool runTimer = false;
@@ -27,7 +27,7 @@ public class LevelDataContainer : MonoBehaviour {
     DataManager.AllowControl = false;
 
     gameTime = defaultGameTime;
-    hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
+    hudManager.TimerChange(Mathf.Ceil(gameTime), defaultGameTime);
 
     StartGame();
   }
@@ -66,7 +66,7 @@ public class LevelDataContainer : MonoBehaviour {
       gameOverRun = true;
     }
 
-    hudManager.TimerChange(Mathf.Round(gameTime), defaultGameTime);
+    hudManager.TimerChange(Mathf.Ceil(gameTime), defaultGameTime);
   }
 
   public IEnumerator GameOverDelay(float wait) {
@@ -93,7 +93,7 @@ public class LevelDataContainer : MonoBehaviour {
     while (time > 0) {
       time -= Time.deltaTime;
 
-      hudManager.OverlayText(Mathf.Round(time) + "");
+      hudManager.OverlayText(Mathf.Ceil(time) + "");
       yield return null;
     }
 
