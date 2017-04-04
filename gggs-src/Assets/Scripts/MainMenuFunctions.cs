@@ -9,12 +9,16 @@ public class MainMenuFunctions : MonoBehaviour {
 
   private EventSystem eventSystem;
 
+
+  [Header("Main Elements")]
   [SerializeField]
   private GameObject mainContainerPanel;
   [SerializeField]
   private Button firstSelectedMainButton;
+  private Button lastSelectedMainButton;
+  private List<GameObject> mainButtons = new List<GameObject>();
 
-
+  [Header("Level Grid Elements")]
   [SerializeField]
   private GameObject levelGridPanel;
   [SerializeField]
@@ -27,6 +31,10 @@ public class MainMenuFunctions : MonoBehaviour {
   private Image levelPreviewImage;
   [SerializeField]
   private Sprite[] levelImages;
+
+  [Header("Options Elements")]
+  [SerializeField]
+  private GameObject optionsPanel;
 
   private bool levelHighlightChanged;
   private bool buttonHighlightChanged;
@@ -42,6 +50,11 @@ public class MainMenuFunctions : MonoBehaviour {
   private void Start() {
     Screen.lockCursor = false;
     eventSystem = FindObjectOfType (typeof (EventSystem)) as EventSystem;
+
+    mainButtons = GetButtons(mainContainerPanel);
+
+    lastSelectedMainButton = firstSelectedMainButton;
+
     ToggleActiveMainContainer(true);
     ToggleDisplayLevelSelect(false);
     ResizeLevelGrid();
@@ -51,6 +64,7 @@ public class MainMenuFunctions : MonoBehaviour {
 
     if (controls.Cancel.WasPressed) {
       ToggleDisplayLevelSelect(false);
+      ToggleDisplayOptions(false);
       ToggleActiveMainContainer(true);
     }
 
@@ -61,6 +75,14 @@ public class MainMenuFunctions : MonoBehaviour {
       for (int i = 0; i < levelSelectButtons.Length; i++) {
         if (currentlySelectedButton == levelSelectButtons[i]) {
           levelPreviewImage.sprite = levelImages[i];
+          break;
+        }
+      }
+
+      for (int i = 0; i < mainButtons.Count; i++) {
+        if (currentlySelectedButton == mainButtons[i]) {
+          lastSelectedMainButton = currentlySelectedButton.GetComponent<Button>();
+          Debug.Log(currentlySelectedButton.gameObject.name);
           break;
         }
       }
@@ -92,6 +114,28 @@ public class MainMenuFunctions : MonoBehaviour {
     }
   }
 
+  public void ToggleDisplayOptions(bool toggle) {
+    Animator anim = null;
+    if ((anim = optionsPanel.GetComponent<Animator>()) != null) {
+      anim.SetBool("open", toggle);
+    } else {
+      Debug.LogWarning("No animator attached to " + optionsPanel.name);
+    }
+
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = optionsPanel.GetComponent<CanvasGroup>()) != null) {
+      // canvasGroup.alpha = (toggle) ? 1 : 0;
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+    } else {
+      Debug.LogWarning("No canvasGroup attached to " + optionsPanel.name);
+    }
+
+    if (toggle && firstSelectedLevelButton != null) {
+      firstSelectedLevelButton.Select();
+    }
+  }
+
   public void ToggleActiveMainContainer(bool toggle) {
     CanvasGroup canvasGroup = null;
     if ((canvasGroup = mainContainerPanel.GetComponent<CanvasGroup>()) != null) {
@@ -101,7 +145,7 @@ public class MainMenuFunctions : MonoBehaviour {
       Debug.LogWarning("No canvasGroup attached to " + mainContainerPanel.name);
     }
     if (toggle) {
-      firstSelectedMainButton.Select();
+      lastSelectedMainButton.Select();
     }
   }
 
@@ -124,6 +168,23 @@ public class MainMenuFunctions : MonoBehaviour {
       }
     }
 
+  }
+
+  private List<GameObject> GetButtons(GameObject container) {
+
+    List<GameObject> list = new List<GameObject>();
+
+    Transform child = null;
+    int count = container.transform.childCount;
+    for (int i = 0; i < count; i++) {
+      child = container.transform.GetChild(i);
+      if ((child.GetComponent<Button>()) != null) {
+        list.Add(child.gameObject);
+      }
+      
+    }
+
+    return list;
   }
 
   public void LoadScene(string scene) {

@@ -91,9 +91,9 @@ public class LevelDataContainer : MonoBehaviour {
     yield return new WaitForSeconds(1);
     float time = countDownTime;
     while (time > 0) {
-      time -= Time.deltaTime;
-
       hudManager.OverlayText(Mathf.Ceil(time) + "");
+
+      time -= Time.deltaTime;
       yield return null;
     }
 
