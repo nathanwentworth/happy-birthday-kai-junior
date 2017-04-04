@@ -16,7 +16,7 @@ public class LevelDataContainer : MonoBehaviour {
   private float scoreGoalBonus = 1500f;
 
   private float gameTime;
-  public bool runTimer = false;
+  public bool runTimer { get; set; }
   private bool gameOverRun;
 
   private int _score;
@@ -25,6 +25,7 @@ public class LevelDataContainer : MonoBehaviour {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 
     DataManager.AllowControl = false;
+    runTimer = false;
 
     gameTime = defaultGameTime;
     hudManager.TimerChange(Mathf.Ceil(gameTime), defaultGameTime);
