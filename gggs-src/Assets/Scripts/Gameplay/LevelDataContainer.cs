@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer : MonoBehaviour {
+public class LevelDataContainer : MonoBehaviour {
 
   private HUDManager hudManager;
 
@@ -10,6 +10,10 @@ public class Timer : MonoBehaviour {
   private float defaultGameTime;
   [SerializeField]
   private float countDownTime;
+  [SerializeField]
+  private float scoreGoalInitial;
+  [SerializeField]
+  private float scoreGoalBonus;
 
   private float gameTime;
   public bool runTimer = false;
@@ -18,7 +22,7 @@ public class Timer : MonoBehaviour {
   private int _score;
 
   private void Awake() {
-    hudManager = GetComponent<HUDManager>();
+    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 
     DataManager.AllowControl = false;
 
