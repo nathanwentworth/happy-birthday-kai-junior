@@ -6,7 +6,7 @@ public class CarJumpCameraSwitch : MonoBehaviour {
 
   private Camera jumpCam;
   private Camera carCam;
-  private Timer timer;
+  private LevelDataContainer timer;
 
   [Header("Should the Game Over panel be displayed when entered?")]
   [SerializeField]
@@ -15,7 +15,7 @@ public class CarJumpCameraSwitch : MonoBehaviour {
   private void Awake() {
     carCam = GameObject.Find("Main Camera").GetComponent<Camera>();
     jumpCam = transform.GetChild(0).GetComponent<Camera>();
-    timer = FindObjectOfType (typeof (Timer)) as Timer;
+    timer = FindObjectOfType (typeof (LevelDataContainer)) as LevelDataContainer;
 
     carCam.enabled = true;
     jumpCam.enabled = false;
