@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -252,14 +252,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282092165}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -72.99982, y: 31.999962, z: 0.00006246567}
+  m_LocalRotation: {x: 0, y: -0.971051, z: 0, w: 0.23887248}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1824396146}
   m_Father: {fileID: 0}
   m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -152.36, z: 0}
 --- !u!1 &341338663
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 901601859}
   - component: {fileID: 901601858}
   - component: {fileID: 901601857}
+  - component: {fileID: 901601861}
   m_Layer: 0
   m_Name: Cam
   m_TagString: Untagged
@@ -1001,6 +1002,20 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!114 &901601861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 901601855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36936827a1fbc431db45394500588a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 901601856}
+  noiseStrength: 5
+  shakeSpeed: 0.01
 --- !u!1 &909253270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2722,25 +2737,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d144f55f18111490f9057d46043bcede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 3
-  rotateSpeed: 3
-  distance: 15
+  followSpeed: 5
+  rotateSpeed: 10
+  distance: 25
   minLookX: 0
-  maxLookX: 0
+  maxLookX: 60
+  distanceNoiseRate: 8
 --- !u!4 &1824396146
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1824396144}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 901601856}
   m_Father: {fileID: 282092166}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
 --- !u!1 &1847850546
 GameObject:
   m_ObjectHideFlags: 0

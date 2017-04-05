@@ -15,7 +15,7 @@ public class BallMovement : MonoBehaviour {
   private float groundedSpeed;
   private bool grounded;
 
-  private float currentSpeed;
+  public float currentSpeed { get; private set; }
 
   private Controls controls;
   private HUDManager hudManager;
@@ -28,7 +28,7 @@ public class BallMovement : MonoBehaviour {
 
   private void Awake() {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
-    GameObject camObj = GameObject.Find("Camera");
+    GameObject camObj = GameObject.Find("SmoothCameraFollow");
     cam = camObj.transform;
   }
 
@@ -48,20 +48,11 @@ public class BallMovement : MonoBehaviour {
 
     currentSpeed = rb.velocity.magnitude;
     hudManager.SpeedometerDisplay(currentSpeed);
-
-    if (controls.Confirm.WasPressed) {
-      MainMenu();
-    }
-
 	}
 
   public void Restart() {
     Scene scene = SceneManager.GetActiveScene();
     SceneManager.LoadScene(scene.name);
-  }
-
-  public void MainMenu() {
-    SceneManager.LoadScene("options-test");
   }
 
   private void FixedUpdate() {

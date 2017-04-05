@@ -235,32 +235,36 @@ public class HUDManager : MonoBehaviour {
   }
 
   private void GetKeyboardInput() {
-    foreach (char c in Input.inputString) {
-      if (c == "\b"[0]) {
-        if (nameEntryText.text.Length != 0) {
-          nameEntryText.text = nameEntryText.text.Substring(0, nameEntryText.text.Length - 1);    
-        }
-      } else {
-        if (c == "\n"[0] || c == "\r"[0]) {
-          print("User entered their name: " + nameEntryText.text);
-          HighScoreEntry(nameEntryText.text);
-          DataManager.LastEnteredHighScoreName = nameEntryText.text;
-          highScoreListText.text = HighScoreListDisplay();
-          acceptTextEntry = false;
-          nameEntryText.text = "";
-          nameEntryHeader.SetActive(false);
-          newHighScoreHeaderText.SetActive(true);
+    HighScoreEntry(nameEntryText.text);
+    DataManager.LastEnteredHighScoreName = nameEntryText.text;
+    highScoreListText.text = HighScoreListDisplay();
+    nameEntryText.text = "";
+    nameEntryHeader.SetActive(false);
+    newHighScoreHeaderText.SetActive(true);
 
-          restartButton.interactable = true;
-          changeLevelButton.interactable = true;
+    restartButton.interactable = true;
+    changeLevelButton.interactable = true;
 
-          eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(restartButton.gameObject);
+    restartButton.Select();
 
-        } else if (nameEntryText.text.Length < 16) {
-          nameEntryText.text += c.ToString();
-        }
-      }
-    }
+    Debug.Log(acceptTextEntry);
+
+    acceptTextEntry = false;
+
+    // foreach (char c in Input.inputString) {
+    //   if (c == "\b"[0]) {
+    //     if (nameEntryText.text.Length != 0) {
+    //       nameEntryText.text = nameEntryText.text.Substring(0, nameEntryText.text.Length - 1);    
+    //     }
+    //   } else {
+    //     if (c == "\n"[0] || c == "\r"[0]) {
+    //       print("User entered their name: " + nameEntryText.text);
+
+    //     } else if (nameEntryText.text.Length < 16) {
+    //       nameEntryText.text += c.ToString();
+    //     }
+    //   }
+    // }
   }
 
   private IEnumerator ObjectsScoredDisplay() {

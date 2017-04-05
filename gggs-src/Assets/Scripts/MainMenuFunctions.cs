@@ -110,11 +110,11 @@ public class MainMenuFunctions : MonoBehaviour {
       Debug.LogWarning("No canvasGroup attached to " + panel.name);
     }
 
-    if (toggle != null) {
+    if (toggle) {
       if (panel == levelGridPanel) {
-        lastSelectedMainButton.Select();
-      } else if (panel == mainContainerPanel) {
         firstSelectedLevelButton.Select();
+      } else if (panel == mainContainerPanel) {
+        lastSelectedMainButton.Select();
       }
     }
 
