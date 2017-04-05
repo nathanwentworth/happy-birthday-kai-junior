@@ -28,7 +28,7 @@ public class BallMovement : MonoBehaviour {
 
   private void Awake() {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
-    GameObject camObj = GameObject.Find("SmoothCameraFollow");
+    GameObject camObj = GameObject.Find("Camera");
     cam = camObj.transform;
   }
 

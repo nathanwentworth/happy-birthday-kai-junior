@@ -4,45 +4,30 @@ using UnityEngine;
 
 public class JointAutoCreate : MonoBehaviour {
 
+  public ContactPoint[] Contacts { get; private set; }
+  private bool contactsChecked;
+  [SerializeField]
+  private bool root;
+  [SerializeField]
+  private float breakForce;
+
   private void Start() {
     GameObject obj = gameObject;
-    CreateJoints(obj);
+    if (root) {
+      StartCoroutine(CheckCollisions());
+    }
   }
 
   [ContextMenu ("Create Joints")]
   public void CreateJoints(GameObject parentObj) {
     Transform transform = parentObj.GetComponent<Transform>();
+    JointAutoCreate jointAutoCreate = null;
+    if ((jointAutoCreate = parentObj.GetComponent<JointAutoCreate>()) != null) {
+      foreach (ContactPoint contact in jointAutoCreate.Contacts) {
+        GameObject obj = contact.otherCollider.gameObject;
 
-    List<Collider[]> colliders = new List<Collider[]>();
-
-    colliders.Add(Physics.OverlapBox(
-      new Vector3(transform.position.x + 1, transform.position.y, transform.position.z),
-      transform.localScale)
-    );
-    colliders.Add(Physics.OverlapBox(
-      new Vector3(transform.position.x - 1, transform.position.y, transform.position.z),
-      transform.localScale)
-    );
-    colliders.Add(Physics.OverlapBox(
-      new Vector3(transform.position.x, transform.position.y + 1, transform.position.z),
-      transform.localScale)
-    );
-    colliders.Add(Physics.OverlapBox(
-      new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),
-      transform.localScale)
-    );
-    colliders.Add(Physics.OverlapBox(
-      new Vector3(transform.position.x, transform.position.y, transform.position.z + 1),
-      transform.localScale)
-    );
-    colliders.Add(Physics.OverlapBox(
-      new Vector3(transform.position.x, transform.position.y, transform.position.z - 1),
-      transform.localScale)
-    );
-
-    for (int i = 0; i < colliders.Count; i++) {
-      for (int j = 0; j < colliders[i].Length; j++) {
-        GameObject obj = colliders[i][j].gameObject;
+        Debug.Log("object checking: " + gameObject.name + ", object being checked: " + obj.name);
+        Debug.DrawLine(contact.point, contact.point + contact.normal, Color.green, 5, false);
 
         if (obj.name != "Floor") {
           if (obj.GetComponent<FixedJoint>() == null) {
@@ -57,10 +42,35 @@ public class JointAutoCreate : MonoBehaviour {
           CreateJoints(obj);
 
           Debug.Log(obj.gameObject.name);
+        } else {
+          Debug.Log("The object being checked is the floor");
         }
+
       }
+      
     }
 
+
     Debug.Log("create joints called");
+  }
+
+
+  private void OnCollisionEnter(Collision other) {
+    if (!contactsChecked) {
+      Contacts = other.contacts;
+      contactsChecked = true;
+      Debug.Log("contactsChecked on " + gameObject.name);
+    }
+  }
+
+  private IEnumerator CheckCollisions() {
+    GameObject obj = gameObject;
+
+    while (!contactsChecked) {
+      yield return new WaitForEndOfFrame();
+    }
+
+    CreateJoints(obj);
+    yield return null;
   }
 }
