@@ -92,7 +92,7 @@ public class ObjectBehaviors : MonoBehaviour {
       }
       GetComponent<Collider>().isTrigger = true;
     }
-		
+
 	}
 
   private void OnTriggerEnter(Collider other) {
@@ -139,7 +139,7 @@ public class ObjectBehaviors : MonoBehaviour {
           rb.isKinematic = false;
         }
       }
-    }    
+    }
   }
 
   private void ObjectActiveSwitchRun(Collider other) {
@@ -220,10 +220,5 @@ public class ObjectBehaviors : MonoBehaviour {
       otherRb.AddForce((transform.rotation * boostDirection) * boostForce, ForceMode.VelocityChange);
     }
   }
-
-
-
-
-
 
 }

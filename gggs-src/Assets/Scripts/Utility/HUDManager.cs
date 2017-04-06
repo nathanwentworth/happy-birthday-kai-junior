@@ -149,14 +149,18 @@ public class HUDManager : MonoBehaviour {
     }
 
   	if (overlayText == null) {
-  			overlayText = GameObject.Find("OverlayText").GetComponent<TextMeshProUGUI>();
+			overlayText = GameObject.Find("OverlayText").GetComponent<TextMeshProUGUI>();
   	}
 
-
-    if (overlayPanel.GetComponent<CanvasGroup>().alpha == 0) {
-      overlayPanel.GetComponent<CanvasGroup>().alpha = 1;
-      overlayPanel.GetComponent<CanvasGroup>().interactable = true;
-      overlayPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = overlayPanel.GetComponent<CanvasGroup>()) != null) {
+      if (canvasGroup.alpha == 0) {
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+      }
+    } else {
+      Debug.Log("no canvasGroup attached to overlayPanel");
     }
 
     overlayText.text = text;
@@ -171,9 +175,12 @@ public class HUDManager : MonoBehaviour {
   // }
 
   public void GameOverDisplay() {
-    gameOverPanel.GetComponent<CanvasGroup>().alpha = 1;
-    gameOverPanel.GetComponent<CanvasGroup>().interactable = true;
-    gameOverPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = gameOverPanel.GetComponent<CanvasGroup>()) != null) {
+      canvasGroup.alpha = 1;
+      canvasGroup.interactable = true;
+      canvasGroup.blocksRaycasts = true;
+    }
 
     highScoreListText.text = "";
 
@@ -249,7 +256,7 @@ public class HUDManager : MonoBehaviour {
     // foreach (char c in Input.inputString) {
     //   if (c == "\b"[0]) {
     //     if (nameEntryText.text.Length != 0) {
-    //       nameEntryText.text = nameEntryText.text.Substring(0, nameEntryText.text.Length - 1);    
+    //       nameEntryText.text = nameEntryText.text.Substring(0, nameEntryText.text.Length - 1);
     //     }
     //   } else {
     //     if (c == "\n"[0] || c == "\r"[0]) {
@@ -268,7 +275,7 @@ public class HUDManager : MonoBehaviour {
     if (ObjectsScoredList != null && ObjectsScoredList.Count > 0) {
       for (int i = 0; i < ObjectsScoredList.Count; i++) {
         objectsScoredListText.text += (ObjectsScoredList[i] + "\n");
-      }      
+      }
     } else {
       objectsScoredListText.text = "You didn't hit any items! Try again next time!";
     }
@@ -295,7 +302,7 @@ public class HUDManager : MonoBehaviour {
       scrollPos += gameOverScrollRate;
 
       t += Time.deltaTime;
-      
+
       yield return new WaitForEndOfFrame();
     }
 
@@ -314,9 +321,12 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void HideOverlay() {
-    overlayPanel.GetComponent<CanvasGroup>().alpha = 0;
-    overlayPanel.GetComponent<CanvasGroup>().interactable = false;
-    overlayPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = overlayPanel.GetComponent<CanvasGroup>()) != null) {
+      canvasGroup.alpha = 0;
+      canvasGroup.interactable = false;
+      canvasGroup.blocksRaycasts = false;
+    }
   }
 
   public void PausePanelDisplay(bool paused) {
@@ -324,9 +334,14 @@ public class HUDManager : MonoBehaviour {
       pausePanel = GameObject.Find("PausePanel").gameObject;
     }
     LockMouse.Lock(!paused);
-    pausePanel.GetComponent<CanvasGroup>().alpha = (paused) ? 1f : 0f;
-    pausePanel.GetComponent<CanvasGroup>().interactable = paused;
-    pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = paused;
+
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = pausePanel.GetComponent<CanvasGroup>()) != null) {
+      canvasGroup.alpha = (paused) ? 1f : 0f;
+      canvasGroup.interactable = paused;
+      canvasGroup.blocksRaycasts = paused;
+    }
+
   }
 
   public void Restart() {

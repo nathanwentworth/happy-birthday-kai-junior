@@ -15,6 +15,11 @@ public class LevelDataContainer : MonoBehaviour {
   [SerializeField]
   private float scoreGoalBonus = 1500f;
 
+  public float CountDownTime {
+    get { return countDownTime; }
+    set { countDownTime = value; }
+  }
+
   private float gameTime;
   public bool runTimer { get; set; }
   private bool gameOverRun;
