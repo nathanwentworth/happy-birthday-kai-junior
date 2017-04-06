@@ -8,18 +8,20 @@ public class CameraBehavior : MonoBehaviour {
   private Transform root;
 
   [SerializeField]
-  private float followSpeed = 3f;
-  [SerializeField]
   private float rotateSpeed = 3f;
   [SerializeField]
-  private float distance = 3f;
+  private float minDistance = 10f;
+  [SerializeField]
+  private float maxDistance = 25f;
 
   [SerializeField]
   private float minLookX;
   [SerializeField]
   private float maxLookX;
 
-  private Vector3 velocity = Vector3.zero;
+  [SerializeField]
+  private float zRotation = 10f;
+
   private float distanceNoise = 0.25f;
   [SerializeField]
   private float distanceNoiseRate;
@@ -40,19 +42,17 @@ public class CameraBehavior : MonoBehaviour {
   private void FixedUpdate() {
     if (!target) return;
 
-    RootTransform();
+    root.position = target.position;
     Rotate();
     Follow();
-  }
-
-  private void RootTransform() {
-    root.position = target.position;
   }
 
   private void Follow() {
     float _distanceNoise = Mathf.PerlinNoise(distanceNoise += 0.01f, distanceNoise += 0.01f);
     _distanceNoise *= Time.deltaTime * distanceNoiseRate;
-    float _distance = (distance * (ballMovement.currentSpeed / 110)) + (10 + _distanceNoise);
+    // float _distance = (distance * (ballMovement.currentSpeed / 110)) + (10 + _distanceNoise);
+    float _distance = (minDistance + _distanceNoise) + ((ballMovement.currentSpeed / 110) * (maxDistance - minDistance));
+
     Debug.Log(_distance);
 
     Vector3 pos = root.rotation * Vector3.forward + root.position;
@@ -66,17 +66,12 @@ public class CameraBehavior : MonoBehaviour {
     float currentRotationAngleX = root.eulerAngles.x;
     float currentRotationAngleZ = root.eulerAngles.z;
 
-    float zRotationModifier = 0;
-    if (controls.Look.X > 0) {
-
-    }
-
     float wantedRotationAngleY = root.eulerAngles.y
     + controls.Look.X * 100 * rotateSpeed * Time.deltaTime;
     float wantedRotationAngleX = root.eulerAngles.x
     + controls.Look.Y * 100 * -rotateSpeed * Time.deltaTime;
     float wantedRotationAngleZ = 0
-    + controls.Look.X * 10 * -(rotateSpeed * 0.8f) * Time.deltaTime;
+    + controls.Look.X * zRotation * -(rotateSpeed * 0.8f) * Time.deltaTime;
 
     if (wantedRotationAngleX > 180) {
       wantedRotationAngleX = wantedRotationAngleX - 360;

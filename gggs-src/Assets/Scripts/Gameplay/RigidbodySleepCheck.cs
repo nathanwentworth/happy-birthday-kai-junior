@@ -46,10 +46,10 @@ public class RigidbodySleepCheck : MonoBehaviour {
       i++;
     }
 
-    MeshFilter mesh = null;
+    MeshFilter objMesh = null;
     float volume = -1;
-    if ((mesh = GetComponent<MeshFilter>()) != null) {
-      volume = VolumeOfMesh(GetComponent<MeshFilter>().mesh);
+    if ((objMesh = GetComponent<MeshFilter>()) != null) {
+      volume = VolumeOfMesh(objMesh.mesh);
     }
 
 

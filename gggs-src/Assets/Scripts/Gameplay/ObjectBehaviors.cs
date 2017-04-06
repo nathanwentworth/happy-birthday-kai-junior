@@ -199,7 +199,7 @@ public class ObjectBehaviors : MonoBehaviour {
     float t = (onT) ? onTime : offTime;
 
     meshToToggle.enabled = onT;
-    foreach (Collider c in GetComponents<Collider>()) {
+    foreach (Collider c in timedToggleColliders) {
       c.enabled = onT;
     }
 
