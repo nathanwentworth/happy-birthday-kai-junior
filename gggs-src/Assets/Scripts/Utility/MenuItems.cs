@@ -50,7 +50,7 @@ public class MenuItems : MonoBehaviour {
     // delete default main camera
     GameObject go;
     Object o;
-    if ((go = GameObject.Find("Main Camera")) != null && go.transform.parent.name != "SmoothCameraFollow") {
+    if ((go = GameObject.Find("Main Camera")) != null && go.transform.parent == null) {
       Object.DestroyImmediate(go);
     }
 
@@ -73,6 +73,7 @@ public class MenuItems : MonoBehaviour {
       go = new GameObject();
       go.AddComponent<UnityEngine.EventSystems.EventSystem>();
       go.AddComponent<InControl.InControlInputModule>();
+      go.name = "EventSystem";
     }
 
     // add the level data object
