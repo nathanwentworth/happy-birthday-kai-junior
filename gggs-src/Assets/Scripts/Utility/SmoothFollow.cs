@@ -7,9 +7,7 @@ public class SmoothFollow : MonoBehaviour {
   public Transform playerTarget;
   [HideInInspector]
   public Transform followTarget;
-  private Rigidbody playerTargetRb;
 
-  private Transform camera;
 
   public float speed = 3f;
 
@@ -36,7 +34,6 @@ public class SmoothFollow : MonoBehaviour {
   }
 
   private void Awake() {
-    camera = transform.GetChild(0).GetComponent<Transform>();
     followTarget = transform.root;
 
     if (playerTarget == null) {
@@ -74,7 +71,6 @@ public class SmoothFollow : MonoBehaviour {
     while (playerTarget == null && checks < 10) {
       if (GameObject.FindWithTag("Player") != null) {
         playerTarget = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        playerTargetRb = playerTarget.GetComponent<Rigidbody>();
         playerTargetName = playerTarget.name;    
       }
 

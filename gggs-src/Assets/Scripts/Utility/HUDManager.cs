@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 using TMPro;
 
 public class HUDManager : MonoBehaviour {
@@ -66,8 +65,6 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private GameObject pausePanel;
 
-  private GameObject eventSystem;
-
   private bool acceptTextEntry = false;
 
   List<LevelData> levelDataList = new List<LevelData>();
@@ -102,8 +99,6 @@ public class HUDManager : MonoBehaviour {
     if (DataManager.LastEnteredHighScoreName != null && DataManager.LastEnteredHighScoreName != "") {
       nameEntryText.text = DataManager.LastEnteredHighScoreName;
     }
-
-    eventSystem = GameObject.Find("EventSystem");
   }
 
   private void Update() {

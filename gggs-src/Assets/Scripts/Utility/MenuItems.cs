@@ -68,6 +68,13 @@ public class MenuItems : MonoBehaviour {
       _go.name = "MainHUD";
     }
 
+    // add an eventsystem
+    if (GameObject.Find("EventSystem") == null) {
+      go = new GameObject();
+      go.AddComponent<UnityEngine.EventSystems.EventSystem>();
+      go.AddComponent<InControl.InControlInputModule>();
+    }
+
     // add the level data object
     if (GameObject.Find("LevelData") == null) {
       go = new GameObject();
@@ -96,6 +103,7 @@ public class MenuItems : MonoBehaviour {
       _go.name = "InControl";
     }
 
+    // add a floor
     if (GameObject.Find("Floor") == null) {
       go = GameObject.CreatePrimitive(PrimitiveType.Cube);
       go.name = "Floor";
