@@ -10,7 +10,8 @@ public class ScoreTextPopup : MonoBehaviour {
   [SerializeField]
   private int initNum = 10;
   private List<GameObject> textObjList;
-  private Transform cam;
+  private GameObject cam;
+  private Camera mainCamera;
   private bool okay;
   [SerializeField]
   private float floatTime;
@@ -19,7 +20,8 @@ public class ScoreTextPopup : MonoBehaviour {
 
   private void Awake() {
     okay = false;
-    cam = GameObject.Find("Cam").GetComponent<Transform>();
+    cam = GameObject.Find("Cam");
+    mainCamera = cam.GetComponent<Camera>();
     if (textObj != null) {
       if (initNum > 0) {
         ObjectPopulate(initNum);
@@ -37,7 +39,11 @@ public class ScoreTextPopup : MonoBehaviour {
     for (int i = 0; i < textObjList.Count; i++) {
       if (!textObjList[i].activeInHierarchy) {
         textObjList[i].transform.position = new Vector3(pos.x, pos.y + (height / 2), pos.z);
-        textObjList[i].transform.LookAt(cam.position);
+        Vector3 camView = mainCamera.WorldToViewportPoint(textObjList[i].transform.position);
+        camView.x = Mathf.Clamp(camView.x, 0.2f, 0.8f);
+        camView.y = Mathf.Clamp(camView.y, 0.2f, 0.8f);
+        textObjList[i].transform.position = mainCamera.ViewportToWorldPoint(camView);
+        textObjList[i].transform.LookAt(cam.transform.position);
         textObjList[i].transform.rotation *= Quaternion.Euler(0, 180, 0);
         textObjList[i].GetComponent<TextMeshPro>().text = points + "";
         textObjList[i].SetActive(true);
