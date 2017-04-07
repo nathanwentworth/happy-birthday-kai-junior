@@ -75,9 +75,10 @@ public class ScoreTextPopup : MonoBehaviour {
     while (lerpTime < startTime) {
       o = t = (lerpTime / startTime);
       // t = Mathf.Sin(t * Mathf.PI * 0.5f);
-      t = Mathf.Sin(Mathf.Pow(t, 3) * (Mathf.PI * 0.5f));
+      // t = Mathf.Sin(Mathf.Pow(t, 3) * (Mathf.PI * 0.5f));
       // t = (Mathf.Cos(Mathf.Pow(t, 3) * Mathf.PI * 0.5f) * -1f) + 1f;
-      o = Mathf.Sin(Mathf.Pow(t, 10) * (Mathf.PI * 0.5f));
+      t = (2 * (Mathf.Pow((1.6f * t) - 0.8f, 3) + 1)) * 0.5f;
+      o = Mathf.Sin(Mathf.Pow(o, 10) * (Mathf.PI * 0.5f));
       obj.transform.position = new Vector3(obj.transform.position.x, Mathf.Lerp(startY, startY + floatHeight, t), obj.transform.position.z);
       tmp.color = new Color32(246, 149, 35, (byte)Mathf.Lerp(255, 0, o));
 
