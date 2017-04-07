@@ -13,6 +13,11 @@ public class CameraBehavior : MonoBehaviour {
   private float minDistance = 10f;
   [SerializeField]
   private float maxDistance = 25f;
+  [SerializeField]
+  private float zoomDistance = 50f;
+  private float activeDistance;
+  private float countDownTime;
+  private bool doneZooming;
 
   [SerializeField]
   private float minLookX;
@@ -28,6 +33,7 @@ public class CameraBehavior : MonoBehaviour {
 
   private Controls controls;
   private BallMovement ballMovement;
+  private LevelDataContainer levelData;
 
   private void OnEnable() {
     controls = Controls.DefaultBindings();
@@ -35,8 +41,20 @@ public class CameraBehavior : MonoBehaviour {
 
   private void Awake() {
     target = GameObject.FindWithTag("Player").GetComponent<Transform>();
+    levelData = GameObject.Find("LevelData").GetComponent<LevelDataContainer>();
+    countDownTime = levelData.CountDownTime;
     ballMovement = target.GetComponent<BallMovement>();
     root = transform.root;
+    root.rotation = Quaternion.Euler(new Vector3(30, target.rotation.y, target.rotation.z));
+  }
+
+  private void Start() {
+    if (countDownTime > 0) {
+      doneZooming = false;
+      StartCoroutine(ZoomIn());
+    } else {
+      doneZooming = true;
+    }
   }
 
   private void FixedUpdate() {
@@ -50,13 +68,13 @@ public class CameraBehavior : MonoBehaviour {
   private void Follow() {
     float _distanceNoise = Mathf.PerlinNoise(distanceNoise += 0.01f, distanceNoise += 0.01f);
     _distanceNoise *= Time.deltaTime * distanceNoiseRate;
-    // float _distance = (distance * (ballMovement.currentSpeed / 110)) + (10 + _distanceNoise);
-    float _distance = (minDistance + _distanceNoise) + ((ballMovement.currentSpeed / 110) * (maxDistance - minDistance));
-
-    Debug.Log(_distance);
+    // activeDistance = (distance * (ballMovement.currentSpeed / 110)) + (10 + _distanceNoise);
+    if (doneZooming) {
+      activeDistance = (minDistance + _distanceNoise) + ((ballMovement.currentSpeed / 110) * (maxDistance - minDistance));
+    }
 
     Vector3 pos = root.rotation * Vector3.forward + root.position;
-    pos += root.transform.forward * -_distance;
+    pos += root.transform.forward * -activeDistance;
 
     transform.position = pos;
   }
@@ -89,6 +107,23 @@ public class CameraBehavior : MonoBehaviour {
 
     var currentRotation = Quaternion.Euler(wantedRotationAngleX, wantedRotationAngleY, wantedRotationAngleZ);
     root.rotation = currentRotation;
+  }
+
+  private IEnumerator ZoomIn() {
+    float startTime = countDownTime;
+    float lerpTime = 0;
+    float t = 0;
+    while (lerpTime < startTime) {
+      t = (lerpTime / startTime);
+      t = Mathf.Sin(t * Mathf.PI * 0.5f);
+      activeDistance = Mathf.Lerp(zoomDistance, minDistance, t);
+
+      lerpTime += Time.deltaTime;
+      yield return new WaitForEndOfFrame();
+    }
+
+    doneZooming = true;
+    yield return null;
   }
 
 }
