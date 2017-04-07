@@ -7,16 +7,13 @@ public class ScoreTextPopup : MonoBehaviour {
 
   [SerializeField]
   private GameObject textObj;
-  [SerializeField]
-  private int initNum = 10;
+  private int initNum = 50;
   private List<GameObject> textObjList;
   private GameObject cam;
   private Camera mainCamera;
   private bool okay;
-  [SerializeField]
-  private float floatTime;
-  [SerializeField]
-  private float floatHeight;
+  private float floatTime = 1f;
+  private float floatHeight = 5f;
 
   private void Awake() {
     okay = false;
