@@ -38,6 +38,7 @@ public class ScoreTextPopup : MonoBehaviour {
       if (!textObjList[i].activeInHierarchy) {
         textObjList[i].transform.position = new Vector3(pos.x, pos.y + (height / 2), pos.z);
         textObjList[i].transform.LookAt(cam.position);
+        textObjList[i].transform.rotation *= Quaternion.Euler(0, 180, 0);
         textObjList[i].GetComponent<TextMeshPro>().text = points + "";
         textObjList[i].SetActive(true);
         StartCoroutine(FloatUp(textObjList[i]));
@@ -75,9 +76,10 @@ public class ScoreTextPopup : MonoBehaviour {
       o = t = (lerpTime / startTime);
       // t = Mathf.Sin(t * Mathf.PI * 0.5f);
       t = Mathf.Sin(Mathf.Pow(t, 3) * (Mathf.PI * 0.5f));
+      // t = (Mathf.Cos(Mathf.Pow(t, 3) * Mathf.PI * 0.5f) * -1f) + 1f;
       o = Mathf.Sin(Mathf.Pow(t, 10) * (Mathf.PI * 0.5f));
       obj.transform.position = new Vector3(obj.transform.position.x, Mathf.Lerp(startY, startY + floatHeight, t), obj.transform.position.z);
-      tmp.color = new Color32(255, 255, 255, (byte)Mathf.Lerp(255, 0, o));
+      tmp.color = new Color32(246, 149, 35, (byte)Mathf.Lerp(255, 0, o));
 
       lerpTime += Time.deltaTime;
       yield return new WaitForEndOfFrame();
