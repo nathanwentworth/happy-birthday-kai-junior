@@ -9,6 +9,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private bool knockedOver;
   private int points;
   private HUDManager hudManager;
+  private ScoreTextPopup scoreTextPopup;
   private float threshold;
   private string sceneName;
   private string objName;
@@ -29,6 +30,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    scoreTextPopup = FindObjectOfType (typeof (ScoreTextPopup)) as ScoreTextPopup;
 
     sceneName = SceneManager.GetActiveScene().name;
 
@@ -60,7 +62,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     rb.mass = (_mass != 0) ? _mass : 1;
     points = (_points != 0) ? _points : 1;
 	}
-	
+
 	private void OnCollisionStay (Collision other) {
     if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null) {
       if (!knockedOver) {
@@ -86,6 +88,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.CumulativeScore += _points;
 
           hudManager.ScoreChange();
+          scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
 
           if (DataManager.Score > DataManager.HighScore) {
 
