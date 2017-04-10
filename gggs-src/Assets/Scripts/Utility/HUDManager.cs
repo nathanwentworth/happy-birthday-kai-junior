@@ -183,14 +183,6 @@ public class HUDManager : MonoBehaviour {
     overlayText.text = text;
   }
 
-  // public void HowToPanelHide() {
-  //   howToPanel.GetComponent<CanvasGroup>().alpha = 0;
-  //   howToPanel.GetComponent<CanvasGroup>().interactable = false;
-  //   howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-  //   startButton.interactable = false;
-  // }
-
   public void GameOverDisplay() {
     CanvasGroup canvasGroup = null;
     if ((canvasGroup = gameOverPanel.GetComponent<CanvasGroup>()) != null) {
@@ -199,7 +191,7 @@ public class HUDManager : MonoBehaviour {
       canvasGroup.blocksRaycasts = true;
     }
 
-    highScoreListText.text = "";
+    // highScoreListText.text = "";
 
     newHighScoreText.SetActive(DataManager.NewHighScore);
     acceptTextEntry = true;
@@ -254,9 +246,9 @@ public class HUDManager : MonoBehaviour {
   }
 
   private void GetKeyboardInput() {
-    HighScoreEntry(nameEntryText.text);
+    HighScoreEntry("player");
     DataManager.LastEnteredHighScoreName = nameEntryText.text;
-    highScoreListText.text = HighScoreListDisplay();
+    // highScoreListText.text = HighScoreListDisplay();
     nameEntryText.text = "";
     nameEntryHeader.SetActive(false);
     newHighScoreHeaderText.SetActive(true);
@@ -265,8 +257,6 @@ public class HUDManager : MonoBehaviour {
     changeLevelButton.interactable = true;
 
     restartButton.Select();
-
-    Debug.Log(acceptTextEntry);
 
     acceptTextEntry = false;
 
