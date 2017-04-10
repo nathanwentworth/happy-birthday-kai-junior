@@ -24,6 +24,9 @@ public class HUDManager : MonoBehaviour {
   private Image timerImage;
   [SerializeField]
   private TextMeshProUGUI overlayText;
+
+  [SerializeField]
+  private Image scoreBarFill;
   // [SerializeField]
   // private Button startButton;
 
@@ -64,8 +67,11 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private GameObject pausePanel;
+  [SerializeField]
+  private Button pauseRestartButton;
 
   private bool acceptTextEntry = false;
+  private int scoreGoal;
 
   List<LevelData> levelDataList = new List<LevelData>();
   List<HighScoreData> highScoreList = new List<HighScoreData>();
@@ -87,6 +93,8 @@ public class HUDManager : MonoBehaviour {
 
     restartButton.interactable = false;
     changeLevelButton.interactable = false;
+
+    scoreGoal = DataManager.ScoreGoal;
 
   }
 
@@ -117,11 +125,20 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void ScoreChange() {
-    scoreText.text = "Score: " + DataManager.Score;
+    int score = DataManager.Score;
+    scoreText.text = "Score: " + score;
+    if (scoreGoal == 0) {
+      scoreGoal = DataManager.ScoreGoal;
+    }
+
+    Debug.Log("score " + score + " scoreGoal " + scoreGoal);
+
+    scoreBarFill.fillAmount = ((float)score / (float)scoreGoal);
   }
 
   public void HighScoreChange() {
-    highScoreText.text = "";
+    int scoreGoal = DataManager.ScoreGoal;
+    highScoreText.text = "Goal: " + scoreGoal;
   }
 
   // public void CumulativeScoreChange() {
@@ -333,6 +350,9 @@ public class HUDManager : MonoBehaviour {
     if (pausePanel == null) {
       pausePanel = GameObject.Find("PausePanel").gameObject;
     }
+    if (pauseRestartButton == null) {
+      pauseRestartButton = pausePanel.transform.Find("ButtonRestart").GetComponent<Button>();
+    }
     LockMouse.Lock(!paused);
 
     CanvasGroup canvasGroup = null;
@@ -341,6 +361,11 @@ public class HUDManager : MonoBehaviour {
       canvasGroup.interactable = paused;
       canvasGroup.blocksRaycasts = paused;
     }
+
+    if (paused) {
+      pauseRestartButton.Select();
+    }
+
 
   }
 
