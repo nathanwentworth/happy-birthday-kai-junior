@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarJumpCameraSwitch : MonoBehaviour {
+public class StuntCamSwitch : MonoBehaviour {
 
   private Camera jumpCam;
-  private Camera carCam;
+  private Camera mainCamera;
   private LevelDataContainer timer;
 
   [Header("Should the Game Over panel be displayed when entered?")]
   [SerializeField]
   private bool gameOver;
-  
+
   private void Awake() {
-    carCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+    mainCamera = GameObject.Find("Cam").GetComponent<Camera>();
     jumpCam = transform.GetChild(0).GetComponent<Camera>();
     timer = FindObjectOfType (typeof (LevelDataContainer)) as LevelDataContainer;
 
-    carCam.enabled = true;
+    mainCamera.enabled = true;
     jumpCam.enabled = false;
   }
 
   private void OnTriggerEnter(Collider other) {
     if (other.gameObject.tag == "Player") {
-      carCam.enabled = false;
+      mainCamera.enabled = false;
       jumpCam.enabled = true;
       if (gameOver) {
         StartCoroutine(timer.GameOverDelay(3));
@@ -34,7 +34,7 @@ public class CarJumpCameraSwitch : MonoBehaviour {
 
   private void OnTriggerExit(Collider other) {
     if (other.gameObject.tag == "Player") {
-      carCam.enabled = true;
+      mainCamera.enabled = true;
       jumpCam.enabled = false;
     }
   }

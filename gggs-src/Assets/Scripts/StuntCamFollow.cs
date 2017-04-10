@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarJumpCameraFollow : MonoBehaviour {
+public class StuntCamFollow : MonoBehaviour {
 
-  private Transform car;
+  private Transform player;
   [Header("Should the camera follow the player?")]
   [SerializeField]
   private bool followPlayer;
 
   private void Awake() {
-    car = GameObject.FindWithTag("Player").GetComponent<Transform>();
+    player = GameObject.FindWithTag("Player").GetComponent<Transform>();
   }
 
   private void Update() {
     if (!followPlayer) { return; }
 
-    transform.LookAt(car);
+    transform.LookAt(player);
   }
 
 }
