@@ -64,6 +64,8 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private GameObject pausePanel;
+  [SerializeField]
+  private Button pauseRestartButton;
 
   private bool acceptTextEntry = false;
 
@@ -333,6 +335,9 @@ public class HUDManager : MonoBehaviour {
     if (pausePanel == null) {
       pausePanel = GameObject.Find("PausePanel").gameObject;
     }
+    if (pauseRestartButton == null) {
+      pauseRestartButton = pausePanel.transform.Find("ButtonRestart").GetComponent<Button>();
+    }
     LockMouse.Lock(!paused);
 
     CanvasGroup canvasGroup = null;
@@ -341,6 +346,11 @@ public class HUDManager : MonoBehaviour {
       canvasGroup.interactable = paused;
       canvasGroup.blocksRaycasts = paused;
     }
+
+    if (paused) {
+      pauseRestartButton.Select();
+    }
+
 
   }
 

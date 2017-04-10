@@ -14,6 +14,8 @@ public class MainMenuFunctions : MonoBehaviour {
   [SerializeField]
   private GameObject mainContainerPanel;
   [SerializeField]
+  private Button closeButton;
+  [SerializeField]
   private Button firstSelectedMainButton;
   private Button lastSelectedMainButton;
   private List<GameObject> mainButtons = new List<GameObject>();
@@ -118,6 +120,8 @@ public class MainMenuFunctions : MonoBehaviour {
       }
     }
 
+    StartCoroutine(FadeCloseButton(toggle));
+
   }
 
   public void ToggleActiveMainContainer(bool toggle) {
@@ -134,6 +138,31 @@ public class MainMenuFunctions : MonoBehaviour {
 
       lastSelectedMainButton.Select();
     }
+  }
+
+  private IEnumerator FadeCloseButton(bool toggle) {
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = closeButton.GetComponent<CanvasGroup>()) != null) {
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+      float t = 0;
+      float totalTime = 0.25f;
+      float start = (toggle) ? 0 : 1;
+      float end = (toggle) ? 1 : 0;
+
+      while (t < 1) {
+        canvasGroup.alpha = Mathf.Lerp(start, end, t);
+
+        t += Time.deltaTime;
+        yield return new WaitForEndOfFrame();
+      }
+
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+
+    }
+
+    yield return null;
   }
 
   private void ResizeLevelGrid() {
@@ -168,7 +197,7 @@ public class MainMenuFunctions : MonoBehaviour {
       if ((child.GetComponent<Button>()) != null) {
         list.Add(child.gameObject);
       }
-      
+
     }
 
     return list;
