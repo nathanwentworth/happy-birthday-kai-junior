@@ -174,7 +174,8 @@ public class MainMenuFunctions : MonoBehaviour {
 
       int rowColMulti = gridLayout.constraintCount;
       float spacing = gridLayout.spacing.x;
-      float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti + 1) * spacing)) / rowColMulti);
+      float padding = gridLayout.padding.top + gridLayout.padding.bottom;
+      float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti - 1) * spacing) - padding) / rowColMulti);
       gridLayout.cellSize = new Vector2(elemWidth, elemWidth);
     } else {
       if (levelGridContainerRect == null) {
