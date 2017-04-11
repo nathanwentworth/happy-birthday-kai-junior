@@ -75,32 +75,34 @@ public class SaveLoad : MonoBehaviour {
 
 		}
 
-		if (File.Exists(Application.persistentDataPath + "/Data/score-spreadsheet.csv")) {
-			// StreamReader file = new StreamReader(Application.persistentDataPath + "/Data/score-spreadsheet.csv");
-			StreamReader file = new StreamReader(Application.streamingAssetsPath + "/score-spreadsheet.csv");
+    if (File.Exists (Application.streamingAssetsPath + "/score-spreadsheet.csv")) {
+      // StreamReader file = new StreamReader(Application.persistentDataPath + "/Data/score-spreadsheet.csv");
+      StreamReader file = new StreamReader (Application.streamingAssetsPath + "/score-spreadsheet.csv");
 
-			// TextAsset file = Resources.Load("score-spreadsheet") as TextAsset;
+      // TextAsset file = Resources.Load("score-spreadsheet") as TextAsset;
 
-			string line = "";
-			string[] row = new string [3];
+      string line = "";
+      string[] row = new string [3];
 
-			List<ObjectData> ObjectProperties = new List<ObjectData>();
+      List<ObjectData> ObjectProperties = new List<ObjectData> ();
 
 
-			while ((line = file.ReadLine()) != null) {
-				row = line.Split(',');
+      while ((line = file.ReadLine ()) != null) {
+        row = line.Split (',');
 
-				int j, k;
+        int j, k;
 
-				if (Int32.TryParse(row[1], out j) && Int32.TryParse(row[2], out k)) {
-					ObjectData data = new ObjectData(row[0], j, k);
-					ObjectProperties.Add(data);
-				}
+        if (Int32.TryParse (row [1], out j) && Int32.TryParse (row [2], out k)) {
+          ObjectData data = new ObjectData (row [0], j, k);
+          ObjectProperties.Add (data);
+        }
 
-			}
+      }
 
-			DataManager.ObjectProperties = ObjectProperties;
-		}
+      DataManager.ObjectProperties = ObjectProperties;
+    } else {
+      Debug.LogWarning ("cannot find score spreadsheet");
+    }
 	}
 }
 
