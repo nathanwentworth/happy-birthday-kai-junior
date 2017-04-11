@@ -31,6 +31,7 @@ public class LevelDataContainer : MonoBehaviour {
 
     DataManager.AllowControl = false;
     DataManager.ScoreGoal = scoreGoalInitial;
+    DataManager.BonusScoreGoal = scoreGoalBonus;
     runTimer = false;
 
     gameTime = defaultGameTime;
