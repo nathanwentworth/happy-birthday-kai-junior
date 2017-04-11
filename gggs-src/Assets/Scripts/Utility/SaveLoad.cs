@@ -6,15 +6,15 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class SaveLoad : MonoBehaviour {
-	
+
 	public static SaveLoad saveLoad;
-	
+
 	private int highScore { get; set; }
 	private int cumulativeScore { get; set; }
 	private string lastEnteredName { get; set; }
 
 	private List<LevelData> levelDataList { get; set; }
-	
+
 	private void Awake() {
 		if (saveLoad == null) {
 			DontDestroyOnLoad(gameObject);
@@ -24,7 +24,7 @@ public class SaveLoad : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-	
+
 	private void OnEnable() {
 		// autoload
 		Load();
@@ -34,7 +34,7 @@ public class SaveLoad : MonoBehaviour {
 		// autosave
 		Save();
 	}
-	
+
 	public void Save() {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/save.dat");
@@ -43,17 +43,17 @@ public class SaveLoad : MonoBehaviour {
 		cumulativeScore = DataManager.CumulativeScore;
 		lastEnteredName = DataManager.LastEnteredHighScoreName;
 		levelDataList = DataManager.LevelDataList;
-		
+
 		PlayerData data = new PlayerData();
 		data.highScore = highScore;
 		data.cumulativeScore = cumulativeScore;
 		data.lastEnteredName = lastEnteredName;
 		data.levelDataList = levelDataList;
-		
+
 		bf.Serialize(file, data);
-		file.Close();	
+		file.Close();
 	}
-	
+
 	public void Load() {
 		if (File.Exists(Application.persistentDataPath + "/save.dat")) {
 			BinaryFormatter bf = new BinaryFormatter();
@@ -75,8 +75,11 @@ public class SaveLoad : MonoBehaviour {
 
 		}
 
-		if (File.Exists(Application.persistentDataPath + "/Data/score-spreadsheet.csv")) {
-			StreamReader file = new StreamReader(Application.persistentDataPath + "/Data/score-spreadsheet.csv");
+		if (File.Exists(Application.streamingAssetsPath + "/score-spreadsheet.csv")) {
+			// StreamReader file = new StreamReader(Application.persistentDataPath + "/Data/score-spreadsheet.csv");
+			StreamReader file = new StreamReader(Application.streamingAssetsPath + "/score-spreadsheet.csv");
+
+			// TextAsset file = Resources.Load("score-spreadsheet") as TextAsset;
 
 			string line = "";
 			string[] row = new string [3];
@@ -97,6 +100,7 @@ public class SaveLoad : MonoBehaviour {
 			}
 
 			DataManager.ObjectProperties = ObjectProperties;
+			file.Close();
 		}
 	}
 }
@@ -110,7 +114,7 @@ class PlayerData {
 
 	public List<LevelData> levelDataList;
 
-	// @CONTINUE: this needs to save a different HighScoreData object for 
+	// @CONTINUE: this needs to save a different HighScoreData object for
 	//            every level. so maybe a dictionary of key value pairs
 	//            <string, List<HighScoreData>> where string is the level
 	//            name? alternatively, nested list where the exterior index

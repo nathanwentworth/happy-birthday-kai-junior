@@ -36,7 +36,7 @@ public class MenuItems : MonoBehaviour {
   static void AddObjectBehaviors() {
     for (int i = 0; i < Selection.gameObjects.Length; i++) {
       GameObject go = Selection.gameObjects[i];
-      
+
       if (go.GetComponent<ObjectBehaviors>() == null) {
         go.AddComponent<ObjectBehaviors>();
       }
@@ -48,50 +48,68 @@ public class MenuItems : MonoBehaviour {
   [MenuItem ("Kaiju/Initialize Scene")]
   static void InitializeScene () {
     // delete default main camera
-    if (GameObject.Find("Main Camera") != null) {
-      Object.DestroyImmediate(GameObject.Find("Main Camera"));
+    GameObject go;
+    Object o;
+    if ((go = GameObject.Find("Main Camera")) != null && go.transform.parent == null) {
+      Object.DestroyImmediate(go);
     }
 
     // add the smooth camera follow
     if (GameObject.Find("CameraFollow") == null) {
-      Object cameraFollow = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/CameraFollow.prefab", typeof(GameObject));
-      GameObject _cameraFollow = PrefabUtility.InstantiatePrefab(cameraFollow) as GameObject;
-      _cameraFollow.name = "CameraFollow";
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/CameraFollow.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "CameraFollow";
     }
 
     // add the main hud
     if (GameObject.Find("MainHUD") == null) {
-      Object hud = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/MainHUD.prefab", typeof(GameObject));
-      GameObject _hud = PrefabUtility.InstantiatePrefab(hud) as GameObject;
-      _hud.name = "MainHUD";
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/MainHUD.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "MainHUD";
+    }
+
+    // add an eventsystem
+    if (GameObject.Find("EventSystem") == null) {
+      go = new GameObject();
+      go.AddComponent<UnityEngine.EventSystems.EventSystem>();
+      go.AddComponent<InControl.InControlInputModule>();
+      go.name = "EventSystem";
+    }
+
+    // add the level data object
+    if (GameObject.Find("LevelData") == null) {
+      go = new GameObject();
+      go.AddComponent<LevelDataContainer>();
+      go.name = "LevelData";
     }
 
     // add the ball
     if (GameObject.Find("Ball") == null) {
-      Object ball = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Ball.prefab", typeof(GameObject));
-      GameObject _ball = PrefabUtility.InstantiatePrefab(ball) as GameObject;
-      _ball.name = "Ball";
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Ball.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "Ball";
     }
 
     // add the game manager
     if (GameObject.Find("GameManagerSingleton") == null) {
-      Object gameManager = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/GameManagerSingleton.prefab", typeof(GameObject));
-      GameObject _gameManager = PrefabUtility.InstantiatePrefab(gameManager) as GameObject;
-      _gameManager.name = "GameManagerSingleton";
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/GameManagerSingleton.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "GameManagerSingleton";
     }
 
     // add incontrol
     if (GameObject.Find("InControl") == null) {
-      Object inControl = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/InControl.prefab", typeof(GameObject));
-      GameObject _inControl = PrefabUtility.InstantiatePrefab(inControl) as GameObject;
-      _inControl.name = "InControl";
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/InControl.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "InControl";
     }
 
+    // add a floor
     if (GameObject.Find("Floor") == null) {
-      GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-      floor.name = "Floor";
-      floor.transform.localScale = new Vector3(200f, 1f, 200f);
-      floor.transform.position = new Vector3(0f, -0.5f, 0f);
+      go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+      go.name = "Floor";
+      go.transform.localScale = new Vector3(200f, 1f, 200f);
+      go.transform.position = new Vector3(0f, -0.5f, 0f);
     }
 
 
