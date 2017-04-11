@@ -75,7 +75,7 @@ public class SaveLoad : MonoBehaviour {
 
 		}
 
-		if (File.Exists(Application.persistentDataPath + "/Data/score-spreadsheet.csv")) {
+		if (File.Exists(Application.streamingAssetsPath + "/score-spreadsheet.csv")) {
 			// StreamReader file = new StreamReader(Application.persistentDataPath + "/Data/score-spreadsheet.csv");
 			StreamReader file = new StreamReader(Application.streamingAssetsPath + "/score-spreadsheet.csv");
 
