@@ -100,6 +100,7 @@ public class SaveLoad : MonoBehaviour {
 			}
 
 			DataManager.ObjectProperties = ObjectProperties;
+			file.Close();
 		}
 	}
 }
