@@ -33,6 +33,8 @@ public class HUDManager : MonoBehaviour {
   [Header("Game Over Display")]
 
   [SerializeField]
+  private TextMeshProUGUI gameOverText;
+  [SerializeField]
   private TextMeshProUGUI highScoreListText;
   [SerializeField]
   private TextMeshProUGUI nameEntryText;
@@ -72,6 +74,7 @@ public class HUDManager : MonoBehaviour {
 
   private bool acceptTextEntry = false;
   private int scoreGoal;
+  private int bonusScoreGoal;
 
   List<LevelData> levelDataList = new List<LevelData>();
   List<HighScoreData> highScoreList = new List<HighScoreData>();
@@ -95,12 +98,13 @@ public class HUDManager : MonoBehaviour {
     changeLevelButton.interactable = false;
 
     scoreGoal = DataManager.ScoreGoal;
+    bonusScoreGoal = DataManager.BonusScoreGoal;
 
   }
 
   private void Start() {
     ScoreChange();
-    HighScoreChange();
+    HighScoreChange(false);
     // CumulativeScoreChange();
 
     nameEntryText.text = "";
@@ -115,15 +119,6 @@ public class HUDManager : MonoBehaviour {
     }
   }
 
-  // @DEBUG
-  // @REFACTOR
-  // this can probably be removed?
-  public void UpdateScoreDisplays() {
-    ScoreChange();
-    HighScoreChange();
-    // CumulativeScoreChange();
-  }
-
   public void ScoreChange() {
     int score = DataManager.Score;
     scoreText.text = "Score: " + score;
@@ -131,19 +126,21 @@ public class HUDManager : MonoBehaviour {
       scoreGoal = DataManager.ScoreGoal;
     }
 
-    Debug.Log("score " + score + " scoreGoal " + scoreGoal);
+    if (score > scoreGoal) {
+      HighScoreChange(true);
+    }
 
     scoreBarFill.fillAmount = ((float)score / (float)scoreGoal);
   }
 
-  public void HighScoreChange() {
-    int scoreGoal = DataManager.ScoreGoal;
-    highScoreText.text = "Goal: " + scoreGoal;
+  public void HighScoreChange(bool bonus) {
+    if (bonusScoreGoal == 0) {
+      bonusScoreGoal = DataManager.BonusScoreGoal;
+    }
+    int goal = (!bonus) ? scoreGoal : bonusScoreGoal;
+    string goalText = (!bonus) ? "Goal: " : "Bonus: ";
+    highScoreText.text = goalText + goal;
   }
-
-  // public void CumulativeScoreChange() {
-  //   cumulativeScoreText.text = "Cumulative Score: " + DataManager.CumulativeScore;
-  // }
 
   public void TimerChange(float t, float gameTime) {
     timerText.text = "" + t;
@@ -193,6 +190,7 @@ public class HUDManager : MonoBehaviour {
 
     // highScoreListText.text = "";
 
+    gameOverText.text = (DataManager.Score > DataManager.ScoreGoal) ? "Level Complete!\nYou hatched the egg!" : "You didn't hatch the egg\nBetter luck next time!" ;
     newHighScoreText.SetActive(DataManager.NewHighScore);
     acceptTextEntry = true;
     StartCoroutine(ObjectsScoredDisplay());
