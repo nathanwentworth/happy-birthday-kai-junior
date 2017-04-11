@@ -24,6 +24,7 @@ public static class DataManager {
   public static bool NewHighScore { get; set; }
   public static int CumulativeScore { get; set; }
   public static int ScoreGoal { get; set; }
+  public static int BonusScoreGoal { get; set; }
 
   public static string LastEnteredHighScoreName { get; set; }
 
