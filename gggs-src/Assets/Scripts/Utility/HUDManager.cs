@@ -24,11 +24,16 @@ public class HUDManager : MonoBehaviour {
   private Image timerImage;
   [SerializeField]
   private TextMeshProUGUI overlayText;
+
+  [SerializeField]
+  private Image scoreBarFill;
   // [SerializeField]
   // private Button startButton;
 
   [Header("Game Over Display")]
 
+  [SerializeField]
+  private TextMeshProUGUI gameOverText;
   [SerializeField]
   private TextMeshProUGUI highScoreListText;
   [SerializeField]
@@ -68,6 +73,8 @@ public class HUDManager : MonoBehaviour {
   private Button pauseRestartButton;
 
   private bool acceptTextEntry = false;
+  private int scoreGoal;
+  private int bonusScoreGoal;
 
   List<LevelData> levelDataList = new List<LevelData>();
   List<HighScoreData> highScoreList = new List<HighScoreData>();
@@ -90,11 +97,14 @@ public class HUDManager : MonoBehaviour {
     restartButton.interactable = false;
     changeLevelButton.interactable = false;
 
+    scoreGoal = DataManager.ScoreGoal;
+    bonusScoreGoal = DataManager.BonusScoreGoal;
+
   }
 
   private void Start() {
     ScoreChange();
-    HighScoreChange();
+    HighScoreChange(false);
     // CumulativeScoreChange();
 
     nameEntryText.text = "";
@@ -109,26 +119,28 @@ public class HUDManager : MonoBehaviour {
     }
   }
 
-  // @DEBUG
-  // @REFACTOR
-  // this can probably be removed?
-  public void UpdateScoreDisplays() {
-    ScoreChange();
-    HighScoreChange();
-    // CumulativeScoreChange();
-  }
-
   public void ScoreChange() {
-    scoreText.text = "Score: " + DataManager.Score;
+    int score = DataManager.Score;
+    scoreText.text = "Score: " + score;
+    if (scoreGoal == 0) {
+      scoreGoal = DataManager.ScoreGoal;
+    }
+
+    if (score > scoreGoal) {
+      HighScoreChange(true);
+    }
+
+    scoreBarFill.fillAmount = ((float)score / (float)scoreGoal);
   }
 
-  public void HighScoreChange() {
-    highScoreText.text = "";
+  public void HighScoreChange(bool bonus) {
+    if (bonusScoreGoal == 0) {
+      bonusScoreGoal = DataManager.BonusScoreGoal;
+    }
+    int goal = (!bonus) ? scoreGoal : bonusScoreGoal;
+    string goalText = (!bonus) ? "Goal: " : "Bonus: ";
+    highScoreText.text = goalText + goal;
   }
-
-  // public void CumulativeScoreChange() {
-  //   cumulativeScoreText.text = "Cumulative Score: " + DataManager.CumulativeScore;
-  // }
 
   public void TimerChange(float t, float gameTime) {
     timerText.text = "" + t;
@@ -168,14 +180,6 @@ public class HUDManager : MonoBehaviour {
     overlayText.text = text;
   }
 
-  // public void HowToPanelHide() {
-  //   howToPanel.GetComponent<CanvasGroup>().alpha = 0;
-  //   howToPanel.GetComponent<CanvasGroup>().interactable = false;
-  //   howToPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-  //   startButton.interactable = false;
-  // }
-
   public void GameOverDisplay() {
     CanvasGroup canvasGroup = null;
     if ((canvasGroup = gameOverPanel.GetComponent<CanvasGroup>()) != null) {
@@ -184,8 +188,9 @@ public class HUDManager : MonoBehaviour {
       canvasGroup.blocksRaycasts = true;
     }
 
-    highScoreListText.text = "";
+    // highScoreListText.text = "";
 
+    gameOverText.text = (DataManager.Score > DataManager.ScoreGoal) ? "Level Complete!\nYou hatched the egg!" : "You didn't hatch the egg\nBetter luck next time!" ;
     newHighScoreText.SetActive(DataManager.NewHighScore);
     acceptTextEntry = true;
     StartCoroutine(ObjectsScoredDisplay());
@@ -239,9 +244,9 @@ public class HUDManager : MonoBehaviour {
   }
 
   private void GetKeyboardInput() {
-    HighScoreEntry(nameEntryText.text);
+    HighScoreEntry("player");
     DataManager.LastEnteredHighScoreName = nameEntryText.text;
-    highScoreListText.text = HighScoreListDisplay();
+    // highScoreListText.text = HighScoreListDisplay();
     nameEntryText.text = "";
     nameEntryHeader.SetActive(false);
     newHighScoreHeaderText.SetActive(true);
@@ -250,8 +255,6 @@ public class HUDManager : MonoBehaviour {
     changeLevelButton.interactable = true;
 
     restartButton.Select();
-
-    Debug.Log(acceptTextEntry);
 
     acceptTextEntry = false;
 
