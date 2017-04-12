@@ -13,6 +13,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private float threshold;
   private string sceneName;
   private string objName;
+  private Renderer rend;
 
 	private void Start () {
 

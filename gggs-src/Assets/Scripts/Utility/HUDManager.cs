@@ -50,6 +50,7 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private float gameOverScrollRate;
+  private float gameOverScrollRateMultiplier = 1;
 
   [Header("Panels")]
 
@@ -78,6 +79,11 @@ public class HUDManager : MonoBehaviour {
 
   List<LevelData> levelDataList = new List<LevelData>();
   List<HighScoreData> highScoreList = new List<HighScoreData>();
+  private Controls controls;
+
+  private void OnEnable() {
+    controls = Controls.DefaultBindings();
+  }
 
   private void Awake() {
 
@@ -117,6 +123,8 @@ public class HUDManager : MonoBehaviour {
     if (acceptTextEntry) {
       GetKeyboardInput();
     }
+
+    // gameOverScrollRateMultiplier += controls.Move.X;
   }
 
   public void ScoreChange() {
@@ -304,7 +312,7 @@ public class HUDManager : MonoBehaviour {
 
     while (scrollPos <= (height + totalHeight)) {
       rectTransform.position = new Vector3(startPos.x, scrollPos, startPos.z);
-      scrollPos += gameOverScrollRate;
+      scrollPos += gameOverScrollRate * gameOverScrollRateMultiplier;
 
       t += Time.deltaTime;
 
