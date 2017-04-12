@@ -112,7 +112,7 @@ public class MenuItems : MonoBehaviour {
     }
 
     // add a floor
-    if (GameObject.Find("Floor") == null) {
+    if (GameObject.Find("Floor") == null || GameObject.Find("ground") == null) {
       go = GameObject.CreatePrimitive(PrimitiveType.Cube);
       go.name = "Floor";
       go.transform.localScale = new Vector3(200f, 1f, 200f);

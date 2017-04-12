@@ -45,7 +45,7 @@ public class CameraBehavior : MonoBehaviour {
     countDownTime = levelData.CountDownTime;
     ballMovement = target.GetComponent<BallMovement>();
     root = transform.root;
-    root.rotation = Quaternion.Euler(new Vector3(30, target.rotation.y, target.rotation.z));
+    root.rotation = Quaternion.Euler(new Vector3(30, root.rotation.y, 0));
   }
 
   private void Start() {
