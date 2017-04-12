@@ -66,9 +66,18 @@ public class ObjectBehaviors : MonoBehaviour {
   [SerializeField]
   private float boostForce;
 
+  [Header("Random Spawn Prefabs In Area")]
 
-
-
+  [SerializeField]
+  private bool randomSpawn;
+  [SerializeField]
+  private float checkRadius;
+  [SerializeField]
+  private float numberOfCitizensToSpawn;
+  [SerializeField]
+  private GameObject[] citizens;
+  private System.Random rnd;
+  int checks = 0;
 
 
   // functions
@@ -92,7 +101,10 @@ public class ObjectBehaviors : MonoBehaviour {
       }
       GetComponent<Collider>().isTrigger = true;
     }
-		
+    if (randomSpawn) {
+      Pool();
+    }
+
 	}
 
   private void OnTriggerEnter(Collider other) {
@@ -139,7 +151,7 @@ public class ObjectBehaviors : MonoBehaviour {
           rb.isKinematic = false;
         }
       }
-    }    
+    }
   }
 
   private void ObjectActiveSwitchRun(Collider other) {
@@ -199,7 +211,7 @@ public class ObjectBehaviors : MonoBehaviour {
     float t = (onT) ? onTime : offTime;
 
     meshToToggle.enabled = onT;
-    foreach (Collider c in GetComponents<Collider>()) {
+    foreach (Collider c in timedToggleColliders) {
       c.enabled = onT;
     }
 
@@ -221,9 +233,30 @@ public class ObjectBehaviors : MonoBehaviour {
     }
   }
 
+  private void Pool() {
+    rnd = new System.Random();
+    for (int i = 0; i < numberOfCitizensToSpawn; i++) {
+      Spawn();
+    }
+  }
 
+  private void Spawn() {
+    Vector3 rndPosWithin;
+    rndPosWithin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+    rndPosWithin = transform.TransformPoint(rndPosWithin * .5f);
 
-
+    Vector3 rndRotation = new Vector3(transform.rotation.x, Random.Range(0, 360), transform.rotation.z);
+    if (!Physics.CheckSphere(rndPosWithin, checkRadius)) {
+      Instantiate(citizens[rnd.Next(citizens.Length)], rndPosWithin, Quaternion.Euler(rndRotation));
+      checks = 0;
+    } else if (checks < 10) {
+      checks++;
+      Debug.Log("Object overlapping, checking again: " + checks);
+      Spawn();
+    } else {
+      Debug.Log("Maxed out checks, not running function anymore");
+    }
+  }
 
 
 }

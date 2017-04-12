@@ -44,13 +44,13 @@ public class MenuItems : MonoBehaviour {
     }
   }
 
-  
+
   [MenuItem ("Kaiju/Initialize Scene")]
   static void InitializeScene () {
     // delete default main camera
     GameObject go;
     Object o;
-    if ((go = GameObject.Find("Main Camera")) != null && go.transform.parent.name != "SmoothCameraFollow") {
+    if ((go = GameObject.Find("Main Camera")) != null && go.transform.parent == null) {
       Object.DestroyImmediate(go);
     }
 
@@ -66,6 +66,21 @@ public class MenuItems : MonoBehaviour {
       o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/MainHUD.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "MainHUD";
+    }
+
+    // add the score text popup
+    if (GameObject.Find("ScoreTextPopup") == null) {
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/ScoreTextPopup.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "ScoreTextPopup";
+    }
+
+    // add an eventsystem
+    if (GameObject.Find("EventSystem") == null) {
+      go = new GameObject();
+      go.AddComponent<UnityEngine.EventSystems.EventSystem>();
+      go.AddComponent<InControl.InControlInputModule>();
+      go.name = "EventSystem";
     }
 
     // add the level data object
@@ -96,7 +111,8 @@ public class MenuItems : MonoBehaviour {
       _go.name = "InControl";
     }
 
-    if (GameObject.Find("Floor") == null) {
+    // add a floor
+    if (GameObject.Find("Floor") == null || GameObject.Find("ground") == null) {
       go = GameObject.CreatePrimitive(PrimitiveType.Cube);
       go.name = "Floor";
       go.transform.localScale = new Vector3(200f, 1f, 200f);

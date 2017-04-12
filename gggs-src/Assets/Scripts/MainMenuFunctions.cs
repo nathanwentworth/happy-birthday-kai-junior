@@ -14,6 +14,8 @@ public class MainMenuFunctions : MonoBehaviour {
   [SerializeField]
   private GameObject mainContainerPanel;
   [SerializeField]
+  private Button closeButton;
+  [SerializeField]
   private Button firstSelectedMainButton;
   private Button lastSelectedMainButton;
   private List<GameObject> mainButtons = new List<GameObject>();
@@ -110,13 +112,15 @@ public class MainMenuFunctions : MonoBehaviour {
       Debug.LogWarning("No canvasGroup attached to " + panel.name);
     }
 
-    if (toggle != null) {
+    if (toggle) {
       if (panel == levelGridPanel) {
-        lastSelectedMainButton.Select();
-      } else if (panel == mainContainerPanel) {
         firstSelectedLevelButton.Select();
+      } else if (panel == mainContainerPanel) {
+        lastSelectedMainButton.Select();
       }
     }
+
+    StartCoroutine(FadeCloseButton(toggle));
 
   }
 
@@ -136,6 +140,31 @@ public class MainMenuFunctions : MonoBehaviour {
     }
   }
 
+  private IEnumerator FadeCloseButton(bool toggle) {
+    CanvasGroup canvasGroup = null;
+    if ((canvasGroup = closeButton.GetComponent<CanvasGroup>()) != null) {
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+      float t = 0;
+      float totalTime = 0.25f;
+      float start = (toggle) ? 0 : 1;
+      float end = (toggle) ? 1 : 0;
+
+      while (t < 1) {
+        canvasGroup.alpha = Mathf.Lerp(start, end, t);
+
+        t += Time.deltaTime;
+        yield return new WaitForEndOfFrame();
+      }
+
+      canvasGroup.interactable = toggle;
+      canvasGroup.blocksRaycasts = toggle;
+
+    }
+
+    yield return null;
+  }
+
   private void ResizeLevelGrid() {
     RectTransform levelGridContainerRect = null;
     GridLayoutGroup gridLayout = null;
@@ -145,7 +174,8 @@ public class MainMenuFunctions : MonoBehaviour {
 
       int rowColMulti = gridLayout.constraintCount;
       float spacing = gridLayout.spacing.x;
-      float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti + 1) * spacing)) / rowColMulti);
+      float padding = gridLayout.padding.top + gridLayout.padding.bottom;
+      float elemWidth = ((levelGridContainerRect.rect.height - ((rowColMulti - 1) * spacing) - padding) / rowColMulti);
       gridLayout.cellSize = new Vector2(elemWidth, elemWidth);
     } else {
       if (levelGridContainerRect == null) {
@@ -168,7 +198,7 @@ public class MainMenuFunctions : MonoBehaviour {
       if ((child.GetComponent<Button>()) != null) {
         list.Add(child.gameObject);
       }
-      
+
     }
 
     return list;

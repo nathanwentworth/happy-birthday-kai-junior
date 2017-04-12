@@ -4,69 +4,94 @@ using UnityEngine;
 using TMPro;
 
 public class ScoreTextPopup : MonoBehaviour {
-	
-  private ObjectDataContainer data;
-  private int points;
 
-  private TextMeshPro m_textMeshPro;
-  private TextMesh m_textMesh;
+  [SerializeField]
+  private GameObject textObj;
+  private int initNum = 50;
+  private List<GameObject> textObjList;
+  private GameObject cam;
+  private Camera mainCamera;
+  private bool okay;
+  private float floatTime = 1f;
+  private float floatHeight = 5f;
 
-  private Transform m_transform;
-  private Transform m_floatingText_Transform;
-  private Transform m_cameraTransform;
-
-  Vector3 lastPOS = Vector3.zero;
-  Quaternion lastRotation = Quaternion.identity;
-
-
-	private void OnEnable () {
-		StartCoroutine(DisplayFloatingText());
-    data = GetComponent<ObjectDataContainer>();
-    points = data.ObjectPoints;
-	}
-
-  private IEnumerator DisplayFloatingText() {
-    float CountDuration = 2.0f; // How long is the countdown alive.    
-    float starting_Count = Random.Range(5f, 20f); // At what number is the counter starting at.
-    float current_Count = starting_Count;
-
-    Vector3 start_pos = m_floatingText_Transform.position;
-    Color32 start_color = m_textMeshPro.color;
-    float alpha = 255;
-    //int int_counter = 0;
-
-
-    float fadeDuration = 3 / starting_Count * CountDuration;
-
-    while (current_Count > 0)
-    {
-      current_Count -= (Time.deltaTime / CountDuration) * starting_Count;
-
-      if (current_Count <= 3)
-      {
-          //Debug.Log("Fading Counter ... " + current_Count.ToString("f2"));
-          alpha = Mathf.Clamp(alpha - (Time.deltaTime / fadeDuration) * 255, 0, 255);
+  private void Awake() {
+    okay = false;
+    cam = GameObject.Find("Cam");
+    mainCamera = cam.GetComponent<Camera>();
+    if (textObj != null) {
+      if (initNum > 0) {
+        ObjectPopulate(initNum);
+      } else {
+        Debug.LogWarning("you have to specify how many objects you want to be spawned!");
       }
+    } else {
+      Debug.LogWarning("there's no prefab to spawn!");
+    }
+  }
 
-      //int_counter = (int)current_Count;                 
-      m_textMeshPro.SetText(points + "");
+  public void Popup(Vector3 pos, int points, float height) {
+    if (!okay) return;
 
-      // Move the floating text upward each update
-      m_floatingText_Transform.position += new Vector3(0, starting_Count * Time.deltaTime, 0);
-
-      // Align floating text perpendicular to Camera.
-      if (!lastPOS.Compare(m_cameraTransform.position, 1000) || !lastRotation.Compare(m_cameraTransform.rotation, 1000))
-      {
-          lastPOS = m_cameraTransform.position;
-          lastRotation = m_cameraTransform.rotation;
-          m_floatingText_Transform.rotation = lastRotation;
-          Vector3 dir = m_transform.position - lastPOS;
-          m_transform.forward = new Vector3(dir.x, 0, dir.z);
+    for (int i = 0; i < textObjList.Count; i++) {
+      if (!textObjList[i].activeInHierarchy) {
+        textObjList[i].transform.position = new Vector3(pos.x, pos.y + (height / 2), pos.z);
+        Vector3 camView = mainCamera.WorldToViewportPoint(textObjList[i].transform.position);
+        camView.x = Mathf.Clamp(camView.x, 0.2f, 0.8f);
+        camView.y = Mathf.Clamp(camView.y, 0.2f, 0.8f);
+        textObjList[i].transform.position = mainCamera.ViewportToWorldPoint(camView);
+        textObjList[i].transform.LookAt(cam.transform.position);
+        textObjList[i].transform.rotation *= Quaternion.Euler(0, 180, 0);
+        textObjList[i].GetComponent<TextMeshPro>().text = points + "";
+        textObjList[i].SetActive(true);
+        StartCoroutine(FloatUp(textObjList[i]));
+        break;
       }
+    }
 
+  }
+
+  private void ObjectPopulate(int num) {
+
+    List<GameObject> list = new List<GameObject>();
+
+    for (int i = 0; i < num; i++) {
+      GameObject obj = GameObject.Instantiate(textObj) as GameObject;
+      obj.name = "ScorePopupText";
+      obj.SetActive(false);
+      list.Add(obj);
+    }
+
+    textObjList = list;
+    okay = true;
+  }
+
+  private IEnumerator FloatUp(GameObject obj) {
+    float startTime = floatTime;
+    float lerpTime = 0;
+    float t = 0;
+    float o = 0;
+    float startY = obj.transform.position.y;
+
+    TextMeshPro tmp = obj.GetComponent<TextMeshPro>();
+
+    while (lerpTime < startTime) {
+      o = t = (lerpTime / startTime);
+      // t = Mathf.Sin(t * Mathf.PI * 0.5f);
+      // t = Mathf.Sin(Mathf.Pow(t, 3) * (Mathf.PI * 0.5f));
+      // t = (Mathf.Cos(Mathf.Pow(t, 3) * Mathf.PI * 0.5f) * -1f) + 1f;
+      t = (2 * (Mathf.Pow((1.6f * t) - 0.8f, 3) + 1)) * 0.5f;
+      o = Mathf.Sin(Mathf.Pow(o, 10) * (Mathf.PI * 0.5f));
+      obj.transform.position = new Vector3(obj.transform.position.x, Mathf.Lerp(startY, startY + floatHeight, t), obj.transform.position.z);
+      tmp.color = new Color32(246, 149, 35, (byte)Mathf.Lerp(255, 0, o));
+
+      lerpTime += Time.deltaTime;
       yield return new WaitForEndOfFrame();
     }
 
+    obj.SetActive(false);
+
+    yield return null;
   }
 
 }

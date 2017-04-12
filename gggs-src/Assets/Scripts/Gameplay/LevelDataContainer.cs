@@ -11,9 +11,14 @@ public class LevelDataContainer : MonoBehaviour {
   [SerializeField]
   private float countDownTime = 3f;
   [SerializeField]
-  private float scoreGoalInitial = 1000f;
+  private int scoreGoalInitial = 1000;
   [SerializeField]
-  private float scoreGoalBonus = 1500f;
+  private int scoreGoalBonus = 1500;
+
+  public float CountDownTime {
+    get { return countDownTime; }
+    set { countDownTime = value; }
+  }
 
   private float gameTime;
   public bool runTimer { get; set; }
@@ -25,6 +30,8 @@ public class LevelDataContainer : MonoBehaviour {
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
 
     DataManager.AllowControl = false;
+    DataManager.ScoreGoal = scoreGoalInitial;
+    DataManager.BonusScoreGoal = scoreGoalBonus;
     runTimer = false;
 
     gameTime = defaultGameTime;
