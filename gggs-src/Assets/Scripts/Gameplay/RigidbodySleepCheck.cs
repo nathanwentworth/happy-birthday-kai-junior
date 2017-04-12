@@ -13,6 +13,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private float threshold;
   private string sceneName;
   private string objName;
+  private Renderer rend;
 
 	private void Start () {
 
@@ -64,9 +65,9 @@ public class RigidbodySleepCheck : MonoBehaviour {
 	}
 
 	private void OnCollisionStay (Collision other) {
-    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null) {
+    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null && !DataManager.GameOver) {
       if (!knockedOver) {
-    		if (rb.velocity.magnitude > 2) {
+        if (rb.velocity.magnitude > 2) {
           knockedOver = true;
 
           Renderer rend = null;
@@ -95,7 +96,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
             DataManager.HighScore = DataManager.Score;
 
             DataManager.NewHighScore = true;
-            hudManager.HighScoreChange();
+            hudManager.HighScoreChange(true);
           }
 
           StartCoroutine(CheckMoveState());

@@ -44,7 +44,7 @@ public class MenuItems : MonoBehaviour {
     }
   }
 
-  
+
   [MenuItem ("Kaiju/Initialize Scene")]
   static void InitializeScene () {
     // delete default main camera
@@ -66,6 +66,13 @@ public class MenuItems : MonoBehaviour {
       o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/MainHUD.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "MainHUD";
+    }
+
+    // add the score text popup
+    if (GameObject.Find("ScoreTextPopup") == null) {
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/ScoreTextPopup.prefab", typeof(GameObject));
+      GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
+      _go.name = "ScoreTextPopup";
     }
 
     // add an eventsystem
@@ -105,7 +112,7 @@ public class MenuItems : MonoBehaviour {
     }
 
     // add a floor
-    if (GameObject.Find("Floor") == null) {
+    if (GameObject.Find("Floor") == null || GameObject.Find("ground") == null) {
       go = GameObject.CreatePrimitive(PrimitiveType.Cube);
       go.name = "Floor";
       go.transform.localScale = new Vector3(200f, 1f, 200f);
