@@ -257,6 +257,7 @@ public class HUDManager : MonoBehaviour {
     // highScoreListText.text = HighScoreListDisplay();
     nameEntryText.text = "";
     nameEntryHeader.SetActive(false);
+    newHighScoreHeaderText.GetComponent<TextMeshProUGUI>().text = "Score: " + DataManager.Score;
     newHighScoreHeaderText.SetActive(true);
 
     restartButton.interactable = true;
