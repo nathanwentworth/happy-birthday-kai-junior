@@ -7,7 +7,7 @@ public class ScoreTextPopup : MonoBehaviour {
 
   [SerializeField]
   private GameObject textObj;
-  private int initNum = 50;
+  private int initNum = 100;
   private List<GameObject> textObjList;
   private GameObject cam;
   private Camera mainCamera;
