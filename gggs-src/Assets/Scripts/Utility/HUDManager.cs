@@ -211,7 +211,7 @@ public class HUDManager : MonoBehaviour {
 
     HighScoreEntry("player");
 
-    if (DataManager.Score > highScoreGoal && highScoreGoal > DataManager.BonusScoreGoal) {
+    if (DataManager.Score >= highScoreGoal && highScoreGoal > DataManager.BonusScoreGoal) {
       gameOverText.text = "A new personal best!! Heck yeah!";
     } else if (DataManager.Score > DataManager.BonusScoreGoal) {
       gameOverText.text = "Whoa!\nYou hatched that egg real well! Congrats!";
