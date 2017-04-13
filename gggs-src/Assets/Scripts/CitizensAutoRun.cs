@@ -22,18 +22,20 @@ public class CitizensAutoRun : MonoBehaviour {
 
   private void Start() {
 
-    if (transform.Find("Body").GetComponent<Animator>() != null) {
-      anim = transform.Find("Body").GetComponent<Animator>();
-    } else {
-      // Debug.Log("no animation attached");
+    Transform body = null;
+
+    if ((body = transform.Find("Body")) != null) {
+      if (body.GetComponent<Animator>() != null) {
+        anim = transform.Find("Body").GetComponent<Animator>();
+      }
     }
 
 
     speed = defaultSpeed;
     kaiju = GameObject.FindWithTag("Player").GetComponent<Transform>();
-    
+
   }
-  
+
   private void Update() {
 
     if (Physics.Raycast(transform.position, -transform.up, 2f)) {
@@ -58,10 +60,10 @@ public class CitizensAutoRun : MonoBehaviour {
       if (anim != null) {
 
         // anim.SetFloat("Speed", speed);
-    
+
         // if (anim.GetFloat("Speed") < 3f){
         //   anim.speed = speed / 2 + 0.5f;
-        
+
         // } else if (anim.GetFloat("Speed") > 3f){
         //   anim.speed = (speed - 1) / 3;
         // }
