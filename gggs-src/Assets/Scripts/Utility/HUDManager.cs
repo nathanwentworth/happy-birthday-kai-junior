@@ -74,8 +74,13 @@ public class HUDManager : MonoBehaviour {
   private Button pauseRestartButton;
 
   private bool acceptTextEntry = false;
-  private int scoreGoal;
+  private int currentScoreGoal;
+  private int defaultScoreGoal;
   private int bonusScoreGoal;
+  private int highScoreGoal;
+  private int getHighScoreChecks;
+
+  private LevelDataContainer levelDataContainer;
 
   List<LevelData> levelDataList = new List<LevelData>();
   List<HighScoreData> highScoreList = new List<HighScoreData>();
@@ -86,6 +91,8 @@ public class HUDManager : MonoBehaviour {
   }
 
   private void Awake() {
+
+    levelDataContainer = FindObjectOfType (typeof (LevelDataContainer)) as LevelDataContainer;
 
     // @DEBUG
     // @REFACTOR: this shouldn't even be needed
@@ -103,15 +110,16 @@ public class HUDManager : MonoBehaviour {
     restartButton.interactable = false;
     changeLevelButton.interactable = false;
 
-    scoreGoal = DataManager.ScoreGoal;
-    bonusScoreGoal = DataManager.BonusScoreGoal;
+    defaultScoreGoal = levelDataContainer.ScoreGoalInitial;
+    bonusScoreGoal = levelDataContainer.ScoreGoalBonus;
+    StartCoroutine(GetHighScore());
 
   }
 
   private void Start() {
     ScoreChange();
-    HighScoreChange(false);
-    // CumulativeScoreChange();
+    HighScoreChange();
+
 
     nameEntryText.text = "";
     if (DataManager.LastEnteredHighScoreName != null && DataManager.LastEnteredHighScoreName != "") {
@@ -119,35 +127,37 @@ public class HUDManager : MonoBehaviour {
     }
   }
 
-  private void Update() {
-    if (acceptTextEntry) {
-      GetKeyboardInput();
-    }
-
-    // gameOverScrollRateMultiplier += controls.Move.X;
-  }
-
   public void ScoreChange() {
     int score = DataManager.Score;
     scoreText.text = "Score: " + score;
-    if (scoreGoal == 0) {
-      scoreGoal = DataManager.ScoreGoal;
+    if (defaultScoreGoal == 0) {
+      defaultScoreGoal = DataManager.ScoreGoal;
     }
 
-    if (score > scoreGoal) {
-      HighScoreChange(true);
+    if (score >= currentScoreGoal) {
+      if (currentScoreGoal == defaultScoreGoal) { currentScoreGoal = bonusScoreGoal; }
+      else if (currentScoreGoal == bonusScoreGoal) { currentScoreGoal = highScoreGoal; }
+      else { currentScoreGoal = score; }
+
+      if (highScoreGoal < score) {
+        highScoreGoal = score;
+      }
+
+      HighScoreChange();
     }
 
-    scoreBarFill.fillAmount = ((float)score / (float)scoreGoal);
+
+    scoreBarFill.fillAmount = ((float)score / (float)defaultScoreGoal);
   }
 
-  public void HighScoreChange(bool bonus) {
-    if (bonusScoreGoal == 0) {
-      bonusScoreGoal = DataManager.BonusScoreGoal;
-    }
-    int goal = (!bonus) ? scoreGoal : bonusScoreGoal;
-    string goalText = (!bonus) ? "Goal: " : "Bonus: ";
-    highScoreText.text = goalText + goal;
+  public void HighScoreChange() {
+    string goalText = "Goal: ";
+
+    if (currentScoreGoal == defaultScoreGoal) { goalText = "Goal: "; }
+    else if (currentScoreGoal == bonusScoreGoal) { goalText = "Bonus: "; }
+    else { goalText = "Best: "; }
+
+    highScoreText.text = goalText + currentScoreGoal;
   }
 
   public void TimerChange(float t, float gameTime) {
@@ -196,11 +206,31 @@ public class HUDManager : MonoBehaviour {
       canvasGroup.blocksRaycasts = true;
     }
 
-    // highScoreListText.text = "";
+    HighScoreEntry("player");
 
-    gameOverText.text = (DataManager.Score > DataManager.ScoreGoal) ? "Level Complete!\nYou hatched the egg!" : "You didn't hatch the egg\nBetter luck next time!" ;
+    if (DataManager.Score >= highScoreGoal && highScoreGoal > DataManager.BonusScoreGoal) {
+      gameOverText.text = "A new personal best!! Heck yeah!";
+    } else if (DataManager.Score > DataManager.BonusScoreGoal) {
+      gameOverText.text = "Whoa!\nYou hatched that egg real well! Congrats!";
+    } else if (DataManager.Score > DataManager.ScoreGoal) {
+      gameOverText.text = "Nice!\nYou hatched the egg!";
+    } else {
+      gameOverText.text = "You didn't hatch the egg\nBetter luck next time!";
+    }
+
     newHighScoreText.SetActive(DataManager.NewHighScore);
-    acceptTextEntry = true;
+
+    DataManager.LastEnteredHighScoreName = nameEntryText.text;
+    nameEntryText.text = "";
+    nameEntryHeader.SetActive(false);
+    newHighScoreHeaderText.GetComponent<TextMeshProUGUI>().text = "Score: " + DataManager.Score;
+    newHighScoreHeaderText.SetActive(true);
+
+    restartButton.interactable = true;
+    changeLevelButton.interactable = true;
+
+    restartButton.Select();
+
     StartCoroutine(ObjectsScoredDisplay());
   }
 
@@ -214,10 +244,10 @@ public class HUDManager : MonoBehaviour {
 
     // List<LevelData> levelDataList = new List<LevelData>();
 
-    if (DataManager.LevelDataList != null) {
-      levelDataList = DataManager.LevelDataList;
-
+    if ((levelDataList = DataManager.LevelDataList) != null) {
       for (int i = 0; i < levelDataList.Count; i++) {
+        Debug.Log(levelDataList[i].levelName);
+
         if (sceneName == levelDataList[i].levelName) {
           highScoreList = levelDataList[i].highScores;
 
@@ -225,17 +255,31 @@ public class HUDManager : MonoBehaviour {
           highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
           highScoreList.Reverse();
 
+          int _highScore = levelDataList[i].highScore;
+
+          if (_score > levelDataList[i].highScore) {
+            _highScore = _score;
+          }
+
+          levelDataList[i].highScore = _highScore;
+
+          Debug.Log("high score n level data list " + levelDataList[i].highScore);
+
           break;
         } else if (i == levelDataList.Count - 1) {
           highScoreList.Add(hs);
           highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
           highScoreList.Reverse();
 
-          LevelData data = new LevelData(sceneName, highScoreList);
+          int _highScore = levelDataList[i].highScore;
+
+          if (_score > levelDataList[i].highScore) {
+            _highScore = _score;
+          }
+
+          LevelData data = new LevelData(sceneName, highScoreList, _highScore);
           levelDataList.Add(data);
           break;
-        } else {
-          Debug.Log("can't find this level name in the data list");
         }
       }
     } else {
@@ -243,7 +287,7 @@ public class HUDManager : MonoBehaviour {
       highScoreList.Sort((x, y) => x.score.CompareTo(y.score));
       highScoreList.Reverse();
 
-      LevelData data = new LevelData(sceneName, highScoreList);
+      LevelData data = new LevelData(sceneName, highScoreList, _score);
       levelDataList.Add(data);
     }
 
@@ -251,36 +295,30 @@ public class HUDManager : MonoBehaviour {
 
   }
 
-  private void GetKeyboardInput() {
-    HighScoreEntry("player");
-    DataManager.LastEnteredHighScoreName = nameEntryText.text;
-    // highScoreListText.text = HighScoreListDisplay();
-    nameEntryText.text = "";
-    nameEntryHeader.SetActive(false);
-    newHighScoreHeaderText.GetComponent<TextMeshProUGUI>().text = "Score: " + DataManager.Score;
-    newHighScoreHeaderText.SetActive(true);
+  private IEnumerator GetHighScore() {
+    yield return new WaitForEndOfFrame();
+    int _highScore = 0;
 
-    restartButton.interactable = true;
-    changeLevelButton.interactable = true;
+    Scene scene = SceneManager.GetActiveScene();
+    string sceneName = scene.name;
 
-    restartButton.Select();
+    if ((levelDataList = DataManager.LevelDataList) != null) {
+      for (int i = 0; i < levelDataList.Count; i++) {
+        Debug.Log("Level names: " + levelDataList[i].levelName);
+        if (sceneName == levelDataList[i].levelName) {
+          _highScore = levelDataList[i].highScore;
+          break;
+        }
+      }
+    } else if (getHighScoreChecks < 10) {
+      getHighScoreChecks++;
+    }
 
-    acceptTextEntry = false;
+    Debug.Log("level high score: " + _highScore);
 
-    // foreach (char c in Input.inputString) {
-    //   if (c == "\b"[0]) {
-    //     if (nameEntryText.text.Length != 0) {
-    //       nameEntryText.text = nameEntryText.text.Substring(0, nameEntryText.text.Length - 1);
-    //     }
-    //   } else {
-    //     if (c == "\n"[0] || c == "\r"[0]) {
-    //       print("User entered their name: " + nameEntryText.text);
-
-    //     } else if (nameEntryText.text.Length < 16) {
-    //       nameEntryText.text += c.ToString();
-    //     }
-    //   }
-    // }
+    highScoreGoal = _highScore;
+    currentScoreGoal = (highScoreGoal > defaultScoreGoal) ? highScoreGoal : defaultScoreGoal;
+    yield return null;
   }
 
   private IEnumerator ObjectsScoredDisplay() {

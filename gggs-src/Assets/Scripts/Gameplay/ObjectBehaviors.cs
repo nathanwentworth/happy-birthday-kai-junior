@@ -234,7 +234,16 @@ public class ObjectBehaviors : MonoBehaviour {
   }
 
   private void Pool() {
+    Collider collider = null;
+    if ((collider = GetComponent<Collider>()) == null) {
+      Debug.Log("Random spawn in area requires a collider!");
+      return;
+    }
+
+    collider.isTrigger = true;
+
     rnd = new System.Random();
+    Debug.Log("Spawning " + numberOfCitizensToSpawn + " citizens");
     for (int i = 0; i < numberOfCitizensToSpawn; i++) {
       Spawn();
     }
@@ -246,7 +255,7 @@ public class ObjectBehaviors : MonoBehaviour {
     rndPosWithin = transform.TransformPoint(rndPosWithin * .5f);
 
     Vector3 rndRotation = new Vector3(transform.rotation.x, Random.Range(0, 360), transform.rotation.z);
-    if (!Physics.CheckSphere(rndPosWithin, checkRadius)) {
+    if (checkRadius == 0 || !Physics.CheckSphere(rndPosWithin, checkRadius)) {
       Instantiate(citizens[rnd.Next(citizens.Length)], rndPosWithin, Quaternion.Euler(rndRotation));
       checks = 0;
     } else if (checks < 10) {
