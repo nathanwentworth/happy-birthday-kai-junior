@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -57,7 +57,7 @@ LightmapSettings:
     serializedVersion: 8
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
+    m_TextureWidth: 128
     m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
@@ -86,7 +86,8 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 835c293812d1a46db9101979b1fda9c2,
+    type: 2}
   m_ShadowMaskMode: 2
 --- !u!196 &4
 NavMeshSettings:
@@ -31313,8 +31314,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1064065315}
-  - component: {fileID: 1064065314}
   - component: {fileID: 1064065313}
+  - component: {fileID: 1064065314}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -31330,7 +31331,7 @@ TerrainCollider:
   m_GameObject: {fileID: 1064065312}
   m_Material: {fileID: 0}
   m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: 0a48648bc1f39fc4c863fd50ae751ab5, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 1f909e1b45a7246c8b39ab0ceea0742b, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &1064065314
 Terrain:
@@ -31340,8 +31341,8 @@ Terrain:
   m_GameObject: {fileID: 1064065312}
   m_Enabled: 1
   serializedVersion: 3
-  m_TerrainData: {fileID: 15600000, guid: 0a48648bc1f39fc4c863fd50ae751ab5, type: 2}
-  m_TreeDistance: 2000
+  m_TerrainData: {fileID: 15600000, guid: 1f909e1b45a7246c8b39ab0ceea0742b, type: 2}
+  m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
@@ -31361,7 +31362,7 @@ Terrain:
   m_LegacyShininess: 0.078125
   m_MaterialTemplate: {fileID: 0}
   m_BakeLightProbesForTrees: 1
-  m_ScaleInLightmap: 0.0512
+  m_ScaleInLightmap: 1
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!4 &1064065315
 Transform:

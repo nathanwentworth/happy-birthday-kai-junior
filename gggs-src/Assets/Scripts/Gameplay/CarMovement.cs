@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour {
 
-  public List<AxleInfo> axleInfos;
-  public float maxMotorTorque;
-  public float maxSteeringAngle;
+
+  [SerializeField]
+  private List<AxleInfo> axleInfos;
+  [SerializeField]
+  private float maxMotorTorque;
+  [SerializeField]
+  private float maxSteeringAngle;
+  [SerializeField]
+  private List<Transform> nodes;
+  private int currentNode = 0;
 
   private float x1, x2, y1, y2;
 
@@ -16,8 +23,18 @@ public class CarMovement : MonoBehaviour {
   }
 
   public void FixedUpdate() {
-    float motor = maxMotorTorque * -Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
-    float steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
+    Drive();
+    GetNextWaypoint();
+  }
+
+  private void Drive() {
+    Vector3 relVector = transform.InverseTransformPoint(nodes[currentNode].position);
+    Debug.Log((relVector.x / relVector.magnitude));
+    relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
+    float motor = maxMotorTorque * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
+    // float motor = maxMotorTorque * 0;
+    // float steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
+    float steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
 
     foreach (AxleInfo axleInfo in axleInfos) {
       if (axleInfo.steering) {
@@ -27,6 +44,16 @@ public class CarMovement : MonoBehaviour {
       if (axleInfo.motor) {
         axleInfo.leftWheel.motorTorque = motor;
         axleInfo.rightWheel.motorTorque = motor;
+      }
+    }
+  }
+
+  private void GetNextWaypoint() {
+    if (Vector3.Distance(transform.position, nodes[currentNode].position) < 5f) {
+      if (currentNode == nodes.Count - 1) {
+        currentNode = 0;
+      } else {
+        currentNode++;
       }
     }
   }

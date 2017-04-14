@@ -96,7 +96,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
             DataManager.HighScore = DataManager.Score;
 
             DataManager.NewHighScore = true;
-            hudManager.HighScoreChange(true);
+            hudManager.HighScoreChange();
           }
 
           StartCoroutine(CheckMoveState());
