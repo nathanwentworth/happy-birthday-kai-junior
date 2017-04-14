@@ -114,9 +114,6 @@ public class HUDManager : MonoBehaviour {
     bonusScoreGoal = levelDataContainer.ScoreGoalBonus;
     StartCoroutine(GetHighScore());
 
-    currentScoreGoal = defaultScoreGoal;
-    Debug.Log("currentScoreGoal" + currentScoreGoal + "defaultScoreGoal" + defaultScoreGoal);
-
   }
 
   private void Start() {
@@ -320,6 +317,7 @@ public class HUDManager : MonoBehaviour {
     Debug.Log("level high score: " + _highScore);
 
     highScoreGoal = _highScore;
+    currentScoreGoal = (highScoreGoal > defaultScoreGoal) ? highScoreGoal : defaultScoreGoal;
     yield return null;
   }
 
