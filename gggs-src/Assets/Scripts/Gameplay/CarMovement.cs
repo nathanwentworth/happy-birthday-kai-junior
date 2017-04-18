@@ -24,17 +24,24 @@ public class CarMovement : MonoBehaviour {
 
   public void FixedUpdate() {
     Drive();
-    GetNextWaypoint();
   }
 
   private void Drive() {
-    Vector3 relVector = transform.InverseTransformPoint(nodes[currentNode].position);
-    Debug.Log((relVector.x / relVector.magnitude));
-    relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
-    float motor = maxMotorTorque * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
-    // float motor = maxMotorTorque * 0;
-    // float steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
-    float steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
+
+    float steering = 0;
+    float motor = 0;
+
+    Vector3 relVector = Vector3.zero;
+    if (nodes.Count < 1) {
+      GetNextWaypoint();
+      relVector = transform.InverseTransformPoint(nodes[currentNode].position);
+      relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
+      steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
+    } else {
+      steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
+    }
+
+    motor = maxMotorTorque * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
 
     foreach (AxleInfo axleInfo in axleInfos) {
       if (axleInfo.steering) {

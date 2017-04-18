@@ -89,7 +89,11 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.CumulativeScore += _points;
 
           hudManager.ScoreChange();
-          scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
+          if (scoreTextPopup != null) {
+            scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
+          } else {
+            Debug.Log("No scoreTextPopup in scene!");
+          }
 
           if (DataManager.Score > DataManager.HighScore) {
 
