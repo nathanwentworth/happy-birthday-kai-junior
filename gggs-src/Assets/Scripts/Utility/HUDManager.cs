@@ -15,6 +15,10 @@ public class HUDManager : MonoBehaviour {
   private TextMeshProUGUI highScoreText;
   [SerializeField]
   private TextMeshProUGUI speedText;
+  [SerializeField]
+  private Sprite[] scoreBarOverlays;
+  [SerializeField]
+  private Sprite[] scoreBarFills;
 
   [SerializeField]
   private TextMeshProUGUI timerText;
@@ -25,6 +29,8 @@ public class HUDManager : MonoBehaviour {
 
   [SerializeField]
   private Image scoreBarFill;
+  [SerializeField]
+  private Image scoreBarOverlay;
 
   [Header("Game Over Display")]
 
@@ -65,11 +71,13 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private Button pauseRestartButton;
 
-  private bool acceptTextEntry = false;
   private List<Scores> scoreGoals;
   private int score;
   private int goalIndex = 0;
   private int getHighScoreChecks;
+  private Scene scene;
+  private string sceneName;
+  private int sceneIndex;
 
   private LevelDataContainer levelDataContainer;
 
@@ -90,6 +98,9 @@ public class HUDManager : MonoBehaviour {
     HideOverlay();
     PausePanelDisplay(false);
 
+    scene = SceneManager.GetActiveScene();
+    sceneName = scene.name;
+
     CanvasGroup gameOverCanvasGroup = null;
     if ((gameOverCanvasGroup = gameOverPanel.GetComponent<CanvasGroup>()) != null) {
       gameOverCanvasGroup.alpha = 0;
@@ -103,15 +114,13 @@ public class HUDManager : MonoBehaviour {
     changeLevelButton.interactable = false;
 
     StartCoroutine(GetScoreGoals());
+    sceneIndex = GetLevelNumber();
 
   }
 
   private IEnumerator GetScoreGoals() {
     yield return new WaitForEndOfFrame();
     int _highScore = 0;
-
-    Scene scene = SceneManager.GetActiveScene();
-    string sceneName = scene.name;
 
     if ((levelDataList = DataManager.LevelDataList) != null) {
       for (int i = 0; i < levelDataList.Count; i++) {
@@ -167,6 +176,25 @@ public class HUDManager : MonoBehaviour {
     string goalText = "Goal: ";
     goalText = scoreGoals[goalIndex].text;
     highScoreText.text = goalText + scoreGoals[goalIndex].val;
+  }
+
+  private int GetLevelNumber() {
+    int levelNumber = -1;
+    if (System.Int32.TryParse(sceneName.Substring(sceneName.Length - 1, 1), out levelNumber)) {
+      Debug.Log("The level number is " + levelNumber);
+      SetUIElements(levelNumber);
+    } else {
+      Debug.LogWarning("The last character in the scene name isn't a number!");
+    }
+
+    return levelNumber;
+  }
+
+  private void SetUIElements(int sceneIndex) {
+    scoreBarOverlay.sprite = scoreBarOverlays[sceneIndex];
+    scoreBarFill.sprite = scoreBarFills[sceneIndex];
+
+    Debug.Log(sceneIndex);
   }
 
   public void TimerChange(float t, float gameTime) {
@@ -245,9 +273,6 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void HighScoreEntry(string name) {
-    Scene scene = SceneManager.GetActiveScene();
-    string sceneName = scene.name;
-
     HighScoreData hs = new HighScoreData(name, score);
 
     if ((levelDataList = DataManager.LevelDataList) != null) {
@@ -357,8 +382,7 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void Restart() {
-    Scene scene = SceneManager.GetActiveScene();
-    SceneManager.LoadScene(scene.name);
+    SceneManager.LoadScene(sceneName);
   }
 
   public void LoadScene(string scene) {
