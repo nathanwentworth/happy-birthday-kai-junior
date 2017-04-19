@@ -14,12 +14,16 @@ public class CarMovement : MonoBehaviour {
   [SerializeField]
   private List<Transform> nodes;
   private int currentNode = 0;
+  private bool pathing;
+  [SerializeField]
+  private bool loop = true;
 
   private float x1, x2, y1, y2;
 
   private void Start() {
     x1 = x2 = (Random.value);
     y1 = y2 = (Random.value / 2);
+    pathing = true;
   }
 
   public void FixedUpdate() {
@@ -32,7 +36,7 @@ public class CarMovement : MonoBehaviour {
     float motor = 0;
 
     Vector3 relVector = Vector3.zero;
-    if (nodes.Count < 1) {
+    if (nodes.Count < 1 && pathing) {
       GetNextWaypoint();
       relVector = transform.InverseTransformPoint(nodes[currentNode].position);
       relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
@@ -56,9 +60,13 @@ public class CarMovement : MonoBehaviour {
   }
 
   private void GetNextWaypoint() {
-    if (Vector3.Distance(transform.position, nodes[currentNode].position) < 5f) {
+    if (Vector3.Distance(transform.position, nodes[currentNode].position) < 3f) {
       if (currentNode == nodes.Count - 1) {
-        currentNode = 0;
+        if (loop) {
+          currentNode = 0;
+        } else {
+          pathing = false;
+        }
       } else {
         currentNode++;
       }
