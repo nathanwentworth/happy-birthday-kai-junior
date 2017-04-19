@@ -9,7 +9,6 @@ public class MainMenuFunctions : MonoBehaviour {
 
   private EventSystem eventSystem;
 
-
   [Header("Main Elements")]
   [SerializeField]
   private GameObject mainContainerPanel;

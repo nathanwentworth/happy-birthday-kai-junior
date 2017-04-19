@@ -41,7 +41,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
 
-    while (_mass == 0 && i < ObjectProperties.Count) {
+    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
       if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
         _mass = ObjectProperties[i].mass;
         _points = ObjectProperties[i].points;
@@ -60,7 +60,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     Debug.Log (objName + " volume: " + volume);
 
-    rb.mass = (_mass != 0) ? _mass : 1;
+    rb.mass = (_mass != 0) ? _mass : rb.mass;
     points = (_points != 0) ? _points : 1;
 	}
 
@@ -89,14 +89,18 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.CumulativeScore += _points;
 
           hudManager.ScoreChange();
-          scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
+          if (scoreTextPopup != null) {
+            scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
+          } else {
+            Debug.Log("No scoreTextPopup in scene!");
+          }
 
           if (DataManager.Score > DataManager.HighScore) {
 
             DataManager.HighScore = DataManager.Score;
 
             DataManager.NewHighScore = true;
-            hudManager.HighScoreChange(true);
+            hudManager.HighScoreChange();
           }
 
           StartCoroutine(CheckMoveState());

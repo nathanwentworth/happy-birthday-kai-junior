@@ -125,10 +125,12 @@ class PlayerData {
 public class LevelData {
 	public string levelName;
 	public List<HighScoreData> highScores;
+	public int highScore;
 
-	public LevelData(string _levelName, List<HighScoreData> _highScores) {
+	public LevelData(string _levelName, List<HighScoreData> _highScores, int _highScore) {
 		levelName = _levelName;
 		highScores = _highScores;
+		highScore = _highScore;
 	}
 }
 

@@ -20,6 +20,16 @@ public class LevelDataContainer : MonoBehaviour {
     set { countDownTime = value; }
   }
 
+  public int ScoreGoalInitial {
+    get { return scoreGoalInitial; }
+    set { scoreGoalInitial = value; }
+  }
+
+  public int ScoreGoalBonus {
+    get { return scoreGoalBonus; }
+    set { scoreGoalBonus = value; }
+  }
+
   private float gameTime;
   public bool runTimer { get; set; }
   private bool gameOverRun;

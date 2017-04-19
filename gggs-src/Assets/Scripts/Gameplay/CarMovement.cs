@@ -4,20 +4,64 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour {
 
-  public List<AxleInfo> axleInfos;
-  public float maxMotorTorque;
-  public float maxSteeringAngle;
+
+  [SerializeField]
+  private List<AxleInfo> axleInfos;
+  [SerializeField]
+  private float maxMotorTorque;
+  [SerializeField]
+  private float maxBrakeTorque;
+  [SerializeField]
+  private float maxSteeringAngle;
+  [SerializeField]
+  private Transform path;
+  public int carInBumper { private get; set; }
+  private List<Transform> nodes;
+  private int currentNode = 0;
+  private bool pathing = true;
+  [SerializeField]
+  private bool loop = true;
 
   private float x1, x2, y1, y2;
 
   private void Start() {
     x1 = x2 = (Random.value);
     y1 = y2 = (Random.value / 2);
+    GetNodes();
+    currentNode = FindClosestWaypoint();
   }
 
   public void FixedUpdate() {
-    float motor = maxMotorTorque * -Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
-    float steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
+    Drive();
+  }
+
+  private void GetNodes() {
+    List<Transform> _nodes = new List<Transform>();
+
+    foreach (Transform child in path) {
+      _nodes.Add(child);
+      Debug.Log("Added: " + child.gameObject.name);
+    }
+
+    nodes = _nodes;
+  }
+
+  private void Drive() {
+
+    float steering = 0;
+    float motor = 0;
+
+    Vector3 relVector = Vector3.zero;
+    if (nodes.Count > 1 && pathing) {
+      GetNextWaypoint();
+      relVector = transform.InverseTransformPoint(nodes[currentNode].position);
+      relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
+      steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
+    } else {
+      steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
+    }
+
+    motor = maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
 
     foreach (AxleInfo axleInfo in axleInfos) {
       if (axleInfo.steering) {
@@ -28,7 +72,42 @@ public class CarMovement : MonoBehaviour {
         axleInfo.leftWheel.motorTorque = motor;
         axleInfo.rightWheel.motorTorque = motor;
       }
+
+      axleInfo.leftWheel.brakeTorque = (carInBumper == 1) ? 0 * maxBrakeTorque : 1 * maxBrakeTorque;
+      axleInfo.rightWheel.brakeTorque = (carInBumper == 1) ? 0 * maxBrakeTorque : 1 * maxBrakeTorque;
     }
+  }
+
+  private void GetNextWaypoint() {
+    if (Vector3.Distance(transform.position, nodes[currentNode].position) < 7.5f) {
+      if (currentNode == nodes.Count - 1) {
+        if (loop) {
+          currentNode = 0;
+        } else {
+          pathing = false;
+        }
+      } else {
+        currentNode++;
+      }
+
+      Debug.Log("The current node for " + gameObject.name + " is " + nodes[currentNode].gameObject.name + ", and is " + Vector3.Distance(transform.position, nodes[currentNode].position) + "m away");
+    }
+  }
+
+  private int FindClosestWaypoint() {
+    float dist = Mathf.Infinity;
+    int closestNode = 0;
+
+    for (int i = 0; i < nodes.Count; i++) {
+      float _dist;
+      if ((_dist = Vector3.Distance(transform.position, nodes[i].position)) < dist && transform.InverseTransformPoint(nodes[i].position).z > 0) {
+        closestNode = i;
+        dist = _dist;
+      }
+    }
+
+    Debug.Log("The closest node to " + gameObject.name + " is " + closestNode);
+    return closestNode;
   }
 }
 

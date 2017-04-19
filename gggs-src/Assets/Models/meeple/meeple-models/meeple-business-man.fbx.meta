@@ -1,0 +1,346 @@
+fileFormatVersion: 2
+guid: 26f42ceac473c96448d572db9a34879b
+timeCreated: 1492201739
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Arm_L_joint
+    100002: Arm_R_joint
+    100004: Foot_L_joint
+    100006: Foot_R_joint
+    100008: Hand_L_joint
+    100010: Hand_R_joint
+    100012: Head_joint
+    100014: //RootNode
+    100016: meeple_business_man
+    100018: Neck_joint
+    100020: Root_joint
+    100022: Spine_joint1
+    100024: Spine_joint2
+    100026: Thigh_L_joint
+    100028: Thigh_R_joint
+    400000: Arm_L_joint
+    400002: Arm_R_joint
+    400004: Foot_L_joint
+    400006: Foot_R_joint
+    400008: Hand_L_joint
+    400010: Hand_R_joint
+    400012: Head_joint
+    400014: //RootNode
+    400016: meeple_business_man
+    400018: Neck_joint
+    400020: Root_joint
+    400022: Spine_joint1
+    400024: Spine_joint2
+    400026: Thigh_L_joint
+    400028: Thigh_R_joint
+    4300000: meeple_business_man
+    7400000: Jumping
+    7400002: Walking
+    7400004: Running
+    7400006: Rolling
+    9500000: //RootNode
+    13700000: meeple_business_man
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Jumping
+      takeName: Take 001
+      firstFrame: 3
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: meeple_business_man
+        weight: 1
+      - path: Root_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint/Hand_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint/Hand_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint/Head_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint/Foot_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint/Foot_R_joint
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walking
+      takeName: Take 001
+      firstFrame: 36
+      lastFrame: 64
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: meeple_business_man
+        weight: 1
+      - path: Root_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint/Hand_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint/Hand_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint/Head_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint/Foot_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint/Foot_R_joint
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Running
+      takeName: Take 001
+      firstFrame: 66
+      lastFrame: 83
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: meeple_business_man
+        weight: 1
+      - path: Root_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint/Hand_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint/Hand_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint/Head_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint/Foot_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint/Foot_R_joint
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rolling
+      takeName: Take 001
+      firstFrame: 85
+      lastFrame: 85
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: meeple_business_man
+        weight: 1
+      - path: Root_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint/Hand_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint/Hand_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint/Head_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint/Foot_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint/Foot_R_joint
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
