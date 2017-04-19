@@ -14,7 +14,7 @@ public class CarMovement : MonoBehaviour {
   [SerializeField]
   private List<Transform> nodes;
   private int currentNode = 0;
-  private bool pathing;
+  private bool pathing = true;
   [SerializeField]
   private bool loop = true;
 
@@ -23,7 +23,7 @@ public class CarMovement : MonoBehaviour {
   private void Start() {
     x1 = x2 = (Random.value);
     y1 = y2 = (Random.value / 2);
-    pathing = true;
+    currentNode = FindClosestWaypoint();
   }
 
   public void FixedUpdate() {
@@ -36,7 +36,7 @@ public class CarMovement : MonoBehaviour {
     float motor = 0;
 
     Vector3 relVector = Vector3.zero;
-    if (nodes.Count < 1 && pathing) {
+    if (nodes.Count > 1 && pathing) {
       GetNextWaypoint();
       relVector = transform.InverseTransformPoint(nodes[currentNode].position);
       relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
@@ -70,7 +70,25 @@ public class CarMovement : MonoBehaviour {
       } else {
         currentNode++;
       }
+
+      Debug.Log("The current node for " + gameObject.name + " is " + currentNode);
     }
+  }
+
+  private int FindClosestWaypoint() {
+    float dist = Mathf.Infinity;
+    int closestNode = 0;
+
+    for (int i = 0; i < nodes.Count; i++) {
+      float _dist;
+      if ((_dist = Vector3.Distance(transform.position, nodes[i].position)) < dist && transform.InverseTransformPoint(nodes[i].position).z > 0) {
+        closestNode = i;
+        dist = _dist;
+      }
+    }
+
+    Debug.Log("The closest node to " + gameObject.name + " is " + closestNode);
+    return closestNode;
   }
 }
 
