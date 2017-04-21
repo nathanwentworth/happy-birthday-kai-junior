@@ -13,12 +13,16 @@ public class CarBumper : MonoBehaviour {
 
   private void OnTriggerEnter(Collider other) {
     // there is a car in the bumper, so stop accelerating
-    carMovement.carInBumper = 0;
+    if (other.gameObject.tag == "car") {
+      carMovement.carInBumper = 0;
+    }
   }
 
   private void OnTriggerExit(Collider other) {
     // there is NOT a car in the bumper, so accelerate
-    carMovement.carInBumper = 1;
+    if (other.gameObject.tag == "car") {
+      carMovement.carInBumper = 1;
+    }
   }
 
 }
