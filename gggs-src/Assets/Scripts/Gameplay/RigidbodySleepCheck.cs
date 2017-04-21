@@ -60,7 +60,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     Debug.Log (objName + " volume: " + volume);
 
-    rb.mass = (_mass != 0) ? _mass : 1;
+    rb.mass = (_mass != 0) ? _mass : rb.mass;
     points = (_points != 0) ? _points : 1;
 	}
 
