@@ -1040,17 +1040,37 @@ MonoBehaviour:
   scoreText: {fileID: 114966736607794562}
   highScoreText: {fileID: 114307848981885588}
   speedText: {fileID: 114242785230844786}
+  scoreBarOverlays:
+  - {fileID: 21300000, guid: b8622516042b54fe58c06054540b1104, type: 3}
+  - {fileID: 21300000, guid: 3088bc758fe4d4292a09d785df4f2976, type: 3}
+  - {fileID: 21300000, guid: c7e6bec4d461b450e8ea81e3a1425e38, type: 3}
+  - {fileID: 21300000, guid: f7ec4c82877c8419980901b3b2039108, type: 3}
+  - {fileID: 21300000, guid: 5be68f9b9f88f416897cf473053a76fc, type: 3}
+  - {fileID: 21300000, guid: 1e4412a1edf3f4b3eb373c8c8a2279b5, type: 3}
+  - {fileID: 21300000, guid: e50a4e9c0c282440baec96bdd5b3230f, type: 3}
+  - {fileID: 21300000, guid: e40df0029e25c4ae697ed9f7487dc8ed, type: 3}
+  - {fileID: 21300000, guid: d0cf7b10ef0a047d2aff707e46be7474, type: 3}
+  scoreBarFills:
+  - {fileID: 21300000, guid: 5be4c33aa53584877b76756adf8612e0, type: 3}
+  - {fileID: 21300000, guid: 186c30cb0e40343a3a0c4385fe0fc3dc, type: 3}
+  - {fileID: 21300000, guid: e321b681bb34342259d6a5bb18970b0b, type: 3}
+  - {fileID: 21300000, guid: d72b0d0d7bd9449488e4ceeb3f2cafb3, type: 3}
+  - {fileID: 21300000, guid: 266d1b82e9122428aba239fb6060541f, type: 3}
+  - {fileID: 21300000, guid: fb49403ce718c423bbd6f1308afa1490, type: 3}
+  - {fileID: 21300000, guid: 6b71dffa81b49426c87e749f064e75f9, type: 3}
+  - {fileID: 21300000, guid: e795c525f8d7141eaa6c6ea4665878df, type: 3}
+  - {fileID: 21300000, guid: c232da5ea77984caca0d226a4789cbf5, type: 3}
   timerText: {fileID: 114506592456094032}
   timerImage: {fileID: 114541883861472752}
   overlayText: {fileID: 114621341928659266}
   scoreBarFill: {fileID: 114121340792822004}
+  scoreBarOverlay: {fileID: 114451196596383242}
   gameOverText: {fileID: 114630857440478466}
   highScoreListText: {fileID: 0}
   nameEntryText: {fileID: 114330254304754712}
   objectsScoredListText: {fileID: 114600118136355082}
   newHighScoreText: {fileID: 1316026815582490}
   newHighScoreHeaderText: {fileID: 1651922808201278}
-  nameEntryHeader: {fileID: 1740550986385020}
   gameOverScrollRate: 10
   overlayPanel: {fileID: 1618459413518570}
   gameOverPanel: {fileID: 1021759497369446}
@@ -3288,11 +3308,11 @@ RectTransform:
   m_Father: {fileID: 224978935749675438}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -24.7, y: 0}
-  m_SizeDelta: {x: 155, y: 620}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 156, y: 620}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224170890803363610
 RectTransform:
   m_ObjectHideFlags: 1
@@ -3842,7 +3862,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 30, y: 30}
-  m_SizeDelta: {x: 150, y: 600}
+  m_SizeDelta: {x: 105, y: 600}
   m_Pivot: {x: 0, y: 0}
 --- !u!225 &225099647115377316
 CanvasGroup:
