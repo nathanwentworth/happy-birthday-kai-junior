@@ -16,11 +16,17 @@ public class CarMovement : MonoBehaviour {
   [SerializeField]
   private Transform path;
   public int carInBumper { private get; set; }
+  private Transform frontGroundCheck;
   private List<Transform> nodes;
   private int currentNode = 0;
   private bool pathing = true;
   [SerializeField]
   private bool loop = true;
+
+  //Connors Vars Refactor Pls
+  private bool isReversing = false;
+  private float reverseTime;
+  public float maxReverseTime = 1.5f;
 
   private float x1, x2, y1, y2;
 
@@ -29,9 +35,11 @@ public class CarMovement : MonoBehaviour {
     y1 = y2 = (Random.value / 2);
     GetNodes();
     currentNode = FindClosestWaypoint();
+    frontGroundCheck = transform.Find("front-ground-check").GetComponent<Transform>();
   }
 
   public void FixedUpdate() {
+    frontGroundCheck.rotation = transform.rotation;
     Drive();
   }
 
@@ -47,21 +55,43 @@ public class CarMovement : MonoBehaviour {
   }
 
   private void Drive() {
-
     float steering = 0;
     float motor = 0;
 
     Vector3 relVector = Vector3.zero;
-    if (nodes.Count > 1 && pathing) {
-      GetNextWaypoint();
-      relVector = transform.InverseTransformPoint(nodes[currentNode].position);
-      relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
-      steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
-    } else {
-      steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
-    }
+    Debug.DrawRay(new Vector3(frontGroundCheck.position.x + 6, frontGroundCheck.position.y, frontGroundCheck.position.z), Vector3.down * 10, Color.red, 3, false);
+    Debug.DrawRay(new Vector3(frontGroundCheck.position.x - 6, frontGroundCheck.position.y, frontGroundCheck.position.z), Vector3.down * 10, Color.red, 3, false);
+    // @CONTINUE: this is kinda completely broken :^/
+    // if (!Physics.Raycast(new Vector3(frontGroundCheck.position.x + 6, frontGroundCheck.position.y, frontGroundCheck.position.z), Vector3.down, 10)) {
+    //   steering = maxSteeringAngle * 1;
+    //   Debug.Log("Something is to the left!");
+    // } else if (!Physics.Raycast(new Vector3(frontGroundCheck.position.x - 6, frontGroundCheck.position.y, frontGroundCheck.position.z), Vector3.down, 10)) {
+    //   steering = maxSteeringAngle * -1;
+    //   Debug.Log("Something is to the right!");
+    // } else {
+      if (nodes.Count > 1 && pathing) {
+        GetNextWaypoint();
+        relVector = transform.InverseTransformPoint(nodes[currentNode].position);
+        relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
+        steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
+      } else {
+        steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
+      }
+    // }
 
-    motor = maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
+    if (Physics.Raycast(frontGroundCheck.position, Vector3.down, 10) && !isReversing) {
+      motor = maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
+    } else {
+      isReversing = true;
+      reverseTime += Time.fixedDeltaTime;
+      Debug.Log("Reverse!");
+      steering *= -1;
+      motor = -maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
+      if(reverseTime >= maxReverseTime){
+        isReversing = false;
+        reverseTime = 0;
+      }
+    }
 
     foreach (AxleInfo axleInfo in axleInfos) {
       if (axleInfo.steering) {
@@ -109,6 +139,7 @@ public class CarMovement : MonoBehaviour {
     Debug.Log("The closest node to " + gameObject.name + " is " + closestNode);
     return closestNode;
   }
+
 }
 
 [System.Serializable]
