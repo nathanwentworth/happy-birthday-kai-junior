@@ -24,6 +24,16 @@ public class ObjectBehaviors : MonoBehaviour {
   [SerializeField]
   private GameObject[] objectsToToggle;
 
+  [Header("Other Object Anim in Zone")]
+
+  [SerializeField]
+  [Tooltip("When this trigger is entered, play an animation on another object")]
+  private bool objAnimZone;
+  [SerializeField]
+  private GameObject[] objectsToAnim;
+  [SerializeField]
+  private string animToToggle;
+
   [Header("Object Swap")]
 
   [SerializeField]
@@ -95,7 +105,7 @@ public class ObjectBehaviors : MonoBehaviour {
     if (timedToggle) {
       TimedToggleInit();
     }
-    if (objActiveSwitch || objectSwap || killBox || speedBoost) {
+    if (objActiveSwitch || objAnimZone || objectSwap || killBox || speedBoost) {
       if (GetComponent<Collider>() == null) {
         gameObject.AddComponent<Collider>();
       }
@@ -111,6 +121,9 @@ public class ObjectBehaviors : MonoBehaviour {
     if (objActiveSwitch) {
       ObjectActiveSwitchRun(other);
     }
+    if (objAnimZone) {
+      ObjectAnimRun(other, true);
+    }
     if (objectSwap) {
       ObjectSwapRun(other);
     }
@@ -122,6 +135,11 @@ public class ObjectBehaviors : MonoBehaviour {
     }
   }
 
+  private void OnTriggerExit(Collider other) {
+    if (objAnimZone) {
+      ObjectAnimRun(other, false);
+    }
+  }
 
   private void OnCollisionEnter(Collision other) {
     if (rbOnCollision) {
@@ -158,6 +176,17 @@ public class ObjectBehaviors : MonoBehaviour {
     if (other.gameObject.tag == "Player") {
       for (int i = 0; i < objectsToToggle.Length; i++) {
         objectsToToggle[i].SetActive(false);
+      }
+    }
+  }
+
+  private void ObjectAnimRun(Collider other, bool state) {
+    if (other.gameObject.tag == "Player") {
+      for (int i = 0; i < objectsToAnim.Length; i++) {
+        Animator anim = null;
+        if ((anim = objectsToAnim[i].GetComponent<Animator>()) != null) {
+          anim.SetBool(animToToggle, state);
+        }
       }
     }
   }
