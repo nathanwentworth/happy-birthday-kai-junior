@@ -9,9 +9,11 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private bool knockedOver;
   private int points;
   private HUDManager hudManager;
+  private ScoreTextPopup scoreTextPopup;
   private float threshold;
   private string sceneName;
   private string objName;
+  private Renderer rend;
 
 	private void Start () {
 
@@ -29,6 +31,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
+    scoreTextPopup = FindObjectOfType (typeof (ScoreTextPopup)) as ScoreTextPopup;
 
     sceneName = SceneManager.GetActiveScene().name;
 
@@ -38,18 +41,18 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
 
-    while (_mass == 0 && i < ObjectProperties.Count) {
-      if (ObjectProperties[i].name == objName) {
+    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
+      if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
         _mass = ObjectProperties[i].mass;
         _points = ObjectProperties[i].points;
       }
       i++;
     }
 
-    MeshFilter mesh = null;
+    MeshFilter objMesh = null;
     float volume = -1;
-    if ((mesh = GetComponent<MeshFilter>()) != null) {
-      volume = VolumeOfMesh(GetComponent<MeshFilter>().mesh);
+    if ((objMesh = GetComponent<MeshFilter>()) != null) {
+      volume = VolumeOfMesh(objMesh.mesh);
     }
 
 
@@ -57,14 +60,14 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     Debug.Log (objName + " volume: " + volume);
 
-    rb.mass = (_mass != 0) ? _mass : 1;
+    rb.mass = (_mass != 0) ? _mass : rb.mass;
     points = (_points != 0) ? _points : 1;
 	}
-	
+
 	private void OnCollisionStay (Collision other) {
-    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null) {
+    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null && !DataManager.GameOver) {
       if (!knockedOver) {
-    		if (rb.velocity.magnitude > 2) {
+        if (rb.velocity.magnitude > 2) {
           knockedOver = true;
 
           Renderer rend = null;
@@ -86,6 +89,11 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.CumulativeScore += _points;
 
           hudManager.ScoreChange();
+          if (scoreTextPopup != null) {
+            scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
+          } else {
+            Debug.Log("No scoreTextPopup in scene!");
+          }
 
           if (DataManager.Score > DataManager.HighScore) {
 

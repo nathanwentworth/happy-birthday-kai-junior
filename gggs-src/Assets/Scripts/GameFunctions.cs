@@ -41,12 +41,7 @@ public class GameFunctions : MonoBehaviour {
       Pause();
       
     }
-    // @DEBUG
-    if (controls.Confirm.WasPressed && DataManager.GameOver) {
-      DataManager.GameOver = false;
-      Debug.Log("Reloading scene: " + SceneManager.GetActiveScene().name);
-      SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+
 	
 	}
 

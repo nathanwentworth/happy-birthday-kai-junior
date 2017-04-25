@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Controls : PlayerActionSet
 {
-  public PlayerAction Interact;
-  public PlayerAction Reset;
   public PlayerAction Confirm;
+  public PlayerAction Cancel;
   public PlayerAction Pause;
 
   public PlayerAction Left;
@@ -20,14 +19,12 @@ public class Controls : PlayerActionSet
 
   public PlayerTwoAxisAction Move;
   public PlayerTwoAxisAction Look;
-  public PlayerOneAxisAction Roll;
 
 
   public Controls()
   {
-    Interact = CreatePlayerAction( "Interact" );
-    Reset = CreatePlayerAction( "Reset" );
     Confirm = CreatePlayerAction( "Confirm" );
+    Cancel = CreatePlayerAction( "Cancel" );
     Pause = CreatePlayerAction( "Pause" );
 
     Left = CreatePlayerAction( "Move Left" );
@@ -49,14 +46,11 @@ public class Controls : PlayerActionSet
   {
     var controls = new Controls();
 
-    controls.Interact.AddDefaultBinding( Key.E );
-    controls.Interact.AddDefaultBinding( InputControlType.Action2 );
-
-    controls.Interact.AddDefaultBinding( Key.E );
-    controls.Interact.AddDefaultBinding( InputControlType.Action2 );
-
     controls.Confirm.AddDefaultBinding( Key.Return );
-    controls.Confirm.AddDefaultBinding( InputControlType.Action2 );
+    controls.Confirm.AddDefaultBinding( InputControlType.Action1 );
+
+    controls.Cancel.AddDefaultBinding( Key.Delete );
+    controls.Cancel.AddDefaultBinding( InputControlType.Action2 );
 
     controls.Pause.AddDefaultBinding( Key.Escape );
     controls.Pause.AddDefaultBinding( InputControlType.Command );

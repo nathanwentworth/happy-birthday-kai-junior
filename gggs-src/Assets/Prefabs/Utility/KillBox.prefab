@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4194001067565452}
   - component: {fileID: 33334667630110714}
   - component: {fileID: 65899183320930734}
-  - component: {fileID: 114836319412161194}
+  - component: {fileID: 114648548249242252}
   m_Layer: 0
   m_Name: KillBox
   m_TagString: Untagged
@@ -36,8 +36,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1606217206719186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.5, y: -46.6, z: 18.247}
-  m_LocalScale: {x: 1375.5079, y: 39.778873, z: 1088.7062}
+  m_LocalPosition: {x: 0, y: -20, z: 0}
+  m_LocalScale: {x: 500, y: 15, z: 500}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -61,7 +61,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114836319412161194
+--- !u!114 &114648548249242252
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -69,6 +69,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1606217206719186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818e966d02689426095254909eb023af, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e3ad7977cd44e56b0afce2a7c092b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbOnCollision: 0
+  hitForce: 0
+  objActiveSwitch: 0
+  objectsToToggle: []
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 1
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 0
+  boostDirection: {x: 0, y: 0, z: 0}
+  boostForce: 0
