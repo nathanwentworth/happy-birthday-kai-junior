@@ -66,7 +66,6 @@ public class CarMovement : MonoBehaviour {
     Debug.DrawRay(leftGroundCheck.position, Vector3.down * 10, Color.red, 3, false);
     Debug.DrawRay(rightGroundCheck.position, Vector3.down * 10, Color.red, 3, false);
 
-    // @CONTINUE: this is kinda completely broken :^/
     if (!Physics.Raycast(leftGroundCheck.position, Vector3.down, 10)) {
       steering = maxSteeringAngle * 1;
       Debug.Log("Something is to the left!");
