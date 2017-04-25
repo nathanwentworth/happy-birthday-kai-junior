@@ -32,6 +32,7 @@ public class ObjectBehaviors : MonoBehaviour {
   [SerializeField]
   private GameObject[] objectsToAnim;
   [SerializeField]
+  [Tooltip("Must be a bool!")]
   private string animToToggle;
 
   [Header("Object Swap")]
