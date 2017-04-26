@@ -25,9 +25,10 @@ public class RigidbodySleepCheck : MonoBehaviour {
     if (objName.Contains("-")) {
       objName = objName.Replace("-", " ");
     }
-    // if (objName.Contains(" ")) {
-    //   objName = objName.ToTitleCase();
-    // }
+    if (objName.Contains(" ")) {
+      System.Globalization.TextInfo textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+      objName = textInfo.ToTitleCase(objName);
+    }
 
     if (DataManager.ObjectMovementThreshold == 0) {
       DataManager.ObjectMovementThreshold = 1;
