@@ -17,12 +17,14 @@ public static class DataManager {
     }
   }
 
-
-  public static Weapon SelectedWeapon { get; set; }
+  public static Vector3 StartingPosition { get; set; }
+  public static Quaternion StartingRotation { get; set; }
 
   public static int HighScore { get { return highScore; } set { highScore = value; } }
   public static bool NewHighScore { get; set; }
   public static int CumulativeScore { get; set; }
+  public static int ScoreGoal { get; set; }
+  public static int BonusScoreGoal { get; set; }
 
   public static string LastEnteredHighScoreName { get; set; }
 
@@ -34,6 +36,9 @@ public static class DataManager {
   public static bool ObjectIsStillMoving { get; set; }
   public static float ObjectMovementThreshold { get; set; }
 
+  public static List<string> ObjectsScoredList { get; set; }
+
+  public static List<ObjectData> ObjectProperties { get; set; }
 
   public static List<LevelData> LevelDataList { get; set; }
 
@@ -49,7 +54,3 @@ public static class DataManager {
 
 }
 
-public enum Weapon {
-  Ball,
-  Cannon
-}

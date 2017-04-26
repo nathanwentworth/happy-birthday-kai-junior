@@ -37,19 +37,11 @@ public class GameFunctions : MonoBehaviour {
 	private void Update () {
 
     // @DEBUG
-    if (controls.Reset.WasPressed) {
-      DataManager.ResetHighScore();
-    }
     if (controls.Pause.WasPressed) {
       Pause();
       
     }
-    // @DEBUG
-    if (controls.Confirm.WasPressed && DataManager.GameOver) {
-      DataManager.GameOver = false;
-      Debug.Log("Reloading scene: " + SceneManager.GetActiveScene().name);
-      SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+
 	
 	}
 
