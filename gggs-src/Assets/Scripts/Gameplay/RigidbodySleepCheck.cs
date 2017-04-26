@@ -22,6 +22,13 @@ public class RigidbodySleepCheck : MonoBehaviour {
     if (objName.LastIndexOf(" ") > 0) {
       objName = objName.Substring(0, objName.LastIndexOf(" "));
     }
+    if (objName.Contains("-")) {
+      objName = objName.Replace("-", " ");
+    }
+    if (objName.Contains(" ")) {
+      System.Globalization.TextInfo textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+      objName = textInfo.ToTitleCase(objName);
+    }
 
     if (DataManager.ObjectMovementThreshold == 0) {
       DataManager.ObjectMovementThreshold = 1;
