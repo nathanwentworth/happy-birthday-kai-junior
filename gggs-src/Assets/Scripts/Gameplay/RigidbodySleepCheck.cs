@@ -160,7 +160,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   // @REFACTOR: this whole script can be done betttttttttter
 
   private IEnumerator CheckMoveState() {
-		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu") && sceneName == "kort-test") {
+		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu")) {
       DataManager.ObjectIsStillMoving = true;
       yield return null;
     }
@@ -168,6 +168,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     // collider.enabled = false;
 
     DataManager.ObjectIsStillMoving = false;
+    gameObject.layer = 12;
 
     this.enabled = false;
   }
