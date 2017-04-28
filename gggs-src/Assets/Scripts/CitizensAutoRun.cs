@@ -5,13 +5,13 @@ using UnityEngine;
 public class CitizensAutoRun : MonoBehaviour {
 
   [SerializeField]
-  private float speedUpDistance;
+  private float speedUpDistance = 50f;
   [SerializeField]
-  private float defaultSpeed;
+  private float defaultSpeed = 1f;
   [SerializeField]
-  private float maxSpeedMultiplier;
+  private float maxSpeedMultiplier = 3f;
   [SerializeField]
-  private float centerOfMassYOffset;
+  private float centerOfMassYOffset = -100f;
 
 
   private Animator anim;
