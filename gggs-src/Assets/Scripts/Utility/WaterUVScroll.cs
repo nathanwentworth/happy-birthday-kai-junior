@@ -2,21 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class WaterUVScroll : MonoBehaviour {
 
   [SerializeField]
-  private float scrollSpeed = 0.5f;
-  private Renderer rend;
+  private float scrollSpeedX = 0.6f;
   [SerializeField]
-  private string materialName;
+  private float scrollLengthX = 0.1f;
+  [SerializeField]
+  private float scrollSpeedY = 0.6f;
+  [SerializeField]
+  private float scrollLengthY = 0.1f;
+  [SerializeField]
+  private float tilingModifier = 0.1f;
+  private Renderer rend;
+  private float rand;
 
   private	void Start () {
 		rend = GetComponent<Renderer>();
+    rand = Random.value;
+
+    rend.sharedMaterial.SetTextureScale("_MainTex", new Vector2(transform.localScale.x * tilingModifier, transform.localScale.y * tilingModifier));
 	}
 
 	private void Update () {
-		float offset = Time.time * scrollSpeed;
-    rend.material.SetTextureOffset("_MainTex", new Vector2(offset, 0));
+    float offsetX = scrollSpeedX * Mathf.Sin(Time.time * 2 * Mathf.PI * scrollLengthX);
+		float offsetY = scrollSpeedY * (Mathf.Sin(Time.time * 2 * Mathf.PI * scrollLengthY) + rand);
+    rend.sharedMaterial.SetTextureOffset("_MainTex", new Vector2(offsetX, offsetY));
 
 	}
 }
