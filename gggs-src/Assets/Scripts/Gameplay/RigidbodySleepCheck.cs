@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class RigidbodySleepCheck : MonoBehaviour {
 
   private Rigidbody rb;
+  private Collider collider;
   private bool knockedOver;
   private int points;
   private HUDManager hudManager;
@@ -25,6 +26,9 @@ public class RigidbodySleepCheck : MonoBehaviour {
     if (objName.Contains("-")) {
       objName = objName.Replace("-", " ");
     }
+    if (objName.Contains("_")) {
+      objName = objName.Replace("_", " ");
+    }
     if (objName.Contains(" ")) {
       System.Globalization.TextInfo textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
       objName = textInfo.ToTitleCase(objName);
@@ -37,6 +41,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     threshold = DataManager.ObjectMovementThreshold;
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
+    collider = GetComponent<Collider>();
     hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
     scoreTextPopup = FindObjectOfType (typeof (ScoreTextPopup)) as ScoreTextPopup;
 
@@ -155,12 +160,15 @@ public class RigidbodySleepCheck : MonoBehaviour {
   // @REFACTOR: this whole script can be done betttttttttter
 
   private IEnumerator CheckMoveState() {
-		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu") && sceneName == "kort-test") {
+		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu")) {
       DataManager.ObjectIsStillMoving = true;
       yield return null;
     }
 
+    // collider.enabled = false;
+
     DataManager.ObjectIsStillMoving = false;
+    gameObject.layer = 12;
 
     this.enabled = false;
   }
