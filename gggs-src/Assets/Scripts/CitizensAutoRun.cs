@@ -41,7 +41,7 @@ public class CitizensAutoRun : MonoBehaviour {
     if (Physics.Raycast(transform.position, -transform.up, 2f)) {
 
       if (anim != null) {
-        // anim.SetBool("Rolling", false);
+        anim.SetBool("Rolling", false);
       }
 
       float distance = Vector3.Distance(transform.position, kaiju.position);
@@ -59,21 +59,21 @@ public class CitizensAutoRun : MonoBehaviour {
 
       if (anim != null) {
 
-        // anim.SetFloat("Speed", speed);
+        anim.SetFloat("Speed", speed);
 
-        // if (anim.GetFloat("Speed") < 3f){
-        //   anim.speed = speed / 2 + 0.5f;
+        if (anim.GetFloat("Speed") < 3f){
+          anim.speed = speed / 2 + 0.5f;
 
-        // } else if (anim.GetFloat("Speed") > 3f){
-        //   anim.speed = (speed - 1) / 3;
-        // }
+        } else if (anim.GetFloat("Speed") > 3f){
+          anim.speed = (speed - 1) / 3;
+        }
       }
 
       transform.Translate(forward * Time.deltaTime * speed);
 
     } else {
       if (anim != null) {
-        // anim.SetBool("Rolling", true);
+        anim.SetBool("Rolling", true);
       }
     }
 

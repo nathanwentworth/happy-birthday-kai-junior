@@ -33487,6 +33487,7 @@ GameObject:
   - component: {fileID: 1444196377}
   - component: {fileID: 1444196376}
   - component: {fileID: 1444196375}
+  - component: {fileID: 1444196379}
   m_Layer: 0
   m_Name: water-edge-highlight
   m_TagString: Untagged
@@ -33558,6 +33559,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 287
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
+--- !u!114 &1444196379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1444196374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ba81c8085f841a5abee50f464aa066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 0.5
+  materialName: water-edge-highlight-texture
 --- !u!1 &1453591994
 GameObject:
   m_ObjectHideFlags: 0
@@ -48380,6 +48394,7 @@ GameObject:
   - component: {fileID: 2126728792}
   - component: {fileID: 2126728791}
   - component: {fileID: 2126728790}
+  - component: {fileID: 2126728794}
   m_Layer: 0
   m_Name: water-foam
   m_TagString: Untagged
@@ -48451,6 +48466,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 286
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
+--- !u!114 &2126728794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2126728789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ba81c8085f841a5abee50f464aa066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 0.5
+  materialName: water-foam-texture
 --- !u!1001 &2131272007
 Prefab:
   m_ObjectHideFlags: 0
