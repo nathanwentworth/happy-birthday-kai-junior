@@ -120,38 +120,47 @@ public class HUDManager : MonoBehaviour {
 
   private IEnumerator GetScoreGoals() {
     yield return new WaitForEndOfFrame();
-    int _highScore = 0;
 
-    if ((levelDataList = DataManager.LevelDataList) != null) {
-      for (int i = 0; i < levelDataList.Count; i++) {
-        if (sceneName == levelDataList[i].levelName) {
-          _highScore = levelDataList[i].highScore;
+    while (scoreGoals == null) {
+      int _highScore = 0;
 
-          Debug.Log("Load: sceneName " + sceneName + " levelDataList[i].levelName " + levelDataList[i].levelName + " _highScore " + _highScore);
-          break;
+      if ((levelDataList = DataManager.LevelDataList) != null) {
+        for (int i = 0; i < levelDataList.Count; i++) {
+          if (sceneName == levelDataList[i].levelName) {
+            _highScore = levelDataList[i].highScore;
+
+            Debug.Log("Load: sceneName " + sceneName + " levelDataList[i].levelName " + levelDataList[i].levelName + " _highScore " + _highScore);
+            break;
+          }
         }
+      } else if (getHighScoreChecks < 10) {
+        getHighScoreChecks++;
       }
-    } else if (getHighScoreChecks < 10) {
-      getHighScoreChecks++;
+
+      List<Scores> _scoreGoals = new List<Scores>();
+
+      _scoreGoals.Add(new Scores("Goal: ", levelDataContainer.ScoreGoalInitial));
+      _scoreGoals.Add(new Scores("Bonus: ", levelDataContainer.ScoreGoalBonus));
+      _scoreGoals.Add(new Scores("Best: ", _highScore));
+
+      scoreGoals = _scoreGoals;
+
+      goalIndex = (scoreGoals[2].val > scoreGoals[0].val) ? 2 : 0;
+
+
+      yield return null;
     }
-
-    List<Scores> _scoreGoals = new List<Scores>();
-
-    _scoreGoals.Add(new Scores("Goal: ", levelDataContainer.ScoreGoalInitial));
-    _scoreGoals.Add(new Scores("Bonus: ", levelDataContainer.ScoreGoalBonus));
-    _scoreGoals.Add(new Scores("Best: ", _highScore));
-
-    scoreGoals = _scoreGoals;
-
-    goalIndex = (scoreGoals[2].val > scoreGoals[0].val) ? 2 : 0;
 
     ScoreChange();
     HighScoreChange();
-
-    yield return null;
   }
 
   public void ScoreChange() {
+    if (scoreGoals == null ||
+      score == null) {
+      return;
+    }
+
     score = DataManager.Score;
     scoreText.text = "Score: " + score;
 

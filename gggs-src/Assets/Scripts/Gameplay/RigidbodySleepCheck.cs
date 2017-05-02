@@ -20,6 +20,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     objName = gameObject.name;
 
+
     if (objName.LastIndexOf(" ") > 0) {
       objName = objName.Substring(0, objName.LastIndexOf(" "));
     }
@@ -29,6 +30,13 @@ public class RigidbodySleepCheck : MonoBehaviour {
     if (objName.Contains("_")) {
       objName = objName.Replace("_", " ");
     }
+
+    string input = objName;
+    string pattern = "\\d";
+    string replacement = "";
+    System.Text.RegularExpressions.Regex rgx = new System.Text.RegularExpressions.Regex(pattern);
+    objName = rgx.Replace(input, replacement);
+
     if (objName.Contains(" ")) {
       System.Globalization.TextInfo textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
       objName = textInfo.ToTitleCase(objName);
@@ -91,7 +99,8 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
           List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
 
-          ObjectsScoredList.Add(objName + " - " + points + "pts");
+          string ptsText = (points > 1) ? "pts" : "pt" ;
+          ObjectsScoredList.Add(objName + " - " + points + ptsText);
 
           DataManager.ObjectsScoredList = ObjectsScoredList;
 
