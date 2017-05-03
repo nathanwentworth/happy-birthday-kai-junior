@@ -6131,6 +6131,7 @@ GameObject:
   - component: {fileID: 4922057898723066}
   - component: {fileID: 33931717021411032}
   - component: {fileID: 23229343915187402}
+  - component: {fileID: 65937310631479678}
   m_Layer: 0
   m_Name: passenger-car
   m_TagString: Untagged
@@ -13321,8 +13322,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821225456814640}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.009668598, y: -0.1298996, z: 9.383701}
+  m_LocalRotation: {x: -0.5000005, y: 0.49999958, z: 0.49999958, w: 0.5000005}
+  m_LocalPosition: {x: 309.96, y: 2.0172334, z: 134.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4283457468143914}
@@ -13347,7 +13348,7 @@ Transform:
   - {fileID: 4823766966006474}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 90.00001}
 --- !u!4 &4922870060912466
 Transform:
   m_ObjectHideFlags: 1
@@ -30560,6 +30561,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675844530289236}
   m_Mesh: {fileID: 4300022, guid: 5924bb30d2509c046b3a01ed13c4710e, type: 3}
+--- !u!65 &65937310631479678
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0422072, y: 9.9025345, z: 3.6203742}
+  m_Center: {x: 5.684342e-14, y: 0.0000004768373, z: -5.6843324e-14}
 --- !u!95 &95142314288421122
 Animator:
   serializedVersion: 3
