@@ -177,7 +177,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
     // collider.enabled = false;
 
     DataManager.ObjectIsStillMoving = false;
-    gameObject.layer = 12;
+    // gameObject.layer = 12;
 
     this.enabled = false;
   }
