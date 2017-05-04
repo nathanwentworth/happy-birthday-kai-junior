@@ -31,7 +31,7 @@ public class GameFunctions : MonoBehaviour {
     DataManager.Score = 0;
 
     LockMouse.Lock(true);
-    
+
   }
 
 	private void Update () {
@@ -39,10 +39,10 @@ public class GameFunctions : MonoBehaviour {
     // @DEBUG
     if (controls.Pause.WasPressed) {
       Pause();
-      
+
     }
 
-	
+
 	}
 
   public void Pause() {
@@ -54,6 +54,14 @@ public class GameFunctions : MonoBehaviour {
 
   public void HighScoreStore() {
     DataManager.HighScoreList.Sort();
+  }
+
+  private void PlayMusic() {
+
+  }
+
+  private void StopMusic() {
+
   }
 
 
