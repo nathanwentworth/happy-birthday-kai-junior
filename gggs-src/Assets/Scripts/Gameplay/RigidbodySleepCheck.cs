@@ -42,11 +42,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
       objName = textInfo.ToTitleCase(objName);
     }
 
-    if (DataManager.ObjectMovementThreshold == 0) {
-      DataManager.ObjectMovementThreshold = 1;
-    }
-
-    threshold = DataManager.ObjectMovementThreshold;
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
     collider = GetComponent<Collider>();
@@ -124,8 +119,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
             hudManager.HighScoreChange();
           }
 
-          StartCoroutine(CheckMoveState());
-
         }
       }
     }
@@ -162,24 +155,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
       t -= Time.deltaTime;
       yield return new WaitForEndOfFrame();
     }
-  }
-
-
-
-  // @REFACTOR: this whole script can be done betttttttttter
-
-  private IEnumerator CheckMoveState() {
-		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu")) {
-      DataManager.ObjectIsStillMoving = true;
-      yield return null;
-    }
-
-    // collider.enabled = false;
-
-    DataManager.ObjectIsStillMoving = false;
-    gameObject.layer = 12;
-
-    this.enabled = false;
   }
 
 }
