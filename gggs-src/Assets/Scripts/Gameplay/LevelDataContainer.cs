@@ -90,14 +90,6 @@ public class LevelDataContainer : MonoBehaviour {
   public IEnumerator GameOverDelay(float wait) {
     yield return new WaitForSeconds(wait);
 
-
-    // @REFACTOR: this is just bad lol
-    while (DataManager.ObjectIsStillMoving) {
-      Debug.Log("starting wait for objects to stop moving");
-      yield return new WaitForSeconds(1);
-      // yield return null;
-    }
-
     DataManager.Score += (int)(gameTime * 100);
 
     hudManager.GameOverDisplay();
