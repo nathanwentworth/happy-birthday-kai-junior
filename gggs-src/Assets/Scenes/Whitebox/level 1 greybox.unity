@@ -1272,20 +1272,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 57719931}
   m_Mesh: {fileID: 4300004, guid: 5a55f6c34dc5fb54d84393d39d3854ae, type: 3}
---- !u!4 &58413340
+--- !u!4 &58413340 stripped
 Transform:
-  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 4245347114224106, guid: 3f46a954bf75e07489e0e4bd207f8745,
     type: 2}
   m_PrefabInternal: {fileID: 65912206}
-  m_GameObject: {fileID: 731396815}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 541342591}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &59792692
 GameObject:
   m_ObjectHideFlags: 0
@@ -17784,7 +17775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &523428021
 Transform:
   m_ObjectHideFlags: 0
@@ -18197,35 +18188,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4019868175778120, guid: 80ff492d9f52d4277abc0a7f29d05e08,
     type: 2}
   m_PrefabInternal: {fileID: 251750659}
---- !u!1 &541342590
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 65912206}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 541342591}
-  m_Layer: 0
-  m_Name: Missing Prefab
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &541342591
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 65912206}
-  m_GameObject: {fileID: 541342590}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 58413340}
-  m_Father: {fileID: 1111548486}
-  m_RootOrder: 66
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542513923
 GameObject:
   m_ObjectHideFlags: 0
@@ -23029,21 +22991,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4875572903728098, guid: c644d764a99f949ce98442daf77953c2,
     type: 2}
   m_PrefabInternal: {fileID: 727174171}
---- !u!1 &731396815
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 65912206}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 58413340}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1001 &731595298
 Prefab:
   m_ObjectHideFlags: 0
@@ -33350,8 +33297,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 27183bf5b59d44dbe9cbe2eb29252cad, type: 3}
-        m_Scale: {x: 18.643229, y: 1}
-        m_Offset: {x: 0.41076532, y: 0}
+        m_Scale: {x: 16.415684, y: 1}
+        m_Offset: {x: -0.44979334, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -35002,7 +34949,7 @@ Transform:
   - {fileID: 320284951}
   - {fileID: 69631860}
   - {fileID: 732347860}
-  - {fileID: 541342591}
+  - {fileID: 58413340}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38378,7 +38325,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1234558633}
-  - {fileID: 1549429171}
+  - {fileID: 285191170}
   - {fileID: 1707632582}
   - {fileID: 1161424736}
   - {fileID: 301868534}
@@ -52428,11 +52375,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1549292044}
   m_Mesh: {fileID: 4300004, guid: 5a55f6c34dc5fb54d84393d39d3854ae, type: 3}
---- !u!4 &1549429171 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4739621402991358, guid: 4e67c7b78d81e7a468da654f9479048f,
-    type: 2}
-  m_PrefabInternal: {fileID: 285191169}
 --- !u!1 &1553101115
 GameObject:
   m_ObjectHideFlags: 0
@@ -56317,8 +56259,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: e811602b0d12d4c3a847ec6104d7ca7b, type: 3}
-        m_Scale: {x: 15.254126, y: 5.3714833}
-        m_Offset: {x: 0.41076532, y: 1.0012747}
+        m_Scale: {x: 12.300017, y: 1.3411739}
+        m_Offset: {x: -0.44979334, y: -0.10090063}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -60031,8 +59973,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 2ec9d2bcff9ea42cb82cd4481fe48ae5, type: 3}
-        m_Scale: {x: 17.663954, y: 1}
-        m_Offset: {x: 0.41076532, y: 0}
+        m_Scale: {x: 16.393507, y: 1}
+        m_Offset: {x: -0.44979334, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
