@@ -55,10 +55,13 @@ GameObject:
   - component: {fileID: 4006256603506374}
   - component: {fileID: 95287127526910018}
   - component: {fileID: 65151498819587406}
-  - component: {fileID: 54514837551376286}
   - component: {fileID: 114001858655526006}
   - component: {fileID: 114039317008655796}
   - component: {fileID: 114714595431102638}
+  - component: {fileID: 54068296575736430}
+  - component: {fileID: 114308565008768526}
+  - component: {fileID: 114319974773416346}
+  - component: {fileID: 114085493070035540}
   m_Layer: 0
   m_Name: hot-dog-cart
   m_TagString: Untagged
@@ -136,9 +139,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1263968931485202}
-  m_LocalRotation: {x: -0, y: -0.28271258, z: -0, w: 0.9592047}
-  m_LocalPosition: {x: 8.206722, y: 0, z: 51.735954}
-  m_LocalScale: {x: 0.5362116, y: 0.5362116, z: 0.5362116}
+  m_LocalRotation: {x: -0, y: 0.10985313, z: -0, w: 0.9939478}
+  m_LocalPosition: {x: 7.569454, y: 0, z: 29.69}
+  m_LocalScale: {x: 0.53621167, y: 0.5362116, z: 0.53621167}
   m_Children:
   - {fileID: 4449603210054592}
   - {fileID: 4905093712762062}
@@ -147,7 +150,7 @@ Transform:
   - {fileID: 4898098371934114}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -32.844, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -87.727005, z: 0}
 --- !u!4 &4104675438157688
 Transform:
   m_ObjectHideFlags: 1
@@ -395,7 +398,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1509195220661702}
   m_Mesh: {fileID: 4300002, guid: e8abe4cdae5a6cd4790798e6318b4b6a, type: 3}
---- !u!54 &54514837551376286
+--- !u!54 &54068296575736430
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -472,6 +475,60 @@ MonoBehaviour:
   numberOfCitizensToSpawn: 0
   citizens: []
 --- !u!114 &114039317008655796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263968931485202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb4f04b631c86494790dc22b5a84ecca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114085493070035540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263968931485202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e5105557d1c4a5d9e87b98285d8843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114308565008768526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263968931485202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e3ad7977cd44e56b0afce2a7c092b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rbOnCollision: 0
+  hitForce: 0
+  objActiveSwitch: 0
+  objectsToToggle: []
+  objAnimZone: 0
+  objectsToAnim: []
+  animToToggle: 
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 0
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 0
+  boostDirection: {x: 0, y: 0, z: 0}
+  boostForce: 0
+  randomSpawn: 0
+  checkRadius: 0
+  numberOfCitizensToSpawn: 0
+  citizens: []
+--- !u!114 &114319974773416346
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
