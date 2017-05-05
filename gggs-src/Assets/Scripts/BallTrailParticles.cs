@@ -6,7 +6,7 @@ public class BallTrailParticles : MonoBehaviour {
 
 	[SerializeField]
 	private GameObject particleTrailParent;
-	private List <Transform> particleList = new List<Transform>();
+	private List <ParticleSystem> particleList = new List<ParticleSystem>();
 	private List <string> particleNames = new List<string>();
 
 	private void Start () {
@@ -16,6 +16,7 @@ public class BallTrailParticles : MonoBehaviour {
 			name = name.Replace ("particle-trail-", "");
 			particleNames.Add (name);
 		}
+
 	}
 
 	private void FixedUpdate () {
@@ -23,14 +24,19 @@ public class BallTrailParticles : MonoBehaviour {
 
 		RaycastHit hit;
 
-		if (Physics.Raycast (transform.position, -Vector3.up, out hit)) {
+		if (Physics.Raycast (transform.position, -Vector3.up, out hit, 3f)) {
 
 			for (int i = 0; i < particleNames.Count; i++) {
 				if (particleNames [i] == hit.transform.gameObject.tag) {
-					particleList [i].gameObject.SetActive (true);
+					particleList [i].Play ();
 				} else {
-					particleList [i].gameObject.SetActive (false);
+					particleList [i].Stop ();
 				}
+			}
+			
+		} else {
+			for (int i = 0; i < particleNames.Count; i++) {
+				particleList [i].Stop ();
 			}
 
 		}
