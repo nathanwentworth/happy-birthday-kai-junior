@@ -9,11 +9,9 @@ public class BallTrailParticles : MonoBehaviour {
 	private List <ParticleSystem> particleList = new List<ParticleSystem>();
 	private List <string> particleNames = new List<string>();
 
-
 	private void Start () {
-		foreach (Transform child in particleTrailParent.transform)
-		{
-			particleList.Add (child.GetComponent<ParticleSystem>());
+		foreach (Transform child in particleTrailParent.transform) {
+			particleList.Add (child);
 			string name = child.gameObject.name;
 			name = name.Replace ("particle-trail-", "");
 			particleNames.Add (name);
@@ -42,8 +40,7 @@ public class BallTrailParticles : MonoBehaviour {
 			}
 
 		}
-			
 
-		
 	}
+
 }
