@@ -5,6 +5,7 @@ using UnityEngine;
 public class TreeLeavesParticles : MonoBehaviour {
 
 	private List<GameObject> treeParticles = new List<GameObject>();
+	private List<ParticleSystem> treeParticleSystems = new List<ParticleSystem> ();
 
 	[SerializeField]
 	private int particlesToSpawn = 10;
@@ -20,20 +21,32 @@ public class TreeLeavesParticles : MonoBehaviour {
 
 		for (int i = 0; i < particlesToSpawn; i++) {
 			GameObject obj = (GameObject)Instantiate (particlePrefab);
+			treeParticleSystems.Add(obj.GetComponent<ParticleSystem>());
 			obj.SetActive (false);
 			treeParticles.Add (obj);
 		}
 	}
-	
+
+	private void Update() {
+		for (int i = 0; i < particlesToSpawn; i++) {
+			if (!treeParticleSystems[i].isPlaying) {
+				treeParticles [i].SetActive (false);
+			}
+		}
+	}
 
 	private void OnCollisionEnter(Collision other) {
 		if (particlePrefab == null) { return; }
-		foreach (GameObject obj in treeParticles) {
-			if (!obj.activeInHierarchy) {
-				obj.transform.position = other.contacts[0].point;
-				obj.SetActive (true);
-				obj.GetComponent<ParticleSystem>().Play();
+		if (other.gameObject.tag == "tree") {
+			for (int i = 0; i < particlesToSpawn; i++) {
+				if (!treeParticles[i].activeInHierarchy) {
+					treeParticles[i].transform.position = new Vector3(other.transform.position.x, other.transform.position.y + 1.5f, other.transform.position.z);
+					treeParticles[i].SetActive (true);
+					treeParticleSystems[i].Play();
+					break;
+				}
 			}
+		
 		}
 	}
 }
