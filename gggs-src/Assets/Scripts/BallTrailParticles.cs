@@ -11,7 +11,7 @@ public class BallTrailParticles : MonoBehaviour {
 
 	private void Start () {
 		foreach (Transform child in particleTrailParent.transform) {
-			particleList.Add (child);
+			particleList.Add (child.GetComponent<ParticleSystem>());
 			string name = child.gameObject.name;
 			name = name.Replace ("particle-trail-", "");
 			particleNames.Add (name);
@@ -33,7 +33,7 @@ public class BallTrailParticles : MonoBehaviour {
 					particleList [i].Stop ();
 				}
 			}
-			
+
 		} else {
 			for (int i = 0; i < particleNames.Count; i++) {
 				particleList [i].Stop ();

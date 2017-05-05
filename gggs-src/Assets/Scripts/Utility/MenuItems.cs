@@ -56,21 +56,21 @@ public class MenuItems : MonoBehaviour {
 
     // add the smooth camera follow
     if (GameObject.Find("CameraFollow") == null) {
-      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/CameraFollow.prefab", typeof(GameObject));
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/game-utilities/CameraFollow.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "CameraFollow";
     }
 
     // add the main hud
     if (GameObject.Find("MainHUD") == null) {
-      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/MainHUD.prefab", typeof(GameObject));
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/game-utilities/MainHUD.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "MainHUD";
     }
 
     // add the score text popup
     if (GameObject.Find("ScoreTextPopup") == null) {
-      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/ScoreTextPopup.prefab", typeof(GameObject));
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/game-utilities/ScoreTextPopup.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "ScoreTextPopup";
     }
@@ -99,14 +99,14 @@ public class MenuItems : MonoBehaviour {
 
     // add the game manager
     if (GameObject.Find("GameManagerSingleton") == null) {
-      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/GameManagerSingleton.prefab", typeof(GameObject));
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/game-utilities/GameManagerSingleton.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "GameManagerSingleton";
     }
 
     // add incontrol
     if (GameObject.Find("InControl") == null) {
-      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/InControl.prefab", typeof(GameObject));
+      o = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Utility/game-utilities/InControl.prefab", typeof(GameObject));
       GameObject _go = PrefabUtility.InstantiatePrefab(o) as GameObject;
       _go.name = "InControl";
     }
