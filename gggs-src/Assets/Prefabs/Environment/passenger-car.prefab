@@ -6132,6 +6132,15 @@ GameObject:
   - component: {fileID: 33931717021411032}
   - component: {fileID: 23229343915187402}
   - component: {fileID: 65937310631479678}
+  - component: {fileID: 65169016116776522}
+  - component: {fileID: 114628793269921850}
+  - component: {fileID: 114220801083478088}
+  - component: {fileID: 114758259712145148}
+  - component: {fileID: 54483831788003344}
+  - component: {fileID: 65600663562417600}
+  - component: {fileID: 114693752419863990}
+  - component: {fileID: 114732075666779124}
+  - component: {fileID: 114124342960378274}
   m_Layer: 0
   m_Name: passenger-car
   m_TagString: Untagged
@@ -13322,8 +13331,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821225456814640}
-  m_LocalRotation: {x: -0.5000005, y: 0.49999958, z: 0.49999958, w: 0.5000005}
-  m_LocalPosition: {x: 309.96, y: 2.0172334, z: 134.4}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 23.91, y: 1.21, z: 2.8700027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4283457468143914}
@@ -13348,7 +13357,7 @@ Transform:
   - {fileID: 4823766966006474}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 90.00001}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 90, z: 90.00001}
 --- !u!4 &4922870060912466
 Transform:
   m_ObjectHideFlags: 1
@@ -30561,6 +30570,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675844530289236}
   m_Mesh: {fileID: 4300022, guid: 5924bb30d2509c046b3a01ed13c4710e, type: 3}
+--- !u!54 &54483831788003344
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  serializedVersion: 2
+  m_Mass: 50
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65169016116776522
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.042205, y: 9.902532, z: 3.6203716}
+  m_Center: {x: 0, y: 0.00000047683716, z: 0}
+--- !u!65 &65600663562417600
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.042205, y: 9.902532, z: 3.6203716}
+  m_Center: {x: 0, y: 0.00000047683716, z: 0}
 --- !u!65 &65937310631479678
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -30828,3 +30876,111 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114124342960378274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e3ad7977cd44e56b0afce2a7c092b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rbOnCollision: 0
+  hitForce: 0
+  objActiveSwitch: 0
+  objectsToToggle: []
+  objAnimZone: 0
+  objectsToAnim: []
+  animToToggle: 
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 0
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 0
+  boostDirection: {x: 0, y: 0, z: 0}
+  boostForce: 0
+  randomSpawn: 0
+  checkRadius: 0
+  numberOfCitizensToSpawn: 0
+  citizens: []
+--- !u!114 &114220801083478088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb4f04b631c86494790dc22b5a84ecca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114628793269921850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e3ad7977cd44e56b0afce2a7c092b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rbOnCollision: 0
+  hitForce: 0
+  objActiveSwitch: 0
+  objectsToToggle: []
+  objAnimZone: 0
+  objectsToAnim: []
+  animToToggle: 
+  objectSwap: 0
+  objectToSwapPrefab: {fileID: 0}
+  killBox: 0
+  timedToggle: 0
+  onTime: 0
+  offTime: 0
+  waitDelay: 0
+  speedBoost: 0
+  boostDirection: {x: 0, y: 0, z: 0}
+  boostForce: 0
+  randomSpawn: 0
+  checkRadius: 0
+  numberOfCitizensToSpawn: 0
+  citizens: []
+--- !u!114 &114693752419863990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e5105557d1c4a5d9e87b98285d8843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114732075666779124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb4f04b631c86494790dc22b5a84ecca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114758259712145148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821225456814640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e5105557d1c4a5d9e87b98285d8843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

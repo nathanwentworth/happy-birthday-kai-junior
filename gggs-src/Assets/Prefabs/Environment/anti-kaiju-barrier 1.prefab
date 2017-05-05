@@ -22,12 +22,13 @@ GameObject:
   - component: {fileID: 33508592133164832}
   - component: {fileID: 23789775488922652}
   - component: {fileID: 95781466383924880}
+  - component: {fileID: 65444514582546372}
   m_Layer: 0
   m_Name: anti-kaiju-barrier 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4739621402991358
 Transform:
@@ -35,9 +36,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1187632798282760}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 77.06, y: -0.00032152366, z: -14.03}
-  m_LocalScale: {x: 0.0067840875, y: 0.0067840875, z: 0.0067840875}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -81,6 +82,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1187632798282760}
   m_Mesh: {fileID: 4300000, guid: 42769ed75efe14044a81e8107d561c62, type: 3}
+--- !u!65 &65444514582546372
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187632798282760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5979583, y: 1.8508953, z: 0.5979583}
+  m_Center: {x: 0.0005351156, y: 0.9259216, z: 0}
 --- !u!95 &95781466383924880
 Animator:
   serializedVersion: 3
@@ -90,7 +103,7 @@ Animator:
   m_GameObject: {fileID: 1187632798282760}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 42769ed75efe14044a81e8107d561c62, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dedd1e102b9e2a34daf008d9ef4d8ca5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
