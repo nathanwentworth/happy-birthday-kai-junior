@@ -23,10 +23,10 @@ GameObject:
   - component: {fileID: 23863415920504938}
   - component: {fileID: 95994646498330784}
   - component: {fileID: 54322321358414708}
-  - component: {fileID: 65791372320055098}
   - component: {fileID: 114943316576073332}
   - component: {fileID: 114357226700714986}
   - component: {fileID: 114302478678352828}
+  - component: {fileID: 65599860569024658}
   m_Layer: 0
   m_Name: kaiju-caution-sign
   m_TagString: Untagged
@@ -40,13 +40,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1185643161635158}
-  m_LocalRotation: {x: -0.087155744, y: 0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 10.604484, y: -0.00075512007, z: -1.5144799}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalRotation: {x: -0.07851565, y: 0.43244553, z: 0.03783409, w: 0.89743793}
+  m_LocalPosition: {x: -2.336, y: -0.00075513124, z: -17.153}
+  m_LocalScale: {x: 0.010000002, y: 0.009999999, z: 0.010000003}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -10, y: 51.456, z: 0}
 --- !u!23 &23863415920504938
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -102,7 +102,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65791372320055098
+--- !u!65 &65599860569024658
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -112,8 +112,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 78.685486, y: 89.57899, z: 21.16823}
-  m_Center: {x: -0.000015258789, y: 45.14284, z: -10.52181}
+  m_Size: {x: 78.685486, y: 86.22621, z: 21.16823}
+  m_Center: {x: -0.000015508096, y: 46.81924, z: -10.521803}
 --- !u!95 &95994646498330784
 Animator:
   serializedVersion: 3
@@ -168,6 +168,9 @@ MonoBehaviour:
   hitForce: 0
   objActiveSwitch: 0
   objectsToToggle: []
+  objAnimZone: 0
+  objectsToAnim: []
+  animToToggle: 
   objectSwap: 0
   objectToSwapPrefab: {fileID: 0}
   killBox: 0
