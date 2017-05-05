@@ -10,9 +10,6 @@ public class CitizensAutoRun : MonoBehaviour {
   private float defaultSpeed = 1f;
   [SerializeField]
   private float maxSpeedMultiplier = 3f;
-  [SerializeField]
-  private float centerOfMassYOffset = -100f;
-
 
   private Animator anim;
 
@@ -24,7 +21,7 @@ public class CitizensAutoRun : MonoBehaviour {
 
     Transform body = null;
 
-    if ((body = transform.Find("Body")) != null) {
+    if ((body = transform.root) != null) {
       if (body.GetComponent<Animator>() != null) {
         anim = transform.Find("Body").GetComponent<Animator>();
       }
