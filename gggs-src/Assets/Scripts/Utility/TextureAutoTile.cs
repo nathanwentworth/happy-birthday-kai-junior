@@ -14,7 +14,7 @@ public class TextureAutoTile : MonoBehaviour {
     rend.sharedMaterial.SetTextureScale("_MainTex", new Vector2(transform.localScale.x * tilingModifier, transform.localScale.y * tilingModifier));
 	}
 
-  #if (UNITY_EDITOR)
+  #if UNITY_EDITOR
 
   private void Update() {
     if (rend == null) {
