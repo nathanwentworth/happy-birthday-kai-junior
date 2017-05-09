@@ -41,6 +41,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1173771227128596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4049359621136368}
+  - component: {fileID: 54506097811100270}
+  - component: {fileID: 138128734676862774}
+  m_Layer: 0
+  m_Name: meeple-weight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1188122147964644
 GameObject:
   m_ObjectHideFlags: 1
@@ -216,6 +233,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4185463650404106}
   - component: {fileID: 95653042119900966}
+  - component: {fileID: 54055906798020488}
+  - component: {fileID: 136935348565552020}
+  - component: {fileID: 114488381585166548}
   m_Layer: 0
   m_Name: meeple-connor-kneeland
   m_TagString: Untagged
@@ -238,6 +258,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4049359621136368
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173771227128596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4185463650404106}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4072771158751084
 Transform:
   m_ObjectHideFlags: 1
@@ -304,11 +337,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1825231949374614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.428442, y: 0, z: 29.981377}
+  m_LocalPosition: {x: -3.3182526, y: -0.000009263619, z: -6.518875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4730069737940466}
   - {fileID: 4072771158751084}
+  - {fileID: 4049359621136368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -447,6 +481,36 @@ Transform:
   m_Father: {fileID: 4621211536077854}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54055906798020488
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1825231949374614}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54506097811100270
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173771227128596}
+  serializedVersion: 2
+  m_Mass: 200
+  m_Drag: 0.2
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &95653042119900966
 Animator:
   serializedVersion: 3
@@ -464,6 +528,33 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114488381585166548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1825231949374614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b029aedfa8b4e5b94b82327360ce40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedUpDistance: 50
+  defaultSpeed: 1
+  maxSpeedMultiplier: 3
+--- !u!136 &136935348565552020
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1825231949374614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29
+  m_Height: 1.39
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!137 &137410847460199332
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -521,3 +612,14 @@ SkinnedMeshRenderer:
     m_Center: {x: 11.413822, y: 19.483555, z: 9.485695}
     m_Extent: {x: 75.70627, y: 79.80585, z: 43.285126}
   m_DirtyAABB: 0
+--- !u!138 &138128734676862774
+FixedJoint:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173771227128596}
+  m_ConnectedBody: {fileID: 54055906798020488}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1

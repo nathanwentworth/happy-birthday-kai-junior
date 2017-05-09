@@ -57,6 +57,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1308738706791496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4143573267770590}
+  - component: {fileID: 54005089906550270}
+  - component: {fileID: 138070886798287264}
+  m_Layer: 0
+  m_Name: meeple-weight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1422445134157000
 GameObject:
   m_ObjectHideFlags: 1
@@ -111,6 +128,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4997100846799352}
   - component: {fileID: 95590123956855974}
+  - component: {fileID: 136825282641564398}
+  - component: {fileID: 54765340000234510}
+  - component: {fileID: 114444105298591882}
   m_Layer: 0
   m_Name: meeple-jon-stewart
   m_TagString: Untagged
@@ -251,6 +271,19 @@ Transform:
   - {fileID: 4340498751429166}
   m_Father: {fileID: 4254341486918926}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4143573267770590
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308738706791496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4997100846799352}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4167865109249366
 Transform:
@@ -439,14 +472,45 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534002380486516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.553805, y: 0, z: 30.569584}
+  m_LocalPosition: {x: -2.3538818, y: -0.000009457164, z: -8.142448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4694129391007856}
   - {fileID: 4254341486918926}
+  - {fileID: 4143573267770590}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54005089906550270
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308738706791496}
+  serializedVersion: 2
+  m_Mass: 200
+  m_Drag: 0
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54765340000234510
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534002380486516}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &95590123956855974
 Animator:
   serializedVersion: 3
@@ -464,6 +528,33 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114444105298591882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534002380486516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b029aedfa8b4e5b94b82327360ce40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedUpDistance: 50
+  defaultSpeed: 1
+  maxSpeedMultiplier: 3
+--- !u!136 &136825282641564398
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534002380486516}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!137 &137002086773218532
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -521,3 +612,14 @@ SkinnedMeshRenderer:
     m_Center: {x: 13.320332, y: 24.538042, z: -2.5259705}
     m_Extent: {x: 75.97, y: 79.83036, z: 41.95864}
   m_DirtyAABB: 0
+--- !u!138 &138070886798287264
+FixedJoint:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1308738706791496}
+  m_ConnectedBody: {fileID: 54765340000234510}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
