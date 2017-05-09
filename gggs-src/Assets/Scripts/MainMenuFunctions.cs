@@ -21,9 +21,9 @@ public class MainMenuFunctions : MonoBehaviour {
 
   [Header("Level Grid Elements")]
   [SerializeField]
-  private GameObject levelGridPanel;
+  private GameObject levelParentPanel;
   [SerializeField]
-  private GameObject levelSelectPanel;
+  private GameObject levelGridPanel;
   [SerializeField]
   private Button firstSelectedLevelButton;
 
@@ -51,7 +51,7 @@ public class MainMenuFunctions : MonoBehaviour {
     lastSelectedMainButton = firstSelectedMainButton;
 
     ToggleDisplayPanelCallback(true, mainContainerPanel);
-    ToggleDisplayPanelCallback(false, levelGridPanel);
+    ToggleDisplayPanelCallback(false, levelParentPanel);
     ToggleDisplayPanelCallback(false, optionsPanel);
     ResizeLevelGrid();
   }
@@ -60,7 +60,7 @@ public class MainMenuFunctions : MonoBehaviour {
 
     if (controls.Cancel.WasPressed) {
       ToggleDisplayPanelCallback(true, mainContainerPanel);
-      ToggleDisplayPanelCallback(false, levelGridPanel);
+      ToggleDisplayPanelCallback(false, levelParentPanel);
       ToggleDisplayPanelCallback(false, optionsPanel);
     }
 
@@ -87,7 +87,7 @@ public class MainMenuFunctions : MonoBehaviour {
 
     // start
     if (currentlySelectedButton == mainButtons[0]) {
-      ToggleDisplayPanelCallback(toggle, levelGridPanel);
+      ToggleDisplayPanelCallback(toggle, levelParentPanel);
     } else if (currentlySelectedButton == mainButtons[1]) {
       ToggleDisplayPanelCallback(toggle, optionsPanel);
     } else {
@@ -112,7 +112,7 @@ public class MainMenuFunctions : MonoBehaviour {
     }
 
     if (toggle) {
-      if (panel == levelGridPanel) {
+      if (panel == levelParentPanel) {
         firstSelectedLevelButton.Select();
       } else if (panel == mainContainerPanel) {
         lastSelectedMainButton.Select();
@@ -132,7 +132,7 @@ public class MainMenuFunctions : MonoBehaviour {
       Debug.LogWarning("No canvasGroup attached to " + mainContainerPanel.name);
     }
     if (toggle) {
-      ToggleDisplayPanelCallback(false, levelGridPanel);
+      ToggleDisplayPanelCallback(false, levelParentPanel);
       ToggleDisplayPanelCallback(false, optionsPanel);
 
       lastSelectedMainButton.Select();
@@ -145,7 +145,6 @@ public class MainMenuFunctions : MonoBehaviour {
       canvasGroup.interactable = toggle;
       canvasGroup.blocksRaycasts = toggle;
       float t = 0;
-      float totalTime = 0.25f;
       float start = (toggle) ? 0 : 1;
       float end = (toggle) ? 1 : 0;
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RigidbodySleepCheck : MonoBehaviour {
 
@@ -11,75 +10,71 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private HUDManager hudManager;
   private ScoreTextPopup scoreTextPopup;
   private float threshold;
-  private string sceneName;
   private string objName;
   private Renderer rend;
 
-	private void Start () {
+  private void Start() {
 
     objName = gameObject.name;
 
+
     if (objName.LastIndexOf(" ") > 0) {
-      objName = objName.Substring(0, objName.LastIndexOf(" "));
+        objName = objName.Substring(0, objName.LastIndexOf(" "));
+    }
+    if (objName.Contains("-")) {
+        objName = objName.Replace("-", " ");
+    }
+    if (objName.Contains("_")) {
+        objName = objName.Replace("_", " ");
     }
 
-    if (DataManager.ObjectMovementThreshold == 0) {
-      DataManager.ObjectMovementThreshold = 1;
+    string input = objName;
+    string pattern = "\\d";
+    string replacement = "";
+    System.Text.RegularExpressions.Regex rgx = new System.Text.RegularExpressions.Regex(pattern);
+    objName = rgx.Replace(input, replacement);
+
+    if (objName.Contains(" ")) {
+        System.Globalization.TextInfo textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+        objName = textInfo.ToTitleCase(objName);
     }
 
-    threshold = DataManager.ObjectMovementThreshold;
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
-    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
-    scoreTextPopup = FindObjectOfType (typeof (ScoreTextPopup)) as ScoreTextPopup;
+    rend = GetComponent<Renderer>();
+    hudManager = FindObjectOfType(typeof(HUDManager)) as HUDManager;
+    scoreTextPopup = FindObjectOfType(typeof(ScoreTextPopup)) as ScoreTextPopup;
 
-    sceneName = SceneManager.GetActiveScene().name;
+    StartCoroutine(GetObjectProperties());
 
-    int _mass = 0;
-    int _points = 0;
-    int i = 0;
 
-    List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
-
-    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
-      if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
-        _mass = ObjectProperties[i].mass;
-        _points = ObjectProperties[i].points;
-      }
-      i++;
-    }
-
-    MeshFilter objMesh = null;
-    float volume = -1;
-    if ((objMesh = GetComponent<MeshFilter>()) != null) {
-      volume = VolumeOfMesh(objMesh.mesh);
-    }
+    // MeshFilter objMesh = null;
+    // float volume = -1;
+    // if ((objMesh = GetComponent<MeshFilter>()) != null) {
+    //     volume = VolumeOfMesh(objMesh.mesh);
+    // }
 
 
     // volume *= ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3);
 
-    Debug.Log (objName + " volume: " + volume);
+    // Debug.Log(objName + " volume: " + volume);
 
-    rb.mass = (_mass != 0) ? _mass : rb.mass;
-    points = (_points != 0) ? _points : 1;
-	}
+  }
 
-	private void OnCollisionStay (Collision other) {
+  private void OnCollisionStay(Collision other) {
     if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null && !DataManager.GameOver) {
       if (!knockedOver) {
         if (rb.velocity.magnitude > 2) {
           knockedOver = true;
 
-          Renderer rend = null;
-          if ((rend = GetComponent<Renderer>()) != null) {
+          if (rend != null) {
             rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);
           }
 
-
-
           List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
 
-          ObjectsScoredList.Add(objName + " - " + points + "pts");
+          string ptsText = (points > 1) ? "pts" : "pt";
+          ObjectsScoredList.Add(objName + " - " + points + ptsText);
 
           DataManager.ObjectsScoredList = ObjectsScoredList;
 
@@ -88,7 +83,10 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
 
-          hudManager.ScoreChange();
+          if (hudManager != null) {
+            hudManager.ScoreChange();
+          }
+
           if (scoreTextPopup != null) {
             scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
           } else {
@@ -103,12 +101,12 @@ public class RigidbodySleepCheck : MonoBehaviour {
             hudManager.HighScoreChange();
           }
 
-          StartCoroutine(CheckMoveState());
+          StartCoroutine(DestroyObject());
 
         }
       }
     }
-	}
+  }
 
   public float SignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3) {
     float v321 = p3.x * p2.y * p1.z;
@@ -135,27 +133,40 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
   private IEnumerator DestroyObject() {
     float t = 1f;
+    float _mass = rb.mass;
     while (t > 0) {
-      transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 0, t), Mathf.Lerp(transform.localScale.y, 0, t), Mathf.Lerp(transform.localScale.z, 0, t));
+      rb.mass = Mathf.Lerp(_mass, 1, t);
 
       t -= Time.deltaTime;
       yield return new WaitForEndOfFrame();
     }
+
   }
 
+  private IEnumerator GetObjectProperties() {
+    int _mass = 0;
+    int _points = 0;
+    int i = 0;
 
+    List<ObjectData> ObjectProperties = null;
 
-  // @REFACTOR: this whole script can be done betttttttttter
-
-  private IEnumerator CheckMoveState() {
-		while (rb.velocity.magnitude > threshold && !gameObject.name.StartsWith("Jeffu") && sceneName == "kort-test") {
-      DataManager.ObjectIsStillMoving = true;
-      yield return null;
+    while (ObjectProperties == null) {
+      ObjectProperties = DataManager.ObjectProperties;
+      yield return new WaitForEndOfFrame();
     }
 
-    DataManager.ObjectIsStillMoving = false;
+    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
+      if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
+          _mass = ObjectProperties[i].mass;
+          _points = ObjectProperties[i].points;
+      }
+      i++;
+    }
 
-    this.enabled = false;
+    rb.mass = (_mass != 0) ? _mass : rb.mass;
+    points = (_points != 0) ? _points : 1;
+
+
   }
 
 }

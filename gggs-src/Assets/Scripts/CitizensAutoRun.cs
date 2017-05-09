@@ -5,14 +5,11 @@ using UnityEngine;
 public class CitizensAutoRun : MonoBehaviour {
 
   [SerializeField]
-  private float speedUpDistance;
+  private float speedUpDistance = 50f;
   [SerializeField]
-  private float defaultSpeed;
+  private float defaultSpeed = 1f;
   [SerializeField]
-  private float maxSpeedMultiplier;
-  [SerializeField]
-  private float centerOfMassYOffset;
-
+  private float maxSpeedMultiplier = 3f;
 
   private Animator anim;
 
@@ -22,26 +19,29 @@ public class CitizensAutoRun : MonoBehaviour {
 
   private void Start() {
 
-    Transform body = null;
-
-    if ((body = transform.Find("Body")) != null) {
-      if (body.GetComponent<Animator>() != null) {
-        anim = transform.Find("Body").GetComponent<Animator>();
-      }
-    }
-
+    anim = transform.root.GetComponent<Animator>();
 
     speed = defaultSpeed;
-    kaiju = GameObject.FindWithTag("Player").GetComponent<Transform>();
+    kaiju = null;
+    if ((kaiju = GameObject.FindWithTag("Player").GetComponent<Transform>()) == null) {
+      kaiju = GameObject.Find("Ball").GetComponent<Transform>();
+    }
+
 
   }
 
   private void Update() {
 
+    if (kaiju == null) {
+      Debug.LogWarning("kaiju is null for some reason??????");
+      kaiju = GameObject.FindWithTag("Player").GetComponent<Transform>();
+      return;
+    }
+
     if (Physics.Raycast(transform.position, -transform.up, 2f)) {
 
       if (anim != null) {
-        // anim.SetBool("Rolling", false);
+        anim.SetBool("rolling", false);
       }
 
       float distance = Vector3.Distance(transform.position, kaiju.position);
@@ -59,21 +59,20 @@ public class CitizensAutoRun : MonoBehaviour {
 
       if (anim != null) {
 
-        // anim.SetFloat("Speed", speed);
+        anim.SetFloat("speed", speed);
 
-        // if (anim.GetFloat("Speed") < 3f){
-        //   anim.speed = speed / 2 + 0.5f;
-
-        // } else if (anim.GetFloat("Speed") > 3f){
-        //   anim.speed = (speed - 1) / 3;
-        // }
+        if (speed < 3f){
+          anim.speed = speed / 2 + 0.5f;
+        } else {
+          anim.speed = (speed - 1) / 3;
+        }
       }
 
       transform.Translate(forward * Time.deltaTime * speed);
 
     } else {
       if (anim != null) {
-        // anim.SetBool("Rolling", true);
+        anim.SetBool("rolling", true);
       }
     }
 

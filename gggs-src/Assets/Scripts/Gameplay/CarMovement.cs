@@ -68,10 +68,8 @@ public class CarMovement : MonoBehaviour {
 
     if (!Physics.Raycast(leftGroundCheck.position, Vector3.down, 10)) {
       steering = maxSteeringAngle * 1;
-      Debug.Log("Something is to the left!");
     } else if (!Physics.Raycast(rightGroundCheck.position, Vector3.down, 10)) {
       steering = maxSteeringAngle * -1;
-      Debug.Log("Something is to the right!");
     } else {
       if (nodes.Count > 1 && pathing) {
         GetNextWaypoint();
