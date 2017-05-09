@@ -15,24 +15,36 @@ public class BallMovement : MonoBehaviour {
   private float groundedSpeed;
   private bool grounded;
   private float checkHeight;
+  [SerializeField]
+  private bool ai = false;
+  private float x1, x2, y1, y2;
 
   public float currentSpeed { get; private set; }
 
   private Controls controls;
-  private HUDManager hudManager;
 
   private Vector3 dir;
 
   private void OnEnable() {
-    controls = Controls.DefaultBindings();
+    if (!ai) {
+      controls = Controls.DefaultBindings();
+    }
   }
 
   private void Awake() {
-    hudManager = FindObjectOfType (typeof (HUDManager)) as HUDManager;
-    cam = GameObject.Find("CameraFollow").transform.GetChild(0);
+    if (!ai) {
+      cam = GameObject.Find("CameraFollow").transform.GetChild(0);
+    } else {
+      cam = Camera.current.gameObject.transform;
+    }
   }
 
 	private void Start() {
+    if (ai) {
+      x1 = y1 = 0.0f;
+      x2 = y2 = 0.5f;
+    }
+
 		rb = GetComponent<Rigidbody>();
 
     checkHeight = (transform.localScale.y / 2) + 1;
@@ -42,7 +54,11 @@ public class BallMovement : MonoBehaviour {
 	}
 
 	private void Update() {
-		dir = controls.Move;
+    if (!ai) {
+		  dir = controls.Move;
+    } else {
+      dir = new Vector2(Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f), Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f));
+    }
   }
 
   private void FixedUpdate() {
