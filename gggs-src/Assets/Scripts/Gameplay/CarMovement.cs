@@ -51,7 +51,6 @@ public class CarMovement : MonoBehaviour {
 
     foreach (Transform child in path) {
       _nodes.Add(child);
-      Debug.Log("Added: " + child.gameObject.name);
     }
 
     nodes = _nodes;
@@ -86,7 +85,6 @@ public class CarMovement : MonoBehaviour {
     } else {
       isReversing = true;
       reverseTime += Time.fixedDeltaTime;
-      Debug.Log("Reverse!");
       steering *= -1;
       motor = -maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
       if(reverseTime >= maxReverseTime){
@@ -122,7 +120,6 @@ public class CarMovement : MonoBehaviour {
         currentNode++;
       }
 
-      Debug.Log("The current node for " + gameObject.name + " is " + nodes[currentNode].gameObject.name + ", and is " + Vector3.Distance(transform.position, nodes[currentNode].position) + "m away");
     }
   }
 
@@ -138,7 +135,6 @@ public class CarMovement : MonoBehaviour {
       }
     }
 
-    Debug.Log("The closest node to " + gameObject.name + " is " + closestNode);
     return closestNode;
   }
 
