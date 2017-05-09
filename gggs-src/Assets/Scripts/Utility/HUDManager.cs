@@ -14,8 +14,6 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private TextMeshProUGUI highScoreText;
   [SerializeField]
-  private TextMeshProUGUI speedText;
-  [SerializeField]
   private Sprite[] scoreBarOverlays;
   [SerializeField]
   private Sprite[] scoreBarFills;
@@ -157,7 +155,7 @@ public class HUDManager : MonoBehaviour {
 
   public void ScoreChange() {
     if (scoreGoals == null ||
-      score == null) {
+      score == 0) {
       return;
     }
 
@@ -215,10 +213,6 @@ public class HUDManager : MonoBehaviour {
     } else {
       timerImage.color = Color.white;
     }
-  }
-
-  public void SpeedometerDisplay(float speed) {
-    speedText.text = Mathf.Round(speed) + "m/s\n" + Mathf.Round((speed * 2.23694f)) + "mph";
   }
 
   public void OverlayText(string text) {
