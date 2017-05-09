@@ -43,9 +43,6 @@ public class BallMovement : MonoBehaviour {
 
 	private void Update() {
 		dir = controls.Move;
-
-    currentSpeed = rb.velocity.magnitude;
-    hudManager.SpeedometerDisplay(currentSpeed);
   }
 
   private void FixedUpdate() {
