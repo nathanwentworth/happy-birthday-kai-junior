@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4278986475140440}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Thigh_L_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,8 +34,25 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4955326147833220}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm_L_joint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1230009103455992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4577789195123888}
+  - component: {fileID: 54867567511174384}
+  - component: {fileID: 138754070997564818}
+  m_Layer: 10
+  m_Name: meeple-weight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +66,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4923927638016244}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_R_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4153229068121404}
   - component: {fileID: 137135167105939862}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: meeple_jeffu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +97,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4677114254914798}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +112,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4923949469689992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_L_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +127,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4077764369011992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spine_joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +142,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4332719310952750}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Thigh_R_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +157,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4246670507407012}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Root_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +172,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4909749907688992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Foot_R_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +188,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4601510155029636}
   - component: {fileID: 95624086837821976}
-  m_Layer: 0
+  - component: {fileID: 54017550964388148}
+  - component: {fileID: 136461499926755618}
+  - component: {fileID: 114422361558761026}
+  m_Layer: 10
   m_Name: meeple-jeffu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +206,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4815317291815376}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Foot_L_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +221,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4199213418441216}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Neck_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +236,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4892294517561210}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm_R_joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +251,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4310527257334074}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spine_joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,6 +359,19 @@ Transform:
   m_Father: {fileID: 4246670507407012}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4577789195123888
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230009103455992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4601510155029636}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4601510155029636
 Transform:
   m_ObjectHideFlags: 1
@@ -346,11 +379,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1717513623677180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.211, y: 0, z: 31.31888}
+  m_LocalPosition: {x: -3.2061844, y: -0.000009393755, z: -7.6105423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4153229068121404}
   - {fileID: 4246670507407012}
+  - {fileID: 4577789195123888}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -447,6 +481,36 @@ Transform:
   m_Father: {fileID: 4077764369011992}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54017550964388148
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1717513623677180}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54867567511174384
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230009103455992}
+  serializedVersion: 2
+  m_Mass: 200
+  m_Drag: 0
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &95624086837821976
 Animator:
   serializedVersion: 3
@@ -464,6 +528,33 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114422361558761026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1717513623677180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b029aedfa8b4e5b94b82327360ce40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedUpDistance: 50
+  defaultSpeed: 1
+  maxSpeedMultiplier: 3
+--- !u!136 &136461499926755618
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1717513623677180}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.28
+  m_Height: 1.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.68, z: 0}
 --- !u!137 &137135167105939862
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -521,3 +612,14 @@ SkinnedMeshRenderer:
     m_Center: {x: 12.379839, y: 24.135567, z: 6.045726}
     m_Extent: {x: 74.45615, y: 79.190865, z: 37.67709}
   m_DirtyAABB: 0
+--- !u!138 &138754070997564818
+FixedJoint:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230009103455992}
+  m_ConnectedBody: {fileID: 54017550964388148}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
