@@ -71,8 +71,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
             rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);
           }
 
-
-
           List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
 
           string ptsText = (points > 1) ? "pts" : "pt";
