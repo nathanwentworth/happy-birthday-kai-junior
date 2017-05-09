@@ -154,8 +154,7 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void ScoreChange() {
-    if (scoreGoals == null ||
-      score == 0) {
+    if (scoreGoals == null) {
       return;
     }
 

@@ -12,6 +12,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private float threshold;
   private string objName;
   private Renderer rend;
+  private readonly Color hitColor = new Color(0.8F, 0.8F, 0.8F, 1F);
 
   private void Start() {
 
@@ -61,49 +62,52 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
   }
 
-  private void OnCollisionStay(Collision other) {
-    if (other.gameObject.GetComponent<Rigidbody>() != null && rb != null && !DataManager.GameOver) {
-      if (!knockedOver) {
-        if (rb.velocity.magnitude > 2) {
-          knockedOver = true;
+  private void FixedUpdate() {
+    if (points != 0 && rb != null && !DataManager.GameOver) {
+      if (!knockedOver && rb.velocity.magnitude > 2) {
+        knockedOver = true;
 
-          if (rend != null) {
-            rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);
-          }
+        if (rend != null) {
+          rend.material.color = hitColor;
+        }
 
-          List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
+        List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
 
-          string ptsText = (points > 1) ? "pts" : "pt";
-          ObjectsScoredList.Add(objName + " - " + points + ptsText);
+        string ptsText = (points > 1) ? "pts" : "pt";
+        ObjectsScoredList.Add(objName + " - " + points + ptsText);
 
-          DataManager.ObjectsScoredList = ObjectsScoredList;
+        DataManager.ObjectsScoredList = ObjectsScoredList;
 
-          int _points = points;
+        int _points = points;
 
+        if (_points == 0) {
+          StartCoroutine(LateScore());
+        } else {
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
-
-          if (hudManager != null) {
-            hudManager.ScoreChange();
-          }
-
-          if (scoreTextPopup != null) {
-            scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
-          } else {
-            Debug.Log("No scoreTextPopup in scene!");
-          }
-
-          if (DataManager.Score > DataManager.HighScore) {
-
-            DataManager.HighScore = DataManager.Score;
-
-            DataManager.NewHighScore = true;
-            hudManager.HighScoreChange();
-          }
-
-          StartCoroutine(DestroyObject());
-
         }
+
+        if (hudManager == null) {
+          hudManager = FindObjectOfType(typeof(HUDManager)) as HUDManager;
+        }
+
+        hudManager.ScoreChange();
+
+        if (scoreTextPopup != null) {
+          scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
+        } else {
+          Debug.Log("No scoreTextPopup in scene!");
+        }
+
+        if (DataManager.Score > DataManager.HighScore) {
+
+          DataManager.HighScore = DataManager.Score;
+
+          DataManager.NewHighScore = true;
+          hudManager.HighScoreChange();
+        }
+
+        StartCoroutine(DestroyObject());
       }
     }
   }
@@ -166,6 +170,33 @@ public class RigidbodySleepCheck : MonoBehaviour {
     rb.mass = (_mass != 0) ? _mass : rb.mass;
     points = (_points != 0) ? _points : 1;
 
+
+  }
+
+  private IEnumerator LateScore() {
+    int _points = 0;
+    int i = 0;
+
+    List<ObjectData> ObjectProperties = null;
+
+    while (ObjectProperties == null) {
+      ObjectProperties = DataManager.ObjectProperties;
+      yield return new WaitForEndOfFrame();
+    }
+
+    while (_points == 0 && i < ObjectProperties.Count) {
+      if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
+        _points = ObjectProperties[i].points;
+      }
+      i++;
+    }
+
+    DataManager.Score += _points;
+    DataManager.CumulativeScore += _points;
+
+    if (hudManager != null) {
+      hudManager.ScoreChange();
+    }
 
   }
 
