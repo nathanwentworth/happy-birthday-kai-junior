@@ -1,22 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RigidbodySleepCheck : MonoBehaviour {
 
-    private Rigidbody rb;
-    private Collider collider;
-    private bool knockedOver;
-    private int points;
-    private HUDManager hudManager;
-    private ScoreTextPopup scoreTextPopup;
-    private float threshold;
-    private string sceneName;
-    private string objName;
-    private Renderer rend;
+  private Rigidbody rb;
+  private bool knockedOver;
+  private int points;
+  private HUDManager hudManager;
+  private ScoreTextPopup scoreTextPopup;
+  private float threshold;
+  private string objName;
+  private Renderer rend;
 
-    private void Start() {
+  private void Start() {
 
     objName = gameObject.name;
 
@@ -44,39 +41,23 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
-    collider = GetComponent<Collider>();
     hudManager = FindObjectOfType(typeof(HUDManager)) as HUDManager;
     scoreTextPopup = FindObjectOfType(typeof(ScoreTextPopup)) as ScoreTextPopup;
 
-    sceneName = SceneManager.GetActiveScene().name;
+    StartCoroutine(GetObjectProperties());
 
-    int _mass = 0;
-    int _points = 0;
-    int i = 0;
 
-    List<ObjectData> ObjectProperties = DataManager.ObjectProperties;
-
-    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
-        if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
-            _mass = ObjectProperties[i].mass;
-            _points = ObjectProperties[i].points;
-        }
-        i++;
-    }
-
-    MeshFilter objMesh = null;
-    float volume = -1;
-    if ((objMesh = GetComponent<MeshFilter>()) != null) {
-        volume = VolumeOfMesh(objMesh.mesh);
-    }
+    // MeshFilter objMesh = null;
+    // float volume = -1;
+    // if ((objMesh = GetComponent<MeshFilter>()) != null) {
+    //     volume = VolumeOfMesh(objMesh.mesh);
+    // }
 
 
     // volume *= ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3);
 
-    Debug.Log(objName + " volume: " + volume);
+    // Debug.Log(objName + " volume: " + volume);
 
-    rb.mass = (_mass != 0) ? _mass : rb.mass;
-    points = (_points != 0) ? _points : 1;
   }
 
   private void OnCollisionStay(Collision other) {
@@ -104,7 +85,10 @@ public class RigidbodySleepCheck : MonoBehaviour {
           DataManager.Score += _points;
           DataManager.CumulativeScore += _points;
 
-          hudManager.ScoreChange();
+          if (hudManager != null) {
+            hudManager.ScoreChange();
+          }
+
           if (scoreTextPopup != null) {
             scoreTextPopup.Popup(transform.position, _points, transform.localScale.y);
           } else {
@@ -158,6 +142,32 @@ public class RigidbodySleepCheck : MonoBehaviour {
       t -= Time.deltaTime;
       yield return new WaitForEndOfFrame();
     }
+
+  }
+
+  private IEnumerator GetObjectProperties() {
+    int _mass = 0;
+    int _points = 0;
+    int i = 0;
+
+    List<ObjectData> ObjectProperties = null;
+
+    while (ObjectProperties == null) {
+      ObjectProperties = DataManager.ObjectProperties;
+      yield return new WaitForEndOfFrame();
+    }
+
+    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
+      if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
+          _mass = ObjectProperties[i].mass;
+          _points = ObjectProperties[i].points;
+      }
+      i++;
+    }
+
+    rb.mass = (_mass != 0) ? _mass : rb.mass;
+    points = (_points != 0) ? _points : 1;
+
 
   }
 

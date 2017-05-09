@@ -145,7 +145,6 @@ public class MainMenuFunctions : MonoBehaviour {
       canvasGroup.interactable = toggle;
       canvasGroup.blocksRaycasts = toggle;
       float t = 0;
-      float totalTime = 0.25f;
       float start = (toggle) ? 0 : 1;
       float end = (toggle) ? 1 : 0;
 
