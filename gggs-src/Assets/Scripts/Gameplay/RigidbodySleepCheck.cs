@@ -41,6 +41,7 @@ public class RigidbodySleepCheck : MonoBehaviour {
 
     knockedOver = false;
     rb = GetComponent<Rigidbody>();
+    rend = GetComponent<Renderer>();
     hudManager = FindObjectOfType(typeof(HUDManager)) as HUDManager;
     scoreTextPopup = FindObjectOfType(typeof(ScoreTextPopup)) as ScoreTextPopup;
 
@@ -66,12 +67,9 @@ public class RigidbodySleepCheck : MonoBehaviour {
         if (rb.velocity.magnitude > 2) {
           knockedOver = true;
 
-          Renderer rend = null;
-          if ((rend = GetComponent<Renderer>()) != null) {
+          if (rend != null) {
             rend.material.color = new Color(0.8F, 0.8F, 0.8F, 1F);
           }
-
-
 
           List<string> ObjectsScoredList = (DataManager.ObjectsScoredList != null) ? DataManager.ObjectsScoredList : new List<string>();
 
