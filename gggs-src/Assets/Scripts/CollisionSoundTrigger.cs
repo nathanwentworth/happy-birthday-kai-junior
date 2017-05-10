@@ -14,7 +14,7 @@ public class CollisionSoundTrigger : MonoBehaviour {
   }
 
   private void OnCollisionEnter(Collision other) {
-    if (audio != null && other.gameObject.tag == "Player") {
+    if (other.gameObject.tag == "Player") {
       StartCoroutine(PlayAudio());
     }
   }
