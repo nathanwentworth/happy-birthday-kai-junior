@@ -22,8 +22,10 @@ public class CollisionSoundTrigger : MonoBehaviour {
   private IEnumerator PlayAudio() {
     if (clips.Length > 0) {
       audio.clip = clips[Random.Range(0, clips.Length)];
-      audio.Play();
     }
+
+    audio.Play();
+    Debug.Log("Audio clip " + audio.clip.name + " played");
     yield return null;
   }
 
