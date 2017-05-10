@@ -14,8 +14,6 @@ public class HUDManager : MonoBehaviour {
   [SerializeField]
   private TextMeshProUGUI highScoreText;
   [SerializeField]
-  private TextMeshProUGUI speedText;
-  [SerializeField]
   private Sprite[] scoreBarOverlays;
   [SerializeField]
   private Sprite[] scoreBarFills;
@@ -120,38 +118,47 @@ public class HUDManager : MonoBehaviour {
 
   private IEnumerator GetScoreGoals() {
     yield return new WaitForEndOfFrame();
-    int _highScore = 0;
 
-    if ((levelDataList = DataManager.LevelDataList) != null) {
-      for (int i = 0; i < levelDataList.Count; i++) {
-        if (sceneName == levelDataList[i].levelName) {
-          _highScore = levelDataList[i].highScore;
+    while (scoreGoals == null) {
+      int _highScore = 0;
 
-          Debug.Log("Load: sceneName " + sceneName + " levelDataList[i].levelName " + levelDataList[i].levelName + " _highScore " + _highScore);
-          break;
+      if ((levelDataList = DataManager.LevelDataList) != null) {
+        for (int i = 0; i < levelDataList.Count; i++) {
+          if (sceneName == levelDataList[i].levelName) {
+            _highScore = levelDataList[i].highScore;
+
+            Debug.Log("Load: sceneName " + sceneName + " levelDataList[i].levelName " + levelDataList[i].levelName + " _highScore " + _highScore);
+            break;
+          }
         }
+      } else if (getHighScoreChecks < 10) {
+        getHighScoreChecks++;
       }
-    } else if (getHighScoreChecks < 10) {
-      getHighScoreChecks++;
+
+      List<Scores> _scoreGoals = new List<Scores>();
+
+      _scoreGoals.Add(new Scores("Goal: ", levelDataContainer.ScoreGoalInitial));
+      _scoreGoals.Add(new Scores("Bonus: ", levelDataContainer.ScoreGoalBonus));
+      _scoreGoals.Add(new Scores("Best: ", _highScore));
+
+      scoreGoals = _scoreGoals;
+
+      goalIndex = (scoreGoals[2].val > scoreGoals[0].val) ? 2 : 0;
+
+
+      yield return null;
     }
-
-    List<Scores> _scoreGoals = new List<Scores>();
-
-    _scoreGoals.Add(new Scores("Goal: ", levelDataContainer.ScoreGoalInitial));
-    _scoreGoals.Add(new Scores("Bonus: ", levelDataContainer.ScoreGoalBonus));
-    _scoreGoals.Add(new Scores("Best: ", _highScore));
-
-    scoreGoals = _scoreGoals;
-
-    goalIndex = (scoreGoals[2].val > scoreGoals[0].val) ? 2 : 0;
 
     ScoreChange();
     HighScoreChange();
-
-    yield return null;
   }
 
   public void ScoreChange() {
+    if (scoreGoals == null ||
+      score == 0) {
+      return;
+    }
+
     score = DataManager.Score;
     scoreText.text = "Score: " + score;
 
@@ -206,10 +213,6 @@ public class HUDManager : MonoBehaviour {
     } else {
       timerImage.color = Color.white;
     }
-  }
-
-  public void SpeedometerDisplay(float speed) {
-    speedText.text = Mathf.Round(speed) + "m/s\n" + Mathf.Round((speed * 2.23694f)) + "mph";
   }
 
   public void OverlayText(string text) {
