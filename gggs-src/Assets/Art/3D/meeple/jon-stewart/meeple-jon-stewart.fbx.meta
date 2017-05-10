@@ -39,6 +39,7 @@ ModelImporter:
     7400000: Jumping
     7400002: Walking
     7400004: Running
+    7400006: Rolling
     9500000: //RootNode
     13700000: meeple_jon_stewart
   materials:
@@ -192,6 +193,64 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: meeple_jon_stewart
+        weight: 1
+      - path: Root_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_L_joint/Hand_L_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Arm_R_joint/Hand_R_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint
+        weight: 1
+      - path: Root_joint/Spine_joint1/Spine_joint2/Neck_joint/Head_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_L_joint/Foot_L_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint
+        weight: 1
+      - path: Root_joint/Thigh_R_joint/Foot_R_joint
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Rolling
+      takeName: Take 001
+      firstFrame: 84
+      lastFrame: 85
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
