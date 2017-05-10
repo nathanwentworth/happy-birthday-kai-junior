@@ -9,11 +9,37 @@ public class BuildingSoundTrigger : MonoBehaviour {
   private AudioClip[] clips;
 
 	private void Start () {
-    audio = transform.root.GetComponent<AudioSource>();
+    audio = GetParentObject().GetComponent<AudioSource>();
 	}
 
+  private int GetObjectDepth() {
+    int parentIndex = 0;
+
+    Transform t = gameObject.transform;
+    while (t.parent != null) {
+      parentIndex++;
+      t = t.parent.transform;
+    }
+
+    return parentIndex - 1;
+  }
+
+  private GameObject GetParentObject() {
+    Transform t = gameObject.transform;
+    for (int i = 0; i < GetObjectDepth(); i++) {
+      t = t.parent.transform;
+    }
+
+    return t.gameObject;
+  }
+
   private void OnCollisionEnter(Collision other) {
-    if (audio != null && other.gameObject.tag == "Player") {
+    if (audio == null) {
+      Debug.Log("No audio on the root of " + transform.root.gameObject.name);
+      return;
+    }
+
+    if (other.gameObject.tag == "Player") {
       StartCoroutine(PlayAudio());
     }
   }
