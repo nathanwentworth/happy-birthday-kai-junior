@@ -16,19 +16,11 @@ public class CarMovement : MonoBehaviour {
   [SerializeField]
   private Transform path;
   public int carInBumper { private get; set; }
-  private Transform frontGroundCheck;
-  private Transform rightGroundCheck;
-  private Transform leftGroundCheck;
   private List<Transform> nodes;
   private int currentNode = 0;
   private bool pathing = true;
   [SerializeField]
   private bool loop = true;
-
-  //Connors Vars Refactor Pls
-  private bool isReversing = false;
-  private float reverseTime;
-  public float maxReverseTime = 1.5f;
 
   private float x1, x2, y1, y2;
 
@@ -37,9 +29,6 @@ public class CarMovement : MonoBehaviour {
     y1 = y2 = (Random.value / 2);
     GetNodes();
     currentNode = FindClosestWaypoint();
-    frontGroundCheck = transform.Find("front-ground-check").GetComponent<Transform>();
-    rightGroundCheck = transform.Find("right-ground-check").GetComponent<Transform>();
-    leftGroundCheck = transform.Find("left-ground-check").GetComponent<Transform>();
   }
 
   public void FixedUpdate() {
@@ -62,36 +51,16 @@ public class CarMovement : MonoBehaviour {
 
     Vector3 relVector = Vector3.zero;
 
-    Debug.DrawRay(leftGroundCheck.position, Vector3.down * 10, Color.red, 3, false);
-    Debug.DrawRay(rightGroundCheck.position, Vector3.down * 10, Color.red, 3, false);
-
-    if (!Physics.Raycast(leftGroundCheck.position, Vector3.down, 10)) {
-      steering = maxSteeringAngle * 1;
-    } else if (!Physics.Raycast(rightGroundCheck.position, Vector3.down, 10)) {
-      steering = maxSteeringAngle * -1;
+    if (nodes.Count > 1 && pathing) {
+      GetNextWaypoint();
+      relVector = transform.InverseTransformPoint(nodes[currentNode].position);
+      relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
+      steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
     } else {
-      if (nodes.Count > 1 && pathing) {
-        GetNextWaypoint();
-        relVector = transform.InverseTransformPoint(nodes[currentNode].position);
-        relVector = Quaternion.Euler(new Vector3(0, 0, 180)) * relVector;
-        steering = (relVector.x / relVector.magnitude) * maxSteeringAngle;
-      } else {
-        steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
-      }
+      steering = maxSteeringAngle * ((Mathf.PerlinNoise(x2 += 0.01f, y2 += 0.01f) * 2) - 1);
     }
 
-    if (Physics.Raycast(frontGroundCheck.position, Vector3.down, 10) && !isReversing) {
-      motor = maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
-    } else {
-      isReversing = true;
-      reverseTime += Time.fixedDeltaTime;
-      steering *= -1;
-      motor = -maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
-      if(reverseTime >= maxReverseTime){
-        isReversing = false;
-        reverseTime = 0;
-      }
-    }
+    motor = maxMotorTorque * carInBumper * Mathf.PerlinNoise(x1 += 0.01f, y1 += 0.01f);
 
     foreach (AxleInfo axleInfo in axleInfos) {
       if (axleInfo.steering) {
@@ -103,9 +72,28 @@ public class CarMovement : MonoBehaviour {
         axleInfo.rightWheel.motorTorque = motor;
       }
 
+      ApplyLocalPositionToVisuals(axleInfo.leftWheel, 90);
+      ApplyLocalPositionToVisuals(axleInfo.rightWheel, -90);
+
       axleInfo.leftWheel.brakeTorque = (carInBumper == 1) ? 0 * maxBrakeTorque : 1 * maxBrakeTorque;
       axleInfo.rightWheel.brakeTorque = (carInBumper == 1) ? 0 * maxBrakeTorque : 1 * maxBrakeTorque;
     }
+  }
+
+  // from https://docs.unity3d.com/Manual/WheelColliderTutorial.html
+  private void ApplyLocalPositionToVisuals(WheelCollider collider, int rotate) {
+    if (collider.transform.childCount == 0) {
+      return;
+    }
+
+    Transform visualWheel = collider.transform.GetChild(0);
+
+    Vector3 position;
+    Quaternion rotation;
+    collider.GetWorldPose(out position, out rotation);
+
+    visualWheel.transform.position = position;
+    visualWheel.transform.rotation = rotation * Quaternion.Euler(new Vector3(0, rotate, 0));
   }
 
   private void GetNextWaypoint() {
