@@ -17,8 +17,8 @@ public class RigidbodySleepCheck : MonoBehaviour {
   private void Start() {
     objName = gameObject.name;
 
-    if (objName.LastIndexOf(" ") > 0) {
-        objName = objName.Substring(0, objName.LastIndexOf(" "));
+    if (objName.LastIndexOf("(") > 0) {
+        objName = objName.Substring(0, objName.LastIndexOf("("));
     }
     if (objName.Contains("-")) {
         objName = objName.Replace("-", " ");
