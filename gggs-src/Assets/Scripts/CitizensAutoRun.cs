@@ -10,6 +10,8 @@ public class CitizensAutoRun : MonoBehaviour {
   private float defaultSpeed = 1f;
   [SerializeField]
   private float maxSpeedMultiplier = 3f;
+  private ParticleSystem heart;
+  private ParticleSystem sweat;
 
   private Animator anim;
 
@@ -27,7 +29,11 @@ public class CitizensAutoRun : MonoBehaviour {
       kaiju = GameObject.Find("Ball").GetComponent<Transform>();
     }
 
+    heart = transform.Find("particle-meeple-hearts").GetComponent<ParticleSystem>();
+    sweat = transform.Find("particle-meeple-sweat").GetComponent<ParticleSystem>();
 
+    sweat.Stop();
+    heart.Play();
   }
 
   private void Update() {
@@ -48,7 +54,20 @@ public class CitizensAutoRun : MonoBehaviour {
 
       if (distance < speedUpDistance) {
         speed = (((1 - (distance / speedUpDistance)) * maxSpeedMultiplier) + defaultSpeed);
+        if (heart.isPlaying) {
+          heart.Stop();
+        }
+        if (!sweat.isPlaying) {
+          sweat.Play();
+        }
+
       } else {
+        if (!heart.isPlaying) {
+          heart.Play();
+        }
+        if (sweat.isPlaying) {
+          sweat.Stop();
+        }
         speed = defaultSpeed;
       }
 
@@ -74,6 +93,8 @@ public class CitizensAutoRun : MonoBehaviour {
       if (anim != null) {
         anim.SetBool("rolling", true);
       }
+
+      heart.Play();
     }
 
 
