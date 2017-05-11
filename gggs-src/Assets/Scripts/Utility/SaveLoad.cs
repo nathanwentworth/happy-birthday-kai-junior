@@ -82,7 +82,7 @@ public class SaveLoad : MonoBehaviour {
 			// TextAsset file = Resources.Load("score-spreadsheet") as TextAsset;
 
 			string line = "";
-			string[] row = new string [3];
+			string[] row = new string [2];
 
 			List<ObjectData> ObjectProperties = new List<ObjectData>();
 
@@ -90,17 +90,22 @@ public class SaveLoad : MonoBehaviour {
 			while ((line = file.ReadLine()) != null) {
 				row = line.Split(',');
 
-				int j, k;
+				int j;
 
-				if (Int32.TryParse(row[1], out j) && Int32.TryParse(row[2], out k)) {
-					ObjectData data = new ObjectData(row[0], j, k);
+				if (Int32.TryParse(row[1], out j)) {
+					ObjectData data = new ObjectData(row[0], j);
 					ObjectProperties.Add(data);
+					Debug.Log("Added " + row[0] + " " + j);
+				} else {
+					Debug.Log("Can't parse int, value: " + row[0] + " " + row[1]);
 				}
 
 			}
 
 			DataManager.ObjectProperties = ObjectProperties;
 			file.Close();
+		} else {
+			Debug.LogWarning("UHH there's no score spreadsheet");
 		}
 	}
 }
@@ -148,12 +153,10 @@ public class HighScoreData {
 [Serializable]
 public class ObjectData {
   public string name;
-  public int mass;
   public int points;
 
-  public ObjectData(string _name, int _mass, int _points) {
+  public ObjectData(string _name, int _points) {
   	name = _name;
-		mass = _mass;
 		points = _points;
   }
 }

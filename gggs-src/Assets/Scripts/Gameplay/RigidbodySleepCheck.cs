@@ -74,7 +74,6 @@ public class RigidbodySleepCheck : MonoBehaviour {
   }
 
   private IEnumerator GetObjectProperties() {
-    int _mass = 0;
     int _points = 0;
     int i = 0;
 
@@ -85,16 +84,18 @@ public class RigidbodySleepCheck : MonoBehaviour {
       yield return new WaitForEndOfFrame();
     }
 
-    while (_mass == 0 && _points == 0 && i < ObjectProperties.Count) {
+    while (_points == 0 && i < ObjectProperties.Count) {
       if (ObjectProperties[i].name.ToLower() == objName.ToLower()) {
-          _mass = ObjectProperties[i].mass;
-          _points = ObjectProperties[i].points;
+        _points = ObjectProperties[i].points;
       }
       i++;
+
+      Debug.Log("index i is " + i);
     }
 
-    rb.mass = (_mass != 0) ? _mass : rb.mass;
     points = (_points != 0) ? _points : 1;
+
+    Debug.Log("points on " + gameObject.name + " is " + points);
 
 
   }
