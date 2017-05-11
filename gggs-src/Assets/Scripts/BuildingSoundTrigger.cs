@@ -34,10 +34,7 @@ public class BuildingSoundTrigger : MonoBehaviour {
   }
 
   private void OnCollisionEnter(Collision other) {
-    if (audio == null) {
-      Debug.Log("No audio on the root of " + transform.root.gameObject.name);
-      return;
-    }
+    if (audio == null) { return; }
 
     if (other.gameObject.tag == "Player") {
       StartCoroutine(PlayAudio());
