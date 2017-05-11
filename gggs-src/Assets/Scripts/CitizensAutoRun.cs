@@ -39,8 +39,6 @@ public class CitizensAutoRun : MonoBehaviour {
   private void Update() {
 
     if (kaiju == null) {
-      Debug.LogWarning("kaiju is null for some reason??????");
-      kaiju = GameObject.FindWithTag("Player").GetComponent<Transform>();
       return;
     }
 
