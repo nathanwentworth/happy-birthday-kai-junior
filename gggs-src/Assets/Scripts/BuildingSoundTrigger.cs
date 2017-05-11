@@ -12,6 +12,15 @@ public class BuildingSoundTrigger : MonoBehaviour {
     audio = GetParentObject().GetComponent<AudioSource>();
 	}
 
+  private GameObject GetParentObject() {
+    Transform t = gameObject.transform;
+    for (int i = 0; i < GetObjectDepth(); i++) {
+      t = t.parent.transform;
+    }
+
+    return t.gameObject;
+  }
+
   private int GetObjectDepth() {
     int parentIndex = 0;
 
@@ -22,15 +31,6 @@ public class BuildingSoundTrigger : MonoBehaviour {
     }
 
     return parentIndex - 1;
-  }
-
-  private GameObject GetParentObject() {
-    Transform t = gameObject.transform;
-    for (int i = 0; i < GetObjectDepth(); i++) {
-      t = t.parent.transform;
-    }
-
-    return t.gameObject;
   }
 
   private void OnCollisionEnter(Collision other) {
