@@ -21,7 +21,10 @@ GameObject:
   - component: {fileID: 4849443942841198}
   - component: {fileID: 33543412310222098}
   - component: {fileID: 23674291354515192}
-  m_Layer: 0
+  - component: {fileID: 54285047867101156}
+  - component: {fileID: 65630401804119942}
+  - component: {fileID: 114182460340169218}
+  m_Layer: 9
   m_Name: storefront-sign-lazy-susan-green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,9 +37,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1487310255981934}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 96.008026, y: -2.4528168e-17, z: -53.65}
-  m_LocalScale: {x: 0.029317731, y: 0.029317731, z: 0.029317731}
+  m_LocalRotation: {x: -0, y: 0.06891279, z: -0, w: 0.99762267}
+  m_LocalPosition: {x: 5.3747826, y: 32.865314, z: 34.4636}
+  m_LocalScale: {x: 0.029317733, y: 0.029317731, z: 0.029317733}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -81,3 +84,41 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1487310255981934}
   m_Mesh: {fileID: 4300000, guid: 4185bcf8333357040b77cace4fbf149a, type: 3}
+--- !u!54 &54285047867101156
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1487310255981934}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65630401804119942
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1487310255981934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 222.81494, y: 163.87604, z: 222.81491}
+  m_Center: {x: -0.0014343262, y: 82.25729, z: 0}
+--- !u!114 &114182460340169218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1487310255981934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e5105557d1c4a5d9e87b98285d8843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
