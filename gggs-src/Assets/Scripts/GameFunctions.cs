@@ -32,15 +32,17 @@ public class GameFunctions : MonoBehaviour {
 
     LockMouse.Lock(true);
 
+    DataManager.ObjectsScoredList = null;
+
   }
 
 	private void Update () {
 
     // @DEBUG
-    if (controls.Pause.WasPressed) {
-      Pause();
+    // if (controls.Pause.WasPressed) {
+    //   Pause();
 
-    }
+    // }
 
 
 	}
@@ -55,14 +57,5 @@ public class GameFunctions : MonoBehaviour {
   public void HighScoreStore() {
     DataManager.HighScoreList.Sort();
   }
-
-  private void PlayMusic() {
-
-  }
-
-  private void StopMusic() {
-
-  }
-
 
 }
