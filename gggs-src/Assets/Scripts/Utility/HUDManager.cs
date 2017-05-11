@@ -259,8 +259,6 @@ public class HUDManager : MonoBehaviour {
 
     Debug.Log("ending with goal index " + goalIndex);
 
-    newHighScoreText.SetActive(DataManager.NewHighScore);
-
     DataManager.LastEnteredHighScoreName = nameEntryText.text;
     nameEntryText.text = "";
     newHighScoreHeaderText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
