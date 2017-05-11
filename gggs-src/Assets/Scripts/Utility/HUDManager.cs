@@ -154,8 +154,7 @@ public class HUDManager : MonoBehaviour {
   }
 
   public void ScoreChange() {
-    if (scoreGoals == null ||
-      score == 0) {
+    if (scoreGoals == null) {
       return;
     }
 
@@ -259,8 +258,6 @@ public class HUDManager : MonoBehaviour {
     }
 
     Debug.Log("ending with goal index " + goalIndex);
-
-    newHighScoreText.SetActive(DataManager.NewHighScore);
 
     DataManager.LastEnteredHighScoreName = nameEntryText.text;
     nameEntryText.text = "";

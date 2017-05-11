@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 198532621461863752}
   - component: {fileID: 199906604488934324}
   m_Layer: 0
-  m_Name: particle-meeple-hearts (1)
+  m_Name: particle-meeple-hearts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 198591366132374470}
   - component: {fileID: 199255207165562936}
   m_Layer: 0
-  m_Name: particle-meeple-sweat (1)
+  m_Name: particle-meeple-sweat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,6 +270,8 @@ GameObject:
   - component: {fileID: 54055906798020488}
   - component: {fileID: 136935348565552020}
   - component: {fileID: 114488381585166548}
+  - component: {fileID: 82893271998162356}
+  - component: {fileID: 114072671906657068}
   m_Layer: 10
   m_Name: meeple-connor-kneeland
   m_TagString: Untagged
@@ -371,7 +373,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1825231949374614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.00206, y: -0.000005038163, z: 28.926819}
+  m_LocalPosition: {x: 0.746048, y: -0.000010580194, z: -17.56311}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4730069737940466}
@@ -573,6 +575,86 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &82893271998162356
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1825231949374614}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.966
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95653042119900966
 Animator:
   serializedVersion: 3
@@ -590,6 +672,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114072671906657068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1825231949374614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12c1be53307ac4531939934159626e3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 0d631d6856e7f4b16a843eaec5b9e9b1, type: 3}
+  - {fileID: 8300000, guid: 9ef047f1d72c940a0bdb89ac9b8f11c0, type: 3}
+  - {fileID: 8300000, guid: af29f0419119b4146b4432503c2dd600, type: 3}
 --- !u!114 &114488381585166548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -740,7 +837,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 731483002
+  randomSeed: -1578274625
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3696,7 +3793,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2041167123
+  randomSeed: -1323229077
   InitialModule:
     serializedVersion: 3
     enabled: 1
